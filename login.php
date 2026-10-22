@@ -1,6 +1,17 @@
 <?php
-// login.php
-// この画面はログインUIのサンプルです。認証処理は別途実装してください。
+// login.php (データベースなしの簡易認証版)
+$save_path = __DIR__ . '/sessions';
+if (!is_dir($save_path)) {
+    mkdir($save_path, 0733, true);
+}
+session_save_path($save_path);
+session_start();
+
+if (isset($_SESSION['user_id'])) {
+    header('Location: home.php');
+    exit;
+}
+
 $email = '';
 $error = '';
 
@@ -11,8 +22,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($email === '' || $password === '') {
         $error = 'メールアドレスとパスワードを入力してください。';
     } else {
-        // TODO: DBからユーザーを取得し、password_verify() で認証してください。
-        $error = '認証処理はまだ実装されていません。';
+        // テスト用の固定アカウントで認証
+        if ($email === 'test@example.com' && $password === 'password123') {
+            $_SESSION['user_id'] = 1;
+            $_SESSION['email'] = $email;
+
+            header('Location: home.php');
+            exit;
+        } else {
+            $error = 'メールアドレスまたはパスワードが間違っています。';
+        }
     }
 }
 ?>
@@ -20,29 +39,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MediThink | ログイン</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="login-body">
     <main class="login-page">
+        <!-- 左側：ブランド・タイトルエリア -->
         <section class="login-brand" aria-label="MediThink ログイン画面">
-            <div class="title-raleb">ログイン画面<br><span>signin</span></div>
-
             <div class="logo" aria-label="MediThink">
                 <div class="logo-pill" aria-hidden="true">
                     <span class="logo-pill-green"></span>
                     <span class="logo-pill-white"></span>
                 </div>
                 <div class="logo-text">MediThink</div>
-                <!-- マスコット画像を使う場合は、下のコメントを外して画像パスを設定してください。
-                <img class="logo-mascot" src="images/mascot.png" alt="">
-                -->
             </div>
 
             <h1 class="login-title">ログイン画面</h1>
         </section>
 
+        <!-- 右側：フォーム入力エリア -->
         <section class="login-form-area">
             <form class="login-form" action="login.php" method="post">
                 <div class="form-group">
@@ -84,7 +100,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <button class="primary-btn" type="submit">ログイン</button>
 
                 <nav class="login-links" aria-label="ログイン関連リンク">
-                    <a class="link" href="forgot-password.php">パスワードを忘れた方はこちら</a>
                     <a class="link" href="signup.php">新規登録はこちら</a>
                 </nav>
             </form>
