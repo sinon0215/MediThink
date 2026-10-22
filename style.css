@@ -15,25 +15,28 @@ body {
    ========================================================= */
 body.login-body {
     background-color: #f0f4f8;
+    width: 100%;
     min-height: 100vh;
+    margin: 0;
+    padding: 0;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    align-items: stretch;
+    justify-content: stretch;
 }
 
 .login-page {
     display: flex;
     width: 100%;
-    max-width: 960px;
-    min-height: 540px;
+    max-width: none;
+    min-height: 100vh;
     background-color: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    border-radius: 0;
+    box-shadow: none;
     overflow: hidden;
-    margin: 20px;
+    margin: 0;
 }
 
-.login-brand {
+.info.flex-fill {
     flex: 1;
     background-color: #a0c4eb;
     padding: 40px;
@@ -84,7 +87,7 @@ body.login-body {
     letter-spacing: 1px;
 }
 
-.login-title {
+.title-label {
     font-size: 40px;
     font-weight: bold;
     color: #ffffff;
@@ -92,7 +95,7 @@ body.login-body {
     text-align: center;
 }
 
-.login-form-area {
+.container.flex-fill {
     flex: 1;
     padding: 60px 48px;
     display: flex;
@@ -121,9 +124,9 @@ body.login-body {
 
 .form-input {
     width: 100%;
-    height: 48px;
+    height: 54px;
     padding: 0 14px;
-    font-size: 16px;
+    font-size: 18px;
     border: 2px solid #333333;
     border-radius: 8px;
     background-color: #ffffff;

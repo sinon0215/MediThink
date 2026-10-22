@@ -42,12 +42,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MediThink | ログイン</title>
     <link rel="stylesheet" href="style.css">
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
 </head>
 <body class="login-body">
     <main class="login-page">
         <!-- 左側：ブランド・タイトルエリア -->
-        <section class="login-brand" aria-label="MediThink ログイン画面">
-            <div class="logo" aria-label="MediThink">
+                <section class="info flex-fill" aria-label="MediThink ログイン画面">            <div class="logo" aria-label="MediThink">
                 <div class="logo-pill" aria-hidden="true">
                     <span class="logo-pill-green"></span>
                     <span class="logo-pill-white"></span>
@@ -55,11 +59,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="logo-text">MediThink</div>
             </div>
 
-            <h1 class="login-title">ログイン画面</h1>
+            <h1 class="title-label">ログイン画面</h1>
         </section>
 
         <!-- 右側：フォーム入力エリア -->
-        <section class="login-form-area">
+       <section class="container flex-fill">
             <form class="login-form" action="login.php" method="post">
                 <div class="form-group">
                     <label class="form-input-label" for="email">メールアドレス</label>
