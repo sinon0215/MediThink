@@ -1,422 +1,279 @@
-/* style.css (共通) */
+/* style.css */
+:root {
+    --brand-blue: #a8cbea;
+    --button-blue: #8bbbe8;
+    --ink: #071f2b;
+    --input-bg: #f2f2f2;
+    --mint: #a4ffe0;
+}
+
 * {
     box-sizing: border-box;
+}
+
+html,
+body {
+    min-height: 100%;
     margin: 0;
-    padding: 0;
 }
 
 body {
-    font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
-    color: #333333;
-}
-
-/* =========================================================
-   ログイン画面用スタイル (.login-body)
-   ========================================================= */
-body.login-body {
-    background-color: #f0f4f8;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    color: #080808;
+    font-family: "Noto Sans JP", "Yu Gothic", "Meiryo", sans-serif;
 }
 
 .login-page {
-    display: flex;
-    width: 100%;
-    max-width: 960px;
-    min-height: 540px;
-    background-color: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
-    overflow: hidden;
-    margin: 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 100vh;
+    border: 2px solid #222;
 }
 
 .login-brand {
-    flex: 1;
-    background-color: #a0c4eb;
-    padding: 40px;
+    position: relative;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    position: relative;
-    gap: 40px;
+    justify-content: center;
+    min-height: 100%;
+    padding: 80px 5vw 48px;
+    overflow: hidden;
+    background: var(--brand-blue);
 }
 
-/* 共通ロゴ */
-.logo, .head_logo {
+.title-raleb {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    min-width: 208px;
+    padding: 8px 14px;
+    border: 4px solid #080808;
+    background: #fff;
+    text-align: center;
+    font-size: 22px;
+    line-height: 1.35;
+}
+
+.title-raleb span {
+    font-size: 18px;
+}
+
+.logo {
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 12px;
+    width: min(90%, 490px);
+    min-height: 210px;
+    margin-top: 10px;
 }
 
 .logo-pill {
-    width: 50px;
-    height: 26px;
-    border-radius: 13px;
-    border: 2px solid #333333;
+    position: absolute;
+    top: 18px;
+    left: 10%;
     display: flex;
+    width: 78%;
+    height: 150px;
     overflow: hidden;
-    transform: rotate(-20deg);
-    background-color: #ffffff;
+    transform: rotate(23deg);
+    border: 3px solid var(--ink);
+    border-radius: 100px;
+    background: #fff;
 }
 
 .logo-pill-green {
-    width: 50%;
-    height: 100%;
-    background-color: #38c172;
-    border-right: 2px solid #333333;
+    width: 48%;
+    background: var(--mint);
+    border-right: 3px solid var(--ink);
 }
 
 .logo-pill-white {
-    width: 50%;
-    height: 100%;
-    background-color: #ffffff;
+    flex: 1;
+    background: #fff;
 }
 
 .logo-text {
-    font-size: 34px;
-    font-weight: 800;
-    color: #2b547e;
-    letter-spacing: 1px;
+    z-index: 1;
+    color: #8df4e2;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(42px, 5vw, 76px);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -2px;
+    -webkit-text-stroke: 1.5px #000;
+    paint-order: stroke fill;
+    text-shadow: 2px 2px 0 #000, -2px -2px 0 #000;
 }
 
 .login-title {
-    font-size: 40px;
-    font-weight: bold;
-    color: #ffffff;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+    margin: 44px 0 0;
+    font-size: clamp(34px, 4.5vw, 62px);
+    font-weight: 700;
     text-align: center;
+    -webkit-text-stroke: 1px #000;
+    color: #fff;
+    text-shadow: 2px 2px 0 #000, -1px -1px 0 #000;
 }
 
 .login-form-area {
-    flex: 1;
-    padding: 60px 48px;
     display: flex;
-    flex-direction: column;
+    align-items: center;
     justify-content: center;
-    background-color: #ffffff;
+    min-width: 0;
+    padding: 64px 5.5vw;
+    background: #fff;
 }
 
 .login-form {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+    width: 100%;
+    max-width: 540px;
 }
 
 .form-group {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
+    margin-bottom: 42px;
 }
 
 .form-input-label {
-    font-size: 18px;
-    font-weight: bold;
-    color: #333333;
+    display: block;
+    margin-bottom: 10px;
+    font-size: clamp(25px, 3vw, 38px);
+    font-weight: 400;
 }
 
 .form-input {
+    display: block;
     width: 100%;
-    height: 48px;
-    padding: 0 14px;
-    font-size: 16px;
-    border: 2px solid #333333;
-    border-radius: 8px;
-    background-color: #ffffff;
+    height: 72px;
+    padding: 12px 18px;
+    border: 2px solid #092b3a;
+    border-radius: 13px;
     outline: none;
-    transition: border-color 0.2s;
+    background: var(--input-bg);
+    font: inherit;
+    font-size: 22px;
 }
 
 .form-input:focus {
-    border-color: #2b547e;
+    border-color: #3989ca;
+    box-shadow: 0 0 0 3px rgb(57 137 202 / 18%);
 }
 
 .checkbox-row {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
+    margin-top: -22px;
+    margin-bottom: 10px;
     cursor: pointer;
-    margin-top: -5px;
 }
 
 .checkbox-input {
-    width: 20px;
-    height: 20px;
+    flex: 0 0 auto;
+    width: 44px;
+    height: 44px;
+    margin: 0;
+    accent-color: var(--button-blue);
     cursor: pointer;
 }
 
 .checkbox-label {
-    font-size: 15px;
-    color: #333333;
-}
-
-.error-message {
-    color: #e3342f;
-    font-size: 14px;
-    font-weight: bold;
+    font-size: clamp(18px, 2.1vw, 29px);
 }
 
 .primary-btn {
-    width: 100%;
-    height: 52px;
-    background-color: #8bbbe8;
-    color: #ffffff;
-    border: none;
-    border-radius: 10px;
-    font-size: 20px;
-    font-weight: bold;
+    display: block;
+    width: min(100%, 345px);
+    min-height: 106px;
+    margin: 10px auto 24px;
+    border: 0;
+    border-radius: 20px;
+    background: var(--button-blue);
+    color: #fff;
+    font: inherit;
+    font-size: clamp(28px, 3vw, 42px);
+    font-weight: 700;
     cursor: pointer;
-    margin-top: 10px;
-    transition: background-color 0.2s;
+    transition: background-color 0.2s, transform 0.2s;
 }
 
 .primary-btn:hover {
-    background-color: #72a8dc;
+    background: #72aee3;
+}
+
+.primary-btn:active {
+    transform: translateY(1px);
 }
 
 .login-links {
-    text-align: center;
-    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
 }
 
 .link {
-    font-size: 16px;
-    color: #333333;
-    text-decoration: underline;
+    color: #080808;
+    font-size: clamp(18px, 2.3vw, 30px);
+    text-align: center;
+    text-underline-offset: 5px;
 }
 
 .link:hover {
-    color: #2b547e;
+    color: #276d9e;
 }
 
-
-/* =========================================================
-   ホーム画面用スタイル (.home-body)
-   ========================================================= */
-body.home-body {
-    background-color: #eef6fc;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    padding: 16px 24px;
-}
-
-.header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px 0;
-    margin-bottom: 12px;
-}
-
-.logout-btn {
-    background-color: #2e75b6;
-    color: #ffffff;
-    padding: 10px 28px;
-    border-radius: 6px;
-    font-size: 18px;
-    font-weight: bold;
-    text-decoration: none;
-    display: inline-block;
-    transition: background-color 0.2s;
-}
-
-.logout-btn:hover {
-    background-color: #245d92;
-}
-
-.header-right-space {
-    width: 120px;
-}
-
-.head_text {
-    width: 100%;
-    max-width: 1100px;
-    margin: 0 auto 20px auto;
-    background-color: #ffffff;
-    border: 2px solid #2b547e;
-    border-radius: 8px;
-    padding: 12px;
-    text-align: center;
-}
-
-.head_text h2 {
-    font-size: 20px;
-    color: #333333;
-    letter-spacing: 2px;
-}
-
-.main-container {
-    display: flex;
-    gap: 24px;
-    width: 100%;
-    max-width: 1100px;
-    margin: 0 auto;
-    flex-grow: 1;
-}
-
-.main-content-left {
-    flex: 2;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
-.calender {
-    width: 100%;
-    height: 320px;
-    background-color: #ffffff;
-    border: 2px solid #2b547e;
-    border-radius: 8px;
-}
-
-.bottom-time-character-row {
-    display: flex;
-    align-items: flex-end;
-    gap: 20px;
-}
-
-.medi-time-box {
-    flex: 1;
-    background-color: #ffffff;
-    border: 2px solid #333333;
-    border-radius: 8px;
-    padding: 16px 20px;
-    position: relative;
-}
-
-.medi-time-box::after {
-    content: '';
-    position: absolute;
-    right: -16px;
-    bottom: 24px;
-    border-width: 10px 0 10px 16px;
-    border-style: solid;
-    border-color: transparent transparent transparent #333333;
-}
-
-.medi-time-label {
+.error-message {
+    margin: 12px 0;
+    color: #b00020;
     font-size: 16px;
-    font-weight: bold;
-    color: #333333;
-    display: block;
-    margin-bottom: 8px;
 }
 
-.medi-time-display {
-    display: flex;
-    align-items: baseline;
-    justify-content: center;
-    gap: 12px;
-}
-
-.time-digits {
-    font-size: 48px;
-    font-weight: 800;
-    letter-spacing: 4px;
-    color: #111111;
-}
-
-.medi-time-suffix {
-    font-size: 18px;
-    font-weight: bold;
-}
-
-.character {
-    width: 110px;
-    height: 110px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-}
-
-.pill-character {
-    position: relative;
-    width: 90px;
-    height: 45px;
-    border-radius: 23px;
-    border: 2px solid #333333;
-    background-color: #ffffff;
-    display: flex;
-    overflow: hidden;
-    transform: rotate(-15deg);
-    box-shadow: 2px 4px 8px rgba(0,0,0,0.15);
-}
-
-.pill-head {
-    width: 100%;
-    height: 100%;
-    display: flex;
-}
-
-.pill-green {
-    width: 50%;
-    height: 100%;
-    background-color: #e3342f;
-    border-right: 2px solid #333333;
-}
-
-.pill-white {
-    width: 50%;
-    height: 100%;
-    background-color: #ffffff;
-}
-
-.pill-glasses {
-    position: absolute;
-    top: 12px;
-    left: 20px;
-    width: 50px;
-    height: 18px;
-    border: 2px solid #333333;
-    border-radius: 10px;
-    background-color: rgba(255, 255, 255, 0.6);
-}
-
-.menu-btn {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    justify-content: flex-start;
-}
-
-.medium-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 64px;
-    background-color: #2e75b6;
-    color: #ffffff;
-    border: none;
-    border-radius: 10px;
-    font-size: 20px;
-    font-weight: bold;
-    text-decoration: none;
-    cursor: pointer;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: background-color 0.2s, transform 0.1s;
-}
-
-.medium-btn:hover {
-    background-color: #245d92;
-}
-
-.medium-btn:active {
-    transform: translateY(2px);
-}
-
-@media (max-width: 768px) {
-    .main-container {
-        flex-direction: column;
+@media (max-width: 800px) {
+    .login-page {
+        grid-template-columns: 1fr;
     }
-    .time-digits {
-        font-size: 36px;
+
+    .login-brand {
+        min-height: 340px;
+        padding: 80px 20px 28px;
+    }
+
+    .logo {
+        min-height: 150px;
+        max-width: 380px;
+    }
+
+    .logo-pill {
+        height: 105px;
+    }
+
+    .login-title {
+        margin-top: 20px;
+    }
+
+    .login-form-area {
+        padding: 42px 24px;
+    }
+
+    .form-group {
+        margin-bottom: 30px;
+    }
+
+    .form-input {
+        height: 60px;
+    }
+
+    .checkbox-row {
+        margin-top: -12px;
+    }
+
+    .checkbox-input {
+        width: 34px;
+        height: 34px;
+    }
+
+    .primary-btn {
+        min-height: 78px;
     }
 }
