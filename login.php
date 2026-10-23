@@ -1,6 +1,27 @@
 <?php
-// login.php
-// この画面はログインUIのサンプルです。認証処理は別途実装してください。
+// login.php (データベース連携版・平文認証)
+
+// --- データベース設定 ---
+$db_host = '127.0.0.1';
+$db_name = 'medithink_db';
+$db_user = 'medithink_admin';     // 必要に応じて変更してください
+$db_pass = 'password123';         // 必要に応じてパスワードを設定してください
+
+$save_path = __DIR__ . '/sessions';
+if (!is_dir($save_path)) {
+    mkdir($save_path, 0733, true);
+}
+session_save_path($save_path);
+
+if (session_status() !== PHP_SESSION_ACTIVE) {
+    session_start();
+}
+
+if (isset($_SESSION['user_id'])) {
+    header('Location: home.php');
+    exit;
+}
+
 $email = '';
 $error = '';
 
@@ -11,8 +32,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($email === '' || $password === '') {
         $error = 'メールアドレスとパスワードを入力してください。';
     } else {
-        // TODO: DBからユーザーを取得し、password_verify() で認証してください。
-        $error = '認証処理はまだ実装されていません。';
+        try {
+            // PDOを使ったデータベース接続
+            $dsn = "mysql:host={$db_host};dbname={$db_name};charset=utf8mb4";
+            $pdo = new PDO($dsn, $db_user, $db_pass, [
+                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+                PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+            ]);
+
+            // データベースからメールアドレスでユーザーを検索
+            $stmt = $pdo->prepare('SELECT id, email, password FROM users WHERE email = ?');
+            $stmt->execute([$email]);
+            $user = $stmt->fetch();
+
+            // ユーザーが存在し、パスワードが一致するか確認（平文で直接比較）
+            if ($user && $password === $user['password']) {
+                // セッションハイジャック対策
+                session_regenerate_id(true);
+
+                $_SESSION['user_id'] = $user['id'];
+                $_SESSION['email'] = $user['email'];
+
+                header('Location: home.php');
+                exit;
+            } else {
+                $error = 'メールアドレスまたはパスワードが間違っています。';
+            }
+
+        } catch (PDOException $e) {
+            $error = 'データベース接続エラーが発生しました。';
+        }
     }
 }
 ?>
@@ -20,29 +69,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MediThink | ログイン</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="login-body">
     <main class="login-page">
+        <!-- 左側：ブランド・タイトルエリア -->
         <section class="login-brand" aria-label="MediThink ログイン画面">
-            <div class="title-raleb">ログイン画面<br><span>signin</span></div>
-
             <div class="logo" aria-label="MediThink">
                 <div class="logo-pill" aria-hidden="true">
                     <span class="logo-pill-green"></span>
                     <span class="logo-pill-white"></span>
                 </div>
                 <div class="logo-text">MediThink</div>
-                <!-- マスコット画像を使う場合は、下のコメントを外して画像パスを設定してください。
-                <img class="logo-mascot" src="images/mascot.png" alt="">
-                -->
             </div>
 
             <h1 class="login-title">ログイン画面</h1>
         </section>
 
+        <!-- 右側：フォーム入力エリア -->
         <section class="login-form-area">
             <form class="login-form" action="login.php" method="post">
                 <div class="form-group">
@@ -84,7 +130,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <button class="primary-btn" type="submit">ログイン</button>
 
                 <nav class="login-links" aria-label="ログイン関連リンク">
-                    <a class="link" href="forgot-password.php">パスワードを忘れた方はこちら</a>
                     <a class="link" href="signup.php">新規登録はこちら</a>
                 </nav>
             </form>
