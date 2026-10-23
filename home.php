@@ -14,64 +14,7 @@ if (!isset($_SESSION['user_id'])) {
     exit;
 }
 
-<<<<<<< HEAD
-// --- データベース設定 ---
-$db_host = '127.0.0.1';
-$db_name = 'medithink_db';
-$db_user = 'medithink_admin';
-$db_pass = 'password123';
-
-$user_times = [
-    'morning_time' => '',
-    'lunch_time' => '',
-    'evening_time' => '',
-    'bedtime_time' => ''
-];
-
-try {
-    $pdo = new PDO("mysql:host={$db_host};dbname={$db_name};charset=utf8mb4", $db_user, $db_pass, [
-        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-    ]);
-
-    // 4つの時間をデータベースから取得
-    $stmt = $pdo->prepare('SELECT morning_time, lunch_time, evening_time, bedtime_time FROM users WHERE id = ?');
-    $stmt->execute([$_SESSION['user_id']]);
-    $result = $stmt->fetch();
-    if ($result) {
-        $user_times = $result;
-    }
-} catch (PDOException $e) {
-    // エラー時の処理
-}
-
-// 画面に表示する「次の時間」を決定するロジック
-// デフォルト値
-$next_time = "-- : --";
-$now_time_str = date('H:i:s');
-
-// 登録されている時間を配列にする（時分秒）
-$schedule = [
-    '朝' => $user_times['morning_time'] ?? '',
-    '昼' => $user_times['lunch_time'] ?? '',
-    '夜' => $user_times['evening_time'] ?? '',
-    '寝る前' => $user_times['bedtime_time'] ?? ''
-];
-
-// 現在時刻より後の最初の時間を「次の時間」として探す
-foreach ($schedule as $label => $time) {
-    if (!empty($time) && $time > $now_time_str) {
-        $next_time = date('H : i', strtotime($time));
-        break;
-    }
-}
-// もし今日の分がすべて終わっていれば、一番最初の「朝」の時間を表示する
-if ($next_time === "-- : --" && !empty($user_times['morning_time'])) {
-    $next_time = date('H : i', strtotime($user_times['morning_time']));
-}
-=======
 $next_time = "20 : 10"; // 次の薬の時間（必要に応じて動的に変更可能）
->>>>>>> 840cdcfc8090754a1b3afd1ff7555ff75e3421da
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -143,57 +86,5 @@ $next_time = "20 : 10"; // 次の薬の時間（必要に応じて動的に変�
         </nav>
     </main>
 
-<<<<<<< HEAD
-    <!-- JavaScriptによる時間監視・通知機能 -->
-    <script>
-        // PHPから4つの時間をJavaScriptに安全に渡す
-        const targetTimes = {
-            morning: "<?= $user_times['morning_time'] ?? '' ?>",
-            lunch:   "<?= $user_times['lunch_time'] ?? '' ?>",
-            evening: "<?= $user_times['evening_time'] ?? '' ?>",
-            bedtime: "<?= $user_times['bedtime_time'] ?? '' ?>"
-        };
-
-        // 同じ時間に何度もアラートが出ないようにするためのフラグ
-        let notifiedStatus = {
-            morning: false,
-            lunch: false,
-            evening: false,
-            bedtime: false
-        };
-
-        function checkNotificationTimes() {
-            const now = new Date();
-            const hours = String(now.getHours()).padStart(2, '0');
-            const minutes = String(now.getMinutes()).padStart(2, '0');
-            const currentHM = `${hours}:${minutes}`;
-
-            // 朝のチェック
-            if (targetTimes.morning && targetTimes.morning.slice(0, 5) === currentHM && !notifiedStatus.morning) {
-                notifiedStatus.morning = true;
-                alert('【朝の通知】時間になりました！');
-            }
-            // 昼のチェック
-            if (targetTimes.lunch && targetTimes.lunch.slice(0, 5) === currentHM && !notifiedStatus.lunch) {
-                notifiedStatus.lunch = true;
-                alert('【昼の通知】時間になりました！');
-            }
-            // 夜のチェック
-            if (targetTimes.evening && targetTimes.evening.slice(0, 5) === currentHM && !notifiedStatus.evening) {
-                notifiedStatus.evening = true;
-                alert('【夜の通知】時間になりました！');
-            }
-            // 寝る前のチェック（先ほど22:00に変更したものもここで連動します）
-            if (targetTimes.bedtime && targetTimes.bedtime.slice(0, 5) === currentHM && !notifiedStatus.bedtime) {
-                notifiedStatus.bedtime = true;
-                alert('【寝る前の通知】時間になりました！');
-            }
-        }
-
-        // 1秒ごとに時間をチェックする
-        setInterval(checkNotificationTimes, 1000);
-    </script>
-=======
->>>>>>> 840cdcfc8090754a1b3afd1ff7555ff75e3421da
 </body>
 </html>
