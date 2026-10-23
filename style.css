@@ -45,6 +45,29 @@ body.login-body {
     gap: 40px;
 }
 
+/* header.css */
+img{
+    width:300px;
+    height:auto;
+}
+
+.logo-area {
+    gap: 5px;
+}
+
+.head_logo {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logout-btn {
+    position: absolute;
+    left: 0;
+    top: 20px;
+}
+
 /* 共通ロゴ */
 .logo, .head_logo {
     display: flex;
