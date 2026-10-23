@@ -2,21 +2,16 @@
 // login.php (データベースなしの簡易認証版)
 $save_path = __DIR__ . '/sessions';
 if (!is_dir($save_path)) {
-    // セッションディレクトリは通常 0700 が安全です
-    mkdir($save_path, 0700, true);
+    mkdir($save_path, 0733, true);
 }
 session_save_path($save_path);
+session_start();
 
-// セッションがアクティブでなければ開始する
-if (session_status() !== PHP_SESSION_ACTIVE) {
-    session_start();
-}
-
-// ログイン済みの場合はホームへリダイレクト
 if (isset($_SESSION['user_id'])) {
     header('Location: home.php');
     exit;
 }
+
 $email = '';
 $error = '';
 
@@ -47,13 +42,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MediThink | ログイン</title>
     <link rel="stylesheet" href="style.css">
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
 
 </head>
 <body class="login-body">
     <main class="login-page">
         <!-- 左側：ブランド・タイトルエリア -->
-        <section class="info flex-fill" aria-label="MediThink ログイン画面">
-            <div class="logo" aria-label="MediThink">
+                <section class="info flex-fill" aria-label="MediThink ログイン画面">            <div class="logo" aria-label="MediThink">
                 <div class="logo-pill" aria-hidden="true">
                     <span class="logo-pill-green"></span>
                     <span class="logo-pill-white"></span>
@@ -61,11 +59,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="logo-text">MediThink</div>
             </div>
 
-            <h1 class="login-title">ログイン画面</h1>
+            <h1 class="title-label">ログイン画面</h1>
         </section>
 
         <!-- 右側：フォーム入力エリア -->
-        <section class="container flex-fill">
+       <section class="container flex-fill">
             <form class="login-form" action="login.php" method="post">
                 <div class="form-group">
                     <label class="form-input-label" for="email">メールアドレス</label>
@@ -107,10 +105,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 <nav class="login-links" aria-label="ログイン関連リンク">
                     <a class="link" href="signup.php">新規登録はこちら</a>
-                </nav>
-
-                <nav class="login-links" aria-label="ログイン関連リンク">
-                    <a class="link" href="pass_reset.php">パスワードを忘れた場合</a>
                 </nav>
             </form>
         </section>
