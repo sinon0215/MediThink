@@ -52,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body class="login-body">
     <main class="login-page">
         <!-- 左側：ブランド・タイトルエリア -->
-        <section class="login-brand" aria-label="MediThink ログイン画面">
+        <section class="info flex-fill" aria-label="MediThink ログイン画面">
             <div class="logo" aria-label="MediThink">
                 <div class="logo-pill" aria-hidden="true">
                     <span class="logo-pill-green"></span>
@@ -65,7 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </section>
 
         <!-- 右側：フォーム入力エリア -->
-        <section class="login-form-area">
+        <section class="container flex-fill">
             <form class="login-form" action="login.php" method="post">
                 <div class="form-group">
                     <label class="form-input-label" for="email">メールアドレス</label>
@@ -107,6 +107,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 <nav class="login-links" aria-label="ログイン関連リンク">
                     <a class="link" href="signup.php">新規登録はこちら</a>
+                </nav>
+
+                <nav class="login-links" aria-label="ログイン関連リンク">
+                    <a class="link" href="pass_reset.php">パスワードを忘れた場合</a>
                 </nav>
             </form>
         </section>
