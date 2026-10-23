@@ -15,15 +15,26 @@ body {
    ========================================================= */
 body.login-body {
     background-color: #f0f4f8;
+<<<<<<< HEAD
     min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
+=======
+    width: 100%;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: stretch;
+    justify-content: stretch;
+>>>>>>> 840cdcfc8090754a1b3afd1ff7555ff75e3421da
 }
 
 .login-page {
     display: flex;
     width: 100%;
+<<<<<<< HEAD
     max-width: 960px;
     min-height: 540px;
     background-color: #ffffff;
@@ -34,6 +45,18 @@ body.login-body {
 }
 
 .login-brand {
+=======
+    max-width: none;
+    min-height: 100vh;
+    background-color: #ffffff;
+    border-radius: 0;
+    box-shadow: none;
+    overflow: hidden;
+    margin: 0;
+}
+
+.info.flex-fill {
+>>>>>>> 840cdcfc8090754a1b3afd1ff7555ff75e3421da
     flex: 1;
     background-color: #a0c4eb;
     padding: 40px;
@@ -84,7 +107,11 @@ body.login-body {
     letter-spacing: 1px;
 }
 
+<<<<<<< HEAD
 .login-title {
+=======
+.title-label {
+>>>>>>> 840cdcfc8090754a1b3afd1ff7555ff75e3421da
     font-size: 40px;
     font-weight: bold;
     color: #ffffff;
@@ -92,7 +119,11 @@ body.login-body {
     text-align: center;
 }
 
+<<<<<<< HEAD
 .login-form-area {
+=======
+.container.flex-fill {
+>>>>>>> 840cdcfc8090754a1b3afd1ff7555ff75e3421da
     flex: 1;
     padding: 60px 48px;
     display: flex;
@@ -121,9 +152,15 @@ body.login-body {
 
 .form-input {
     width: 100%;
+<<<<<<< HEAD
     height: 48px;
     padding: 0 14px;
     font-size: 16px;
+=======
+    height: 54px;
+    padding: 0 14px;
+    font-size: 18px;
+>>>>>>> 840cdcfc8090754a1b3afd1ff7555ff75e3421da
     border: 2px solid #333333;
     border-radius: 8px;
     background-color: #ffffff;
@@ -183,6 +220,14 @@ body.login-body {
     margin-top: 15px;
 }
 
+<<<<<<< HEAD
+=======
+.signup-links {
+    text-align: center;
+    margin-top: 15px;
+}
+
+>>>>>>> 840cdcfc8090754a1b3afd1ff7555ff75e3421da
 .link {
     font-size: 16px;
     color: #333333;
@@ -419,4 +464,8 @@ body.home-body {
     .time-digits {
         font-size: 36px;
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 840cdcfc8090754a1b3afd1ff7555ff75e3421da

@@ -1,4 +1,5 @@
 <?php
+<<<<<<< HEAD
 // login.php (データベース連携版・平文認証)
 
 // --- データベース設定 ---
@@ -7,15 +8,22 @@ $db_name = 'medithink_db';
 $db_user = 'medithink_admin';     // 必要に応じて変更してください
 $db_pass = 'password123';         // 必要に応じてパスワードを設定してください
 
+=======
+// login.php (データベースなしの簡易認証版)
+>>>>>>> 840cdcfc8090754a1b3afd1ff7555ff75e3421da
 $save_path = __DIR__ . '/sessions';
 if (!is_dir($save_path)) {
     mkdir($save_path, 0733, true);
 }
 session_save_path($save_path);
+<<<<<<< HEAD
 
 if (session_status() !== PHP_SESSION_ACTIVE) {
     session_start();
 }
+=======
+session_start();
+>>>>>>> 840cdcfc8090754a1b3afd1ff7555ff75e3421da
 
 if (isset($_SESSION['user_id'])) {
     header('Location: home.php');
@@ -32,6 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($email === '' || $password === '') {
         $error = 'メールアドレスとパスワードを入力してください。';
     } else {
+<<<<<<< HEAD
         try {
             // PDOを使ったデータベース接続
             $dsn = "mysql:host={$db_host};dbname={$db_name};charset=utf8mb4";
@@ -61,6 +70,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         } catch (PDOException $e) {
             $error = 'データベース接続エラーが発生しました。';
+=======
+        // テスト用の固定アカウントで認証
+        if ($email === 'test@example.com' && $password === 'password123') {
+            $_SESSION['user_id'] = 1;
+            $_SESSION['email'] = $email;
+
+            header('Location: home.php');
+            exit;
+        } else {
+            $error = 'メールアドレスまたはパスワードが間違っています。';
+>>>>>>> 840cdcfc8090754a1b3afd1ff7555ff75e3421da
         }
     }
 }
@@ -72,12 +92,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MediThink | ログイン</title>
     <link rel="stylesheet" href="style.css">
+<<<<<<< HEAD
+=======
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+>>>>>>> 840cdcfc8090754a1b3afd1ff7555ff75e3421da
 </head>
 <body class="login-body">
     <main class="login-page">
         <!-- 左側：ブランド・タイトルエリア -->
+<<<<<<< HEAD
         <section class="login-brand" aria-label="MediThink ログイン画面">
             <div class="logo" aria-label="MediThink">
+=======
+                <section class="info flex-fill" aria-label="MediThink ログイン画面">            <div class="logo" aria-label="MediThink">
+>>>>>>> 840cdcfc8090754a1b3afd1ff7555ff75e3421da
                 <div class="logo-pill" aria-hidden="true">
                     <span class="logo-pill-green"></span>
                     <span class="logo-pill-white"></span>
@@ -85,11 +117,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="logo-text">MediThink</div>
             </div>
 
-            <h1 class="login-title">ログイン画面</h1>
+            <h1 class="title-label">ログイン画面</h1>
         </section>
 
         <!-- 右側：フォーム入力エリア -->
+<<<<<<< HEAD
         <section class="login-form-area">
+=======
+       <section class="container flex-fill">
+>>>>>>> 840cdcfc8090754a1b3afd1ff7555ff75e3421da
             <form class="login-form" action="login.php" method="post">
                 <div class="form-group">
                     <label class="form-input-label" for="email">メールアドレス</label>

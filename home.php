@@ -14,6 +14,7 @@ if (!isset($_SESSION['user_id'])) {
     exit;
 }
 
+<<<<<<< HEAD
 // --- データベース設定 ---
 $db_host = '127.0.0.1';
 $db_name = 'medithink_db';
@@ -68,6 +69,9 @@ foreach ($schedule as $label => $time) {
 if ($next_time === "-- : --" && !empty($user_times['morning_time'])) {
     $next_time = date('H : i', strtotime($user_times['morning_time']));
 }
+=======
+$next_time = "20 : 10"; // 次の薬の時間（必要に応じて動的に変更可能）
+>>>>>>> 840cdcfc8090754a1b3afd1ff7555ff75e3421da
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -139,6 +143,7 @@ if ($next_time === "-- : --" && !empty($user_times['morning_time'])) {
         </nav>
     </main>
 
+<<<<<<< HEAD
     <!-- JavaScriptによる時間監視・通知機能 -->
     <script>
         // PHPから4つの時間をJavaScriptに安全に渡す
@@ -188,5 +193,7 @@ if ($next_time === "-- : --" && !empty($user_times['morning_time'])) {
         // 1秒ごとに時間をチェックする
         setInterval(checkNotificationTimes, 1000);
     </script>
+=======
+>>>>>>> 840cdcfc8090754a1b3afd1ff7555ff75e3421da
 </body>
 </html>
