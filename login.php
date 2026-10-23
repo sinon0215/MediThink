@@ -2,16 +2,21 @@
 // login.php (データベースなしの簡易認証版)
 $save_path = __DIR__ . '/sessions';
 if (!is_dir($save_path)) {
-    mkdir($save_path, 0733, true);
+    // セッションディレクトリは通常 0700 が安全です
+    mkdir($save_path, 0700, true);
 }
 session_save_path($save_path);
-session_start();
 
+// セッションがアクティブでなければ開始する
+if (session_status() !== PHP_SESSION_ACTIVE) {
+    session_start();
+}
+
+// ログイン済みの場合はホームへリダイレクト
 if (isset($_SESSION['user_id'])) {
     header('Location: home.php');
     exit;
 }
-
 $email = '';
 $error = '';
 

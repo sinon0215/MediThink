@@ -6,15 +6,43 @@ $save_path = __DIR__ . '/sessions';
 if (is_dir($save_path)) {
     session_save_path($save_path);
 }
-session_start();
+if(session_status() !== PHP_SESSION_ACTIVE){
+    session_start();
+}
 
 // ログインしていない場合はログイン画面へリダイレクト
 if (!isset($_SESSION['user_id'])) {
+    error_log("failed to session.");
     header('Location: login.php');
     exit;
 }
 
-$next_time = "20 : 10"; // 次の薬の時間（必要に応じて動的に変更可能）
+// ==========================================
+// データベースから次の薬の時間を取得する処理
+// ==========================================
+$next_time = "未設定"; // デフォルト値
+
+$db_host = 'localhost';
+$db_name = 'medithink_db';
+$db_user = 'medithink_admin'; // 必要に応じて変更してください
+$db_pass = 'password123';     // 必要に応じてパスワードを設定してください
+
+try {
+    $pdo = new PDO("mysql:host=$db_host;dbname=$db_name;charset=utf8", $db_user, $db_pass);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+    // ログイン中のユーザーIDをもとに users テーブルから morning_time を取得
+    $stmt = $pdo->prepare("SELECT morning_time FROM users WHERE id = ?");
+    $stmt->execute([$_SESSION['user_id']]);
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if ($user && !empty($user['morning_time'])) {
+        $next_time = date('H:i', strtotime($user['morning_time']));
+    }
+} catch (PDOException $e) {
+    // どのようなエラーが起きているかを画面に詳細表示する
+    $next_time = "DBエラー: " . $e->getMessage();
+}
 ?>
 <!DOCTYPE html>
 <html lang="ja">
