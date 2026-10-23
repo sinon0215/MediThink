@@ -42,10 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MediThink | ログイン</title>
     <link rel="stylesheet" href="style.css">
-    <link
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
-        rel="stylesheet"
-    >
+    
 
 </head>
 <body class="login-body">
@@ -105,6 +102,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 <nav class="login-links" aria-label="ログイン関連リンク">
                     <a class="link" href="signup.php">新規登録はこちら</a>
+                </nav>
+
+                <nav class="login-links" aria-label="ログイン関連リンク">
+                    <a class="link" href="pass_reset.php">パスワードを忘れた場合</a>
                 </nav>
             </form>
         </section>
