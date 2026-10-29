@@ -10,7 +10,7 @@
 
     <!-- ヘッダーエリア (.header) -->
     <header class="header">
-        <a href="logout.php" class="home-btn">ホームに戻る</a>
+        <a href="home.php" class="home-btn">ホームに戻る</a>
 
         <div class="head_logo" aria-label="MediThink">
             <div class="logo-pill" aria-hidden="true">
