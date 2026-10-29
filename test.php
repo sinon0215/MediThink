@@ -11,6 +11,9 @@
     > -->
 
 </head>
-    <?php include 'header.php'; ?>
 <body>
+    <?php
+    $header_notice = 'テスト画面のお知らせ';
+    include 'header.php';
+    ?>
 </body>
