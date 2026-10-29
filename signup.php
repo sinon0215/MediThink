@@ -1,5 +1,57 @@
 <?php
+// エラー表示（開発用）
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
 
+$email = '';
+$error = '';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $email = trim($_POST['email'] ?? '');
+    $password = $_POST['password'] ?? '';
+
+    // バリデーション
+    if ($email === '' || $password === '') {
+        $error = 'メールアドレスとパスワードを入力してください。';
+    } elseif (strlen($password) < 6) {
+        $error = 'パスワードは6文字以上で入力してください。';
+    } else {
+        $host = 'localhost';
+        $dbname = 'medithink_db';
+        $username = 'medithink_admin'; 
+        $password_db = 'MediThink123!'; 
+
+        try {
+            $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $username, $password_db);
+            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+            // すでに登録されているメールアドレスか確認
+            $checkStmt = $pdo->prepare("SELECT id FROM users WHERE email = :email");
+            $checkStmt->execute([':email' => $email]);
+            
+            if ($checkStmt->fetch()) {
+                $error = 'このメールアドレスはすでに登録されています。';
+            } else {
+                // ★パスワードをハッシュ化する
+                $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
+                // データベースに登録
+                $sql = "INSERT INTO users (email, password) VALUES (:email, :password)";
+                $stmt = $pdo->prepare($sql);
+                $stmt->execute([
+                    ':email' => $email,
+                    ':password' => $hashed_password
+                ]);
+
+                header('Location: login.php');
+                exit;
+            }
+
+        } catch (PDOException $e) {
+            $error = 'データベースエラー: ' . $e->getMessage();
+        }
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -8,25 +60,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MediThink | 新規登録</title>
     <link rel="stylesheet" href="style.css">
-  
-
 </head>
 <body class="login-body">
     <main class="login-page">
-        <!-- 左側：ブランド・タイトルエリア -->
-                <section class="info flex-fill" aria-label="MediThink 新規登録画面">            <div class="logo" aria-label="MediThink">
+        <section class="info flex-fill" aria-label="MediThink 新規登録画面">
+            <div class="logo" aria-label="MediThink">
                 <div class="logo-pill" aria-hidden="true">
                     <span class="logo-pill-green"></span>
                     <span class="logo-pill-white"></span>
                 </div>
                 <div class="logo-text">MediThink</div>
             </div>
-
             <h1 class="title-label">新規登録画面</h1>
         </section>
 
-        <!-- 右側：フォーム入力エリア -->
-       <section class="container flex-fill">
+        <section class="container flex-fill">
             <form class="login-form" action="signup.php" method="post">
                 <div class="form-group">
                     <label class="form-input-label" for="email">メールアドレス</label>
@@ -42,13 +90,12 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="form-input-label" for="password">パスワード</label>
+                    <label class="form-input-label" for="password">パスワード（6文字以上）</label>
                     <input
                         class="form-input"
                         type="password"
                         id="password"
                         name="password"
-                        autocomplete="current-password"
                         required
                     >
                 </div>

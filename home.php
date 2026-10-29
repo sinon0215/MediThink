@@ -25,7 +25,7 @@ $next_time = "未設定"; // デフォルト値
 $db_host = 'localhost';
 $db_name = 'medithink_db';
 $db_user = 'medithink_admin'; // 必要に応じて変更してください
-$db_pass = 'password123';     // 必要に応じてパスワードを設定してください
+$db_pass = 'MediThink123!';     // 必要に応じてパスワードを設定してください
 
 try {
     $pdo = new PDO("mysql:host=$db_host;dbname=$db_name;charset=utf8", $db_user, $db_pass);

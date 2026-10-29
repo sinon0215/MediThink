@@ -1,17 +1,14 @@
 <?php
-// login.php (データベースなしの簡易認証版)
 $save_path = __DIR__ . '/sessions';
 if (!is_dir($save_path)) {
     mkdir($save_path, 0733, true);
 }
 session_save_path($save_path);
-session_start();
 
-if (isset($_SESSION['user_id'])) {
-    header('Location: home.php');
-    exit;
+// ★ セッションがまだ始まっていない場合のみスタートする
+if (session_status() !== PHP_SESSION_ACTIVE) {
+    session_start();
 }
-
 $email = '';
 $error = '';
 
@@ -22,15 +19,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($email === '' || $password === '') {
         $error = 'メールアドレスとパスワードを入力してください。';
     } else {
-        // テスト用の固定アカウントで認証
-        if ($email === 'test@example.com' && $password === 'password123') {
-            $_SESSION['user_id'] = 1;
-            $_SESSION['email'] = $email;
+        $host = 'localhost';
+        $dbname = 'medithink_db';
+        $username = 'medithink_admin'; 
+        $password_db = 'MediThink123!'; 
 
-            header('Location: home.php');
-            exit;
-        } else {
-            $error = 'メールアドレスまたはパスワードが間違っています。';
+        try {
+            $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $username, $password_db);
+            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+            $stmt = $pdo->prepare("SELECT * FROM users WHERE email = :email");
+            $stmt->execute([':email' => $email]);
+            $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            // ★ ユーザーが存在し、パスワードがハッシュ値と一致するか検証する
+            if ($user && password_verify($password, $user['password'])) {
+                $_SESSION['user_id'] = $user['id'];
+                $_SESSION['email'] = $user['email'];
+
+                header('Location: home.php');
+                exit;
+            } else {
+                $error = 'メールアドレスまたはパスワードが間違っています。';
+            }
+
+        } catch (PDOException $e) {
+            $error = 'データベースエラーが発生しました。';
         }
     }
 }
@@ -42,24 +56,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MediThink | ログイン</title>
     <link rel="stylesheet" href="style.css">
-    
-
 </head>
 <body class="login-body">
     <main class="login-page">
-        <!-- 左側：ブランド・タイトルエリア -->
-                <section class="info flex-fill" aria-label="MediThink ログイン画面">            <div class="logo" aria-label="MediThink">
+        <section class="info flex-fill" aria-label="MediThink ログイン画面">            
+            <div class="logo" aria-label="MediThink">
                 <div class="logo-pill" aria-hidden="true">
                     <span class="logo-pill-green"></span>
                     <span class="logo-pill-white"></span>
                 </div>
                 <div class="logo-text">MediThink</div>
             </div>
-
             <h1 class="title-label">ログイン画面</h1>
         </section>
 
-        <!-- 右側：フォーム入力エリア -->
        <section class="container flex-fill">
             <form class="login-form" action="login.php" method="post">
                 <div class="form-group">
