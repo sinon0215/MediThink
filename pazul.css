@@ -1,0 +1,283 @@
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    min-width: 320px;
+    min-height: 100%;
+    margin: 0;
+}
+
+.pazul-body {
+    min-height: 100vh;
+    overflow-x: hidden;
+    background: #fff url("image/background-image.png") center top / cover fixed no-repeat;
+    font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+}
+
+.pazul-body .medithink-header {
+    padding: 0 24px;
+    background: transparent;
+}
+
+.pazul-body .medithink-logo-area {
+    height: 76px;
+}
+
+.pazul-body .medithink-logo img {
+    width: 190px;
+}
+
+.pazul-body .medithink-notice {
+    margin-top: 7px;
+    height: 49px;
+    padding: 8px 16px;
+    font-weight: 400;
+}
+
+.pazul-main {
+    width: min(1120px, calc(100% - 32px));
+    margin: 28px auto 0;
+}
+
+.puzzle-board {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    width: min(884px, 100%);
+    aspect-ratio: 884 / 392;
+    margin: 0 auto;
+    border: 2px solid #111;
+    padding: 30px 22%;
+    background: #fff;
+}
+
+.puzzle-cell {
+    position: relative;
+    border: 1.5px solid #111;
+    background: #fff;
+}
+
+.puzzle-tab {
+    position: absolute;
+    z-index: 1;
+    width: 27px;
+    height: 27px;
+    border: 3px solid #111;
+    background: #fff;
+}
+
+.puzzle-cell:nth-child(4n + 1) .puzzle-tab,
+.puzzle-cell:nth-child(4n + 3) .puzzle-tab {
+    right: -16px;
+    top: 50%;
+    transform: translateY(-50%);
+    border-left: 0;
+    border-radius: 0 50% 50% 0;
+}
+
+.puzzle-cell:nth-child(4n + 2) .puzzle-tab,
+.puzzle-cell:nth-child(4n + 4) .puzzle-tab {
+    left: -16px;
+    top: 50%;
+    transform: translateY(-50%);
+    border-right: 0;
+    border-radius: 50% 0 0 50%;
+}
+
+.puzzle-cell:nth-child(-n + 4) .puzzle-tab {
+    bottom: -16px;
+    top: auto;
+    left: 50%;
+    transform: translateX(-50%);
+    border-top: 0;
+    border-radius: 0 0 50% 50%;
+}
+
+.puzzle-cell:nth-child(n + 9) .puzzle-tab {
+    top: -16px;
+    bottom: auto;
+    left: 50%;
+    transform: translateX(-50%);
+    border-bottom: 0;
+    border-radius: 50% 50% 0 0;
+}
+
+.pazul-bottom {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-top: 14px;
+}
+
+.game-screen-link {
+    display: grid;
+    flex: 0 0 190px;
+    min-height: 70px;
+    place-items: center;
+    border: 4px solid #111;
+    background: #fff;
+    color: #111;
+    font-size: 20px;
+    text-decoration: none;
+}
+
+.piece-tray {
+    display: flex;
+    flex: 1;
+    justify-content: space-around;
+    align-items: center;
+    min-height: 84px;
+    padding: 8px 14px;
+    border: 2px solid #111;
+    border-radius: 16px;
+    background: #fff;
+}
+
+.piece {
+    position: relative;
+    width: 72px;
+    height: 60px;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+}
+
+.piece span {
+    position: absolute;
+    inset: 7px 5px;
+    border: 3px solid #222;
+    background: #fff;
+    border-radius: 3px;
+}
+
+.piece span::before,
+.piece span::after {
+    content: "";
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    border: 3px solid #222;
+    border-radius: 50%;
+    background: #fff;
+}
+
+.piece span::before {
+    top: -12px;
+    left: 23px;
+    border-bottom: 0;
+}
+
+.piece span::after {
+    right: -12px;
+    top: 18px;
+    border-left: 0;
+}
+
+.piece-1 span::before,
+.piece-3 span::before,
+.piece-5 span::before {
+    top: auto;
+    bottom: -12px;
+    border-top: 0;
+    border-bottom: 3px solid #222;
+}
+
+.piece-1 span,
+.piece-3 span,
+.piece-5 span {
+    transform: rotate(35deg);
+}
+
+.piece-3 span,
+.piece-5 span {
+    border-color: #555;
+}
+
+.pazul-character {
+    position: relative;
+    flex: 0 0 145px;
+    height: 108px;
+}
+
+.character-body {
+    position: absolute;
+    top: 10px;
+    left: 18px;
+    width: 113px;
+    height: 62px;
+    border: 3px solid #111;
+    border-radius: 50% 50% 45% 45%;
+    background: linear-gradient(90deg, #fff 0 48%, #e94361 49%);
+    transform: rotate(-12deg);
+}
+
+.character-face {
+    position: absolute;
+    top: 45px;
+    left: 0;
+    width: 58px;
+    height: 47px;
+    border: 3px solid #111;
+    border-radius: 50%;
+    background: #fff;
+    transform: rotate(15deg);
+}
+
+.character-face::after {
+    content: "";
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    width: 22px;
+    height: 10px;
+    border: 3px solid #26344d;
+    border-radius: 5px;
+}
+
+.character-book {
+    position: absolute;
+    right: 3px;
+    bottom: 0;
+    padding: 7px 4px;
+    border: 2px solid #111;
+    background: #315377;
+    color: #fff;
+    font-size: 9px;
+    writing-mode: vertical-rl;
+}
+
+@media (max-width: 700px) {
+    .pazul-body .medithink-header {
+        padding: 0 8px;
+    }
+
+    .pazul-body .medithink-logo img {
+        width: min(190px, 42vw);
+    }
+
+    .pazul-main {
+        width: calc(100% - 16px);
+    }
+
+    .pazul-bottom {
+        flex-wrap: wrap;
+    }
+
+    .game-screen-link {
+        flex-basis: 145px;
+    }
+
+    .piece-tray {
+        order: 3;
+        flex-basis: 100%;
+    }
+
+    .pazul-character {
+        margin-left: auto;
+    }
+
+    .puzzle-board {
+        padding: 7% 5%;
+    }
+}

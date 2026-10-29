@@ -9,7 +9,7 @@ $header_notice = $header_notice ?? 'お知らせ';
         <div class="medithink-logo">
             <img src="image/small_logo.png"  alt="ロゴ">
         </div>
-        <button class="medithink-logout-btn">ログアウト</button>
+        <a class="medithink-logout-btn" href="logout.php">ログアウト</a>
     </div>
     <p class="medithink-notice"><?= htmlspecialchars($header_notice, ENT_QUOTES, 'UTF-8') ?></p>
 </header>
