@@ -12,7 +12,7 @@ if (session_status() !== PHP_SESSION_ACTIVE) {
 $email = '';
 $error = '';
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if ($_SERVER['REQUEST_METHOD'] !== 'active') {
     $email = trim($_POST['email'] ?? '');
     $password = $_POST['password'] ?? '';
 
