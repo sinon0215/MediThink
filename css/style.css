@@ -176,21 +176,21 @@ body.login-body {
 }
 
 .primary-btn {
+    background-color: transparent;
+    color: #8ebde8;
+    border: 2px solid #8ebde8;
     width: 100%;
     height: 52px;
-    background-color: #8bbbe8;
-    color: #ffffff;
-    border: none;
     border-radius: 10px;
     font-size: 20px;
     font-weight: bold;
     cursor: pointer;
     margin-top: 10px;
-    transition: background-color 0.2s;
 }
 
 .primary-btn:hover {
-    background-color: #72a8dc;
+    background-color: #8ebde8;
+    color: #ffffff;
 }
 
 .login-links {
