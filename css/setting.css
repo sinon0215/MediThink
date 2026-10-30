@@ -233,3 +233,23 @@ body {
         width: 350px;
         box-sizing: border-box;
     }
+
+
+/* =========================================================
+   時間編集画面スタイル (.settings-body)
+   ========================================================= */
+.calender {
+    text-align: center;
+}
+
+.calender tr:first-child th {
+    color: white;
+    background-color: #72C3E8;
+}
+
+.calender th,
+.calender td {
+    border: 2px solid #0F9ED5;
+    width: 90px;
+    height: 90px;
+}
