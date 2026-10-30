@@ -14,12 +14,10 @@
 <body class="login-body">
     <main class="login-page">
         <!-- 左側：ブランド・タイトルエリア -->
-                <section class="info flex-fill" aria-label="MediThink パスワード再設定画面">            <div class="logo" aria-label="MediThink">
-                <div class="logo-pill" aria-hidden="true">
-                    <span class="logo-pill-green"></span>
-                    <span class="logo-pill-white"></span>
+            <section class="info flex-fill" aria-label="MediThink パスワード再設定画面">
+                <div class="logo" aria-label="MediThink">
+                    <img src="./image/logo.png" height="350px">
                 </div>
-                <div class="logo-text">MediThink</div>
             </div>
 
             <h1 class="title-label">パスワード再設定画面</h1>
