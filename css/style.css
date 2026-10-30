@@ -222,7 +222,6 @@ body.home-body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    padding: 16px 24px;
 }
 
 .header {
@@ -271,6 +270,7 @@ body.home-body {
 }
 
 .main-container {
+    padding: 16px 24px;
     display: flex;
     gap: 24px;
     width: 100%;
