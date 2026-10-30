@@ -1,0 +1,686 @@
+/* style.css (共通) */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+    color: #333333;
+}
+
+.home-btn {
+    background-color: #2e75b6;
+    color: #ffffff;
+    padding: 10px 28px;
+    border-radius: 6px;
+    font-size: 18px;
+    font-weight: bold;
+    text-decoration: none;
+    display: inline-block;
+    transition: background-color 0.2s;
+}
+
+/* =========================================================
+   ログイン画面用スタイル (.login-body)
+   ========================================================= */
+body.login-body {
+    background-color: #f0f4f8;
+    width: 100%;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: stretch;
+    justify-content: stretch;
+}
+
+.login-page {
+    display: flex;
+    width: 100%;
+    max-width: none;
+    min-height: 100vh;
+    background-color: #ffffff;
+    border-radius: 0;
+    box-shadow: none;
+    overflow: hidden;
+    margin: 0;
+}
+
+.info.flex-fill {
+    flex: 1;
+    background-color: #a0c4eb;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    gap: 40px;
+}
+
+/* 共通ロゴ */
+.logo, .head_logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+}
+
+.logo-pill {
+    width: 50px;
+    height: 26px;
+    border-radius: 13px;
+    border: 2px solid #333333;
+    display: flex;
+    overflow: hidden;
+    transform: rotate(-20deg);
+    background-color: #ffffff;
+}
+
+.logo-pill-green {
+    width: 50%;
+    height: 100%;
+    background-color: #38c172;
+    border-right: 2px solid #333333;
+}
+
+.logo-pill-white {
+    width: 50%;
+    height: 100%;
+    background-color: #ffffff;
+}
+
+.logo-text {
+    font-size: 34px;
+    font-weight: 800;
+    color: #2b547e;
+    letter-spacing: 1px;
+}
+
+.title-label {
+    font-size: 40px;
+    font-weight: bold;
+    color: #ffffff;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+.container.flex-fill {
+    flex: 1;
+    padding: 60px 48px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #ffffff;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-input-label {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333333;
+}
+
+.form-input {
+    width: 100%;
+    height: 54px;
+    padding: 0 14px;
+    font-size: 18px;
+    border: 2px solid #333333;
+    border-radius: 8px;
+    background-color: #ffffff;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.form-input:focus {
+    border-color: #2b547e;
+}
+
+.checkbox-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    margin-top: -5px;
+}
+
+.checkbox-input {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.checkbox-label {
+    font-size: 15px;
+    color: #333333;
+}
+
+.error-message {
+    color: #e3342f;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.primary-btn {
+    width: 100%;
+    height: 52px;
+    background-color: #8bbbe8;
+    color: #ffffff;
+    border: none;
+    border-radius: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.2s;
+}
+
+.primary-btn:hover {
+    background-color: #72a8dc;
+}
+
+.login-links {
+    text-align: center;
+    margin-top: 15px;
+}
+
+.signup-links {
+    text-align: center;
+    margin-top: 15px;
+}
+
+.link {
+    font-size: 16px;
+    color: #333333;
+    text-decoration: underline;
+}
+
+.link:hover {
+    color: #2b547e;
+}
+
+
+/* =========================================================
+   ホーム画面用スタイル (.home-body)
+   ========================================================= */
+body.home-body {
+    background-color: #eef6fc;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    padding: 16px 24px;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 0;
+    margin-bottom: 12px;
+}
+
+.logout-btn {
+    background-color: #2e75b6;
+    color: #ffffff;
+    padding: 10px 28px;
+    border-radius: 6px;
+    font-size: 18px;
+    font-weight: bold;
+    text-decoration: none;
+    display: inline-block;
+    transition: background-color 0.2s;
+}
+
+.logout-btn:hover {
+    background-color: #245d92;
+}
+
+.header-right-space {
+    width: 120px;
+}
+
+.head_text {
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto 20px auto;
+    background-color: #ffffff;
+    border: 2px solid #2b547e;
+    border-radius: 8px;
+    padding: 12px;
+    text-align: center;
+}
+
+.head_text h2 {
+    font-size: 20px;
+    color: #333333;
+    letter-spacing: 2px;
+}
+
+.main-container {
+    display: flex;
+    gap: 24px;
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    flex-grow: 1;
+}
+
+.main-content-left {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.calender {
+    width: 100%;
+    height: 320px;
+    background-color: #ffffff;
+    border: 2px solid #2b547e;
+    border-radius: 8px;
+}
+
+.bottom-time-character-row {
+    display: flex;
+    align-items: flex-end;
+    gap: 20px;
+}
+
+.medi-time-box {
+    flex: 1;
+    background-color: #ffffff;
+    border: 2px solid #333333;
+    border-radius: 8px;
+    padding: 16px 20px;
+    position: relative;
+}
+
+.medi-time-box::after {
+    content: '';
+    position: absolute;
+    right: -16px;
+    bottom: 24px;
+    border-width: 10px 0 10px 16px;
+    border-style: solid;
+    border-color: transparent transparent transparent #333333;
+}
+
+.medi-time-label {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333333;
+    display: block;
+    margin-bottom: 8px;
+}
+
+.medi-time-display {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 12px;
+}
+
+.time-digits {
+    font-size: 48px;
+    font-weight: 800;
+    letter-spacing: 4px;
+    color: #111111;
+}
+
+.medi-time-suffix {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.character {
+    width: 110px;
+    height: 110px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.pill-character {
+    position: relative;
+    width: 90px;
+    height: 45px;
+    border-radius: 23px;
+    border: 2px solid #333333;
+    background-color: #ffffff;
+    display: flex;
+    overflow: hidden;
+    transform: rotate(-15deg);
+    box-shadow: 2px 4px 8px rgba(0,0,0,0.15);
+}
+
+.pill-head {
+    width: 100%;
+    height: 100%;
+    display: flex;
+}
+
+.pill-green {
+    width: 50%;
+    height: 100%;
+    background-color: #e3342f;
+    border-right: 2px solid #333333;
+}
+
+.pill-white {
+    width: 50%;
+    height: 100%;
+    background-color: #ffffff;
+}
+
+.pill-glasses {
+    position: absolute;
+    top: 12px;
+    left: 20px;
+    width: 50px;
+    height: 18px;
+    border: 2px solid #333333;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.6);
+}
+
+.menu-btn {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    justify-content: flex-start;
+}
+
+.medium-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 64px;
+    background-color: #2e75b6;
+    color: #ffffff;
+    border: none;
+    border-radius: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    text-decoration: none;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+.medium-btn:hover {
+    background-color: #245d92;
+}
+
+.medium-btn:active {
+    transform: translateY(2px);
+}
+
+@media (max-width: 768px) {
+    .main-container {
+        flex-direction: column;
+    }
+    .time-digits {
+        font-size: 36px;
+    }
+}
+
+
+
+    /* ========================================================= */
+   /* 数字探しゲーム画面用スタイル (.game-body) */
+   /* ========================================================= */ */
+ 
+body.game-body {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    padding: 12px 16px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+ 
+    /* 背景画像 */
+    background-color: #ffffff;
+    background-image: url("image/background-image.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+ 
+/* ヘッダー */
+.game-body .header {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    min-height: 44px;
+    margin-bottom: 4px;
+    padding: 0;
+    z-index: 1;
+}
+ 
+.game-body .home-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 38px;
+    padding: 8px 20px;
+    background-color: #2e75b6;
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: bold;
+    white-space: nowrap;
+}
+ 
+.game-body .head_logo {
+    gap: 8px;
+}
+ 
+.game-body .logo-pill {
+    width: 34px;
+    height: 19px;
+    border: 1px solid #333333;
+}
+ 
+.game-body .logo-pill-green {
+    background-color: #a8f0df;
+    border-right: 1px solid #333333;
+}
+ 
+.game-body .logo-text {
+    color: #333333;
+    font-size: 24px;
+    white-space: nowrap;
+    text-shadow: 1px 1px 1px #ffaaaa;
+}
+ 
+.game-body .time-btn {
+    min-height: 38px;
+    padding: 8px 14px;
+    background-color: #155c7a;
+    color: #ffffff;
+    border: 1px solid #333333;
+    font-size: 14px;
+    font-weight: bold;
+    white-space: nowrap;
+    cursor: pointer;
+}
+ 
+/* お題 */
+.game-body .head_text {
+    width: 100%;
+    max-width: none;
+    margin: 0 0 12px;
+    padding: 5px;
+    background-color: #ffffff;
+    border: 1px solid #333333;
+    border-radius: 0;
+    z-index: 1;
+}
+ 
+.game-body .head_text h2 {
+    font-size: 15px;
+    font-weight: normal;
+    letter-spacing: 1px;
+}
+ 
+/* ゲーム全体 */
+.game-body .game-main-container {
+    display: flex;
+    flex: 1;
+    width: 100%;
+    max-width: none;
+    min-height: 0;
+    margin: 0;
+    padding: 0 9%;
+}
+ 
+.game-body .game-container {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    grid-template-rows: repeat(2, minmax(0, 1fr));
+    gap: 0;
+    width: 100%;
+    min-height: 250px;
+    max-height: 430px;
+    margin: 0 auto;
+    border: 2px solid #111111;
+    background-color: #ffffff;
+    z-index: 1;
+}
+ 
+.game-body .game-number {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 0;
+    color: #176486;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(36px, 8vw, 76px);
+    line-height: 1;
+    user-select: none;
+}
+ 
+/* キャラクターと吹き出し */
+.game-body .character-area {
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 0;
+    min-height: 90px;
+    z-index: 1;
+}
+ 
+.game-body .character-comment {
+    position: relative;
+    width: 210px;
+    min-height: 56px;
+    padding: 16px 12px;
+    border: 2px solid #111111;
+    background-color: #ffffff;
+    text-align: center;
+    font-size: 14px;
+    font-weight: bold;
+}
+ 
+.game-body .character-comment::after {
+    content: "";
+    position: absolute;
+    right: -12px;
+    bottom: 12px;
+    width: 18px;
+    height: 18px;
+    background-color: #ffffff;
+    border-top: 2px solid #111111;
+    border-right: 2px solid #111111;
+    transform: rotate(45deg);
+}
+ 
+.game-body .character {
+    width: 100px;
+    height: 80px;
+    flex-shrink: 0;
+}
+ 
+.game-body .pill-character {
+    width: 82px;
+    height: 42px;
+}
+ 
+.game-body .pill-green {
+    background-color: #ff5272;
+}
+ 
+.game-body .pill-glasses {
+    top: 11px;
+    left: 17px;
+    width: 46px;
+    height: 16px;
+}
+ 
+/* スマートフォン対応 */
+@media (max-width: 600px) {
+    body.game-body {
+        padding: 8px;
+    }
+ 
+    .game-body .header {
+        gap: 5px;
+    }
+ 
+    .game-body .home-btn,
+    .game-body .time-btn {
+        padding: 7px;
+        font-size: 11px;
+    }
+ 
+    .game-body .logo-text {
+        font-size: 16px;
+    }
+ 
+    .game-body .logo-pill {
+        display: none;
+    }
+ 
+    .game-body .game-main-container {
+        padding: 0;
+    }
+ 
+    .game-body .game-container {
+        min-height: 220px;
+    }
+ 
+    .game-body .game-number {
+        font-size: clamp(30px, 11vw, 54px);
+    }
+ 
+    .game-body .character-comment {
+        width: 175px;
+        font-size: 12px;
+    }
+}
+.game-character-image {
+    width: 150px;
+    height: auto;
+    display: block;
+}

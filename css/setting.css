@@ -1,0 +1,235 @@
+/* style.css (共通) */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+    color: #333333;
+}
+
+.home-btn {
+    background-color: #2e75b6;
+    color: #ffffff;
+    padding: 10px 28px;
+    border-radius: 6px;
+    font-size: 18px;
+    font-weight: bold;
+    text-decoration: none;
+    display: inline-block;
+    transition: background-color 0.2s;
+}
+
+/* 共通ロゴ */
+.logo, .head_logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+}
+
+.logo-pill {
+    width: 50px;
+    height: 26px;
+    border-radius: 13px;
+    border: 2px solid #333333;
+    display: flex;
+    overflow: hidden;
+    transform: rotate(-20deg);
+    background-color: #ffffff;
+}
+
+.logo-pill-green {
+    width: 50%;
+    height: 100%;
+    background-color: #38c172;
+    border-right: 2px solid #333333;
+}
+
+.logo-pill-white {
+    width: 50%;
+    height: 100%;
+    background-color: #ffffff;
+}
+
+.logo-text {
+    font-size: 34px;
+    font-weight: 800;
+    color: #2b547e;
+    letter-spacing: 1px;
+}
+
+.title-label {
+    font-size: 40px;
+    font-weight: bold;
+    color: #ffffff;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+.container.flex-fill {
+    flex: 1;
+    padding: 60px 48px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #ffffff;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-input-label {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333333;
+}
+
+.form-input {
+    width: 100%;
+    height: 54px;
+    padding: 0 14px;
+    font-size: 18px;
+    border: 2px solid #333333;
+    border-radius: 8px;
+    background-color: #ffffff;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.form-input:focus {
+    border-color: #2b547e;
+}
+
+.checkbox-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    margin-top: -5px;
+}
+
+.checkbox-input {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.checkbox-label {
+    font-size: 15px;
+    color: #333333;
+}
+
+.error-message {
+    color: #e3342f;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.primary-btn {
+    width: 100%;
+    height: 52px;
+    background-color: #8bbbe8;
+    color: #ffffff;
+    border: none;
+    border-radius: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.2s;
+}
+
+.primary-btn:hover {
+    background-color: #72a8dc;
+}
+
+.login-links {
+    text-align: center;
+    margin-top: 15px;
+}
+
+.signup-links {
+    text-align: center;
+    margin-top: 15px;
+}
+
+.link {
+    font-size: 16px;
+    color: #333333;
+    text-decoration: underline;
+}
+
+.link:hover {
+    color: #2b547e;
+}
+
+/* =========================================================
+   設定画面用スタイル (.settings-body)
+   ========================================================= */
+
+   .main-container-section{
+    gap: 24px;
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    flex-grow: 1;
+   }
+
+   .large-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 180px;
+    background-color: #2e75b6;
+    color: #ffffff;
+    border: none;
+    border-radius: 10px;
+    font-size: 40px;
+    font-weight: bold;
+    text-decoration: none;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.2s, transform 0.1s;
+    }
+    .large-btn:hover {
+        background-color: #245d92;
+    }
+
+    .setting-btn {
+        min-height: 70vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 70px;
+    }
+
+    .setting-btns {
+        display: flex;
+        justify-content: center;
+        gap: 80px;
+    }
+
+    /* 上のボタンだけ幅を変更 */
+    .setting-btn .password-btn {
+        width: 370px;
+        box-sizing: border-box;
+    }
+
+    /* 下の2つだけ幅を変更 */
+    .setting-btns .large-btn {
+        width: 350px;
+        box-sizing: border-box;
+    }

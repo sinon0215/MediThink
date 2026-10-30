@@ -1,0 +1,100 @@
+.medithink-header {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 8px 16px 15px;
+    background-color: transparent;
+    border: 0;
+}
+
+.medithink-logo-area {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    height: 68px;
+    align-items: center;
+}
+
+.medithink-logo {
+    grid-column: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.medithink-logo img {
+    display: block;
+    width: 300px;
+    height: auto;
+}
+
+.medithink-logout-btn {
+    box-sizing: border-box;
+    grid-column: 1;
+    grid-row: 1;
+    justify-self: start;
+    align-self: center;
+    display: inline-flex;
+    width: 194px;
+    height: 57px;
+    margin: 0;
+    padding: 0 12px;
+    border: 0;
+    border-radius: 0;
+    background-color: #2e75b6;
+    color: #ffffff;
+    align-items: center;
+    justify-content: center;
+    font: inherit;
+    font-size: 20px;
+    font-weight: bold;
+    line-height: 1;
+    cursor: pointer;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.medithink-logout-btn:hover {
+    background-color: #245d92;
+}
+
+.medithink-notice {
+    box-sizing: border-box;
+    width: 100%;
+    margin: 24px 0 0;
+    height: 51px;
+    padding: 10px 16px;
+    border: 2px solid #111111;
+    background-color: rgba(255, 255, 255, 0.95);
+    color: #111111;
+    font-size: 20px;
+    font-weight: bold;
+    line-height: 1.25;
+    text-align: center;
+}
+
+@media (max-width: 600px) {
+    .medithink-header {
+        padding: 6px 8px 10px;
+    }
+
+    .medithink-logo-area {
+        height: 58px;
+    }
+
+    .medithink-logo img {
+        width: min(230px, 42vw);
+    }
+
+    .medithink-logout-btn {
+        width: 194px;
+        height: 44px;
+        padding: 8px 12px;
+        font-size: 15px;
+        line-height: 28px;
+    }
+
+    .medithink-notice {
+        font-size: 18px;
+    }
+}
