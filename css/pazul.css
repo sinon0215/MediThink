@@ -37,21 +37,36 @@ body {
 }
 
 .pazul-main {
-    width: min(1120px, calc(100% - 32px));
-    margin: 28px auto 0;
+    width: min(1080px, calc(100% - 32px));
+    margin: 24px auto 32px;
+    padding: 20px;
+    border: 1px solid rgba(17, 17, 17, 0.18);
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.78);
+    box-shadow: 0 8px 24px rgba(30, 55, 75, 0.12);
+}
+
+.puzzle-stage {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 190px;
+    align-items: center;
+    gap: 24px;
 }
 
 .puzzle-reference {
-    width: min(220px, 100%);
-    margin: 0 0 12px auto;
-    padding: 8px;
-    border: 2px solid #111;
-    background: rgba(255, 255, 255, 0.95);
+    width: 100%;
+    margin: 0;
+    padding: 10px;
+    border: 1px solid #b5c3cc;
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
 }
 
 .puzzle-reference figcaption {
-    margin-bottom: 5px;
-    font-size: 14px;
+    margin-bottom: 8px;
+    color: #155d7c;
+    font-size: 15px;
     font-weight: bold;
     text-align: center;
 }
@@ -60,6 +75,7 @@ body {
     display: block;
     width: 100%;
     height: auto;
+    border-radius: 6px;
 }
 
 .puzzle-board {
@@ -69,7 +85,8 @@ body {
     width: min(720px, 100%);
     aspect-ratio: 1;
     margin: 0 auto;
-    border: 2px solid #111;
+    border: 3px solid #26344d;
+    border-radius: 4px;
     padding: 0;
     background: #fff;
 }
@@ -166,8 +183,8 @@ body {
 .pazul-bottom {
     display: flex;
     align-items: center;
-    gap: 14px;
-    margin-top: 14px;
+    gap: 16px;
+    margin-top: 22px;
 }
 
 .game-screen-link {
@@ -188,10 +205,10 @@ body {
     justify-content: flex-start;
     align-items: center;
     gap: 8px;
-    min-height: 84px;
-    padding: 8px 14px;
-    border: 2px solid #111;
-    border-radius: 16px;
+    min-height: 98px;
+    padding: 12px 14px;
+    border: 1px solid #b5c3cc;
+    border-radius: 12px;
     background: #fff;
     overflow-x: auto;
 }
@@ -224,9 +241,13 @@ body {
 }
 
 .puzzle-help {
-    margin: 10px 0 0;
-    color: #333;
-    font-size: 15px;
+    margin: 16px 0 0;
+    padding: 10px 14px;
+    border-radius: 8px;
+    background: #eef7fb;
+    color: #26344d;
+    font-size: 16px;
+    font-weight: 500;
     text-align: center;
 }
 
@@ -244,6 +265,33 @@ body {
 .puzzle-timeout .puzzle-board {
     border-color: #b63232;
     opacity: 0.7;
+}
+
+.clear-overlay {
+    position: fixed;
+    z-index: 10;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    background: rgba(15, 36, 52, 0.45);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+}
+
+.clear-overlay[aria-hidden="false"] {
+    opacity: 1;
+}
+
+.clear-message {
+    padding: 24px 56px;
+    border: 4px solid #155d7c;
+    border-radius: 16px;
+    background: #fff;
+    color: #155d7c;
+    font-size: clamp(40px, 8vw, 88px);
+    font-weight: bold;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
 }
 
 .pazul-character {
@@ -272,6 +320,22 @@ body {
 
     .pazul-main {
         width: calc(100% - 16px);
+        padding: 12px;
+    }
+
+    .puzzle-stage {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .puzzle-reference {
+        width: min(180px, 100%);
+        justify-self: center;
+        grid-row: 1;
+    }
+
+    .puzzle-board {
+        grid-row: 2;
     }
 
     .pazul-bottom {
@@ -296,7 +360,4 @@ body {
         height: 145px;
     }
 
-    .puzzle-board {
-        padding: 7% 5%;
-    }
 }

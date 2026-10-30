@@ -13,23 +13,24 @@
     ?>
 
     <main class="pazul-main">
-        <figure class="puzzle-reference">
-            <figcaption>完成イメージ</figcaption>
-            <img src="image/neko.webp" alt="パズルの完成イメージ">
-        </figure>
-        <section class="puzzle-board" aria-label="パズル盤">
-            <?php for ($row = 0; $row < 3; $row++): ?>
-                <?php for ($column = 0; $column < 4; $column++): ?>
-                    <?php $cell = $row * 4 + $column; ?>
-                    <button class="puzzle-cell puzzle-cell-<?= $row ?>-<?= $column ?>" type="button" aria-label="空のパズルマス" data-cell="<?= $cell ?>">
-                        <span class="puzzle-tab" aria-hidden="true"></span>
-                    </button>
+        <div class="puzzle-stage">
+            <section class="puzzle-board" aria-label="パズル盤">
+                <?php for ($row = 0; $row < 3; $row++): ?>
+                    <?php for ($column = 0; $column < 4; $column++): ?>
+                        <?php $cell = $row * 4 + $column; ?>
+                        <button class="puzzle-cell puzzle-cell-<?= $row ?>-<?= $column ?>" type="button" aria-label="空のパズルマス" data-cell="<?= $cell ?>">
+                            <span class="puzzle-tab" aria-hidden="true"></span>
+                        </button>
+                    <?php endfor; ?>
                 <?php endfor; ?>
-            <?php endfor; ?>
-        </section>
+            </section>
+            <figure class="puzzle-reference">
+                <figcaption>完成イメージ</figcaption>
+                <img src="image/neko.webp" alt="パズルの完成イメージ">
+            </figure>
+        </div>
 
         <div class="pazul-bottom">
-            <a class="game-screen-link" href="home.php">ゲーム画面</a>
 
             <section class="piece-tray" aria-label="パズルのピース">
                 <?php
@@ -61,6 +62,9 @@
         </div>
         <p class="puzzle-help" aria-live="polite">ピースを選んで、盤面のマスをクリックしてください。</p>
     </main>
+    <div class="clear-overlay" role="status" aria-live="assertive" aria-hidden="true">
+        <div class="clear-message">クリア！</div>
+    </div>
     <script>
         const pieces = document.querySelectorAll('.piece');
         const cells = document.querySelectorAll('.puzzle-cell');
@@ -160,11 +164,15 @@
 
                 if (placedCount === cells.length) {
                     document.body.classList.add('puzzle-cleared');
+                    document.querySelector('.clear-overlay').setAttribute('aria-hidden', 'false');
                     window.clearInterval(timerId);
                     timerId = null;
                     timerButton.disabled = true;
                     timerButton.textContent = 'クリア！';
                     help.textContent = 'クリア！すべてのピースを正しく並べました。';
+                    window.setTimeout(() => {
+                        window.location.href = 'home.php';
+                    }, 1000);
                     return;
                 }
 
