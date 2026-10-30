@@ -58,6 +58,31 @@
     background-color: #245d92;
 }
 
+.medithink-timer-btn {
+    box-sizing: border-box;
+    grid-column: 3;
+    grid-row: 1;
+    justify-self: end;
+    align-self: center;
+    display: inline-flex;
+    width: 200px;
+    height: 57px;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #111;
+    background-color: #155d7c;
+    color: #fff;
+    font: inherit;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.medithink-timer-btn:hover {
+    background-color: #124e68;
+}
+
 .medithink-notice {
     box-sizing: border-box;
     width: 100%;
@@ -92,6 +117,13 @@
         padding: 8px 12px;
         font-size: 15px;
         line-height: 28px;
+    }
+
+    .medithink-timer-btn {
+        width: 194px;
+        height: 44px;
+        padding: 8px 12px;
+        font-size: 15px;
     }
 
     .medithink-notice {

@@ -2,7 +2,7 @@
 $header_notice = $header_notice ?? 'お知らせ';
 ?>
 
-<link rel="stylesheet" href="header.css">
+<link rel="stylesheet" href="css/header.css">
 
 <header class="medithink-header">
     <div class="medithink-logo-area">
