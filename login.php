@@ -32,16 +32,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt->execute([':email' => $email]);
             $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-            // ★ ユーザーが存在し、パスワードがハッシュ値と一致するか検証する
+            
+
+            
+            // ユーザーが存在し、パスワードがハッシュ値と一致するか検証する
             if ($user && password_verify($password, $user['password'])) {
                 $_SESSION['user_id'] = $user['id'];
                 $_SESSION['email'] = $user['email'];
 
-                header('Location: home.php');
-                exit;
+                // 初回ログインか確認
+                if ($user['is_first_login'] == 1) {
+
+                    // 初回ログイン済みに更新
+                    $stmt = $pdo->prepare(
+                        "UPDATE users SET is_first_login = 0 WHERE id = :id"
+                    );
+                    $stmt->execute([':id' => $user['id']]);
+
+                    // 設定画面へ移動
+                    header('Location: setting_medi.php');
+                    exit;
+
+                } else {
+                    // 2回目以降はホーム画面へ
+                    header('Location: home.php');
+                    exit;
+                }
+
             } else {
                 $error = 'メールアドレスまたはパスワードが間違っています。';
             }
+
 
         } catch (PDOException $e) {
             $error = 'データベースエラーが発生しました。';
