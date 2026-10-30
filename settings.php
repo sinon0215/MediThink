@@ -4,31 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MediThink | 設定</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="./css/setting.css">
 </head>
 <body class="home-body">
-
-    <!-- ヘッダーエリア (.header) -->
-    <header class="header">
-        <a href="home.php" class="home-btn">ホームに戻る</a>
-
-        <div class="head_logo" aria-label="MediThink">
-            <div class="logo-pill" aria-hidden="true">
-                <span class="logo-pill-green"></span>
-                <span class="logo-pill-white"></span>
-            </div>
-            <span class="logo-text">MediThink</span>
-        </div>
-
-        <div class="header-right-space"></div>
-    </header>
-
-    <!-- お知らせ領域 (.head_text) -->
-    <section class="head_text">
-        <h2>変更したい設定を選択してください</h2>
-    </section>
-
-    <!-- メインコンテンツ (.main-container) -->
+    <?php include 'header_home.php'; ?>
+    
+<!-- メインコンテンツ (.main-container) -->
     <main class="main-container-section">
         
 
