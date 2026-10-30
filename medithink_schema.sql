@@ -32,6 +32,7 @@ CREATE TABLE `users` (
   `lunch_time` time DEFAULT NULL,
   `evening_time` time DEFAULT NULL,
   `bedtime_time` time DEFAULT NULL,
+  `is_first_login` TINYINT(1) NOT NULL DEFAULT 1,
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
