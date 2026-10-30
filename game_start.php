@@ -1,5 +1,5 @@
-
 <?php
+// ヘッダーのお知らせ表示
 $header_notice = 'ゲームスタート画面';
 ?>
 
@@ -21,33 +21,26 @@ $header_notice = 'ゲームスタート画面';
     <!-- 共通ヘッダー -->
     <?php include 'header.php'; ?>
 
-    <main class="main-container flex-fill">
+    <main class="main-container">
 
-        <!-- 左側：ゲーム説明 -->
+        <!-- ゲーム説明エリア -->
         <section class="game-rule-container">
-
-            <h2 class="head-text">
-                ゲーム説明
-            </h2>
+            <h2 class="head-text">ゲーム説明</h2>
 
             <button class="small-btn" type="button">
                 次へ
             </button>
-
         </section>
 
-        <!-- 左下：スタートボタン -->
+        <!-- スタートボタン -->
         <div class="start-area">
-
             <button class="medium-btn" type="button">
                 スタート
             </button>
-
         </div>
 
-        <!-- 右側：ゲームメニュー -->
-        <section class="menu-btn flex-fill">
-
+        <!-- ゲーム選択ボタン -->
+        <section class="menu-btn">
             <button class="medium-btn" type="button">
                 計算
             </button>
@@ -59,18 +52,17 @@ $header_notice = 'ゲームスタート画面';
             <button class="medium-btn" type="button">
                 数字記憶
             </button>
-
         </section>
 
-        <!-- キャラクターとコメント -->
+        <!-- キャラクターエリア -->
         <div class="character-area">
 
-            <div class="character-comment flex-fill">
+            <div class="character-comment">
                 ゲームを選択してください
             </div>
 
             <img
-                class="character flex-fill"
+                class="character"
                 src="image/zilyou_zaiko.png"
                 alt="MediThinkのキャラクター"
             >

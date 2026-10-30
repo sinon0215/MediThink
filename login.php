@@ -1,17 +1,14 @@
-
 <?php
 $save_path = __DIR__ . '/sessions';
-
 if (!is_dir($save_path)) {
     mkdir($save_path, 0733, true);
 }
-
 session_save_path($save_path);
 
+// ★ セッションがまだ始まっていない場合のみスタートする
 if (session_status() !== PHP_SESSION_ACTIVE) {
     session_start();
 }
-
 $email = '';
 $error = '';
 
@@ -24,22 +21,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         $host = 'localhost';
         $dbname = 'medithink_db';
-        $username = 'medithink_admin';
-        $password_db = 'MediThink123!';
+        $username = 'medithink_admin'; 
+        $password_db = 'MediThink123!'; 
 
         try {
-            $pdo = new PDO(
-                "mysql:host=$host;dbname=$dbname;charset=utf8mb4",
-                $username,
-                $password_db
-            );
-
+            $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $username, $password_db);
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-            $stmt = $pdo->prepare(
-                "SELECT * FROM users WHERE email = :email"
-            );
-
+            $stmt = $pdo->prepare("SELECT * FROM users WHERE email = :email");
             $stmt->execute([':email' => $email]);
             $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -81,40 +70,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>MediThink | ログイン</title>
     <link rel="stylesheet" href="./css/style.css">
 </head>
-
 <body class="login-body">
-
     <main class="login-page">
-
-        <section class="info flex-fill" aria-label="MediThink ログイン画面">
-
+        <section class="info flex-fill" aria-label="MediThink ログイン画面">            
             <div class="logo" aria-label="MediThink">
-                <img src="./image/logo.png" height="350px" alt="MediThink">
+                <img src="./image/logo.png" height="350px">
             </div>
-
             <h1 class="title-label">ログイン画面</h1>
-
         </section>
 
-        <section class="container flex-fill">
-
+       <section class="container flex-fill">
             <form class="login-form" action="login.php" method="post">
-
                 <div class="form-group">
-                    <label class="form-input-label" for="email">
-                        メールアドレス
-                    </label>
-
+                    <label class="form-input-label" for="email">メールアドレス</label>
                     <input
                         class="form-input"
                         type="email"
@@ -127,10 +103,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
 
                 <div class="form-group">
-                    <label class="form-input-label" for="password">
-                        パスワード
-                    </label>
-
+                    <label class="form-input-label" for="password">パスワード</label>
                     <input
                         class="form-input"
                         type="password"
@@ -142,15 +115,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
 
                 <label class="checkbox-row">
-                    <input
-                        class="checkbox-input"
-                        type="checkbox"
-                        id="show-password"
-                    >
-
-                    <span class="checkbox-label">
-                        パスワードを表示する
-                    </span>
+                    <input class="checkbox-input" type="checkbox" id="show-password">
+                    <span class="checkbox-label">パスワードを表示する</span>
                 </label>
 
                 <?php if ($error !== ''): ?>
@@ -160,6 +126,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <?php endif; ?>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
                 <!-- <button class="primary-btn btn-outline-primary" type="submit">ログイン</button> -->
                 <button type="submit" class="primary-btn">ログイン</button>
 =======
@@ -167,23 +134,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     ログイン
                 </button>
 >>>>>>> 52c06a1 (ガクトセーブ)
+=======
+                <!-- <button class="primary-btn btn-outline-primary" type="submit">ログイン</button> -->
+                <button type="submit" class="primary-btn">ログイン</button>
+>>>>>>> 84749ce (鷲尾おおお)
 
                 <nav class="login-links" aria-label="ログイン関連リンク">
-                    <a class="link" href="signup.php">
-                        新規登録はこちら
-                    </a>
+                    <a class="link" href="signup.php">新規登録はこちら</a>
                 </nav>
 
                 <nav class="login-links" aria-label="ログイン関連リンク">
-                    <a class="link" href="pass_reset.php">
-                        パスワードを忘れた場合
-                    </a>
+                    <a class="link" href="pass_reset.php">パスワードを忘れた場合</a>
                 </nav>
-
             </form>
-
         </section>
-
     </main>
 
     <script>
@@ -194,6 +158,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             passwordInput.type = showPassword.checked ? 'text' : 'password';
         });
     </script>
-
 </body>
 </html>
