@@ -61,11 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <main class="login-page">
         <section class="info flex-fill" aria-label="MediThink ログイン画面">            
             <div class="logo" aria-label="MediThink">
-                <div class="logo-pill" aria-hidden="true">
-                    <span class="logo-pill-green"></span>
-                    <span class="logo-pill-white"></span>
-                </div>
-                <div class="logo-text">MediThink</div>
+                <img src="./image/logo.png" height="350px">
             </div>
             <h1 class="title-label">ログイン画面</h1>
         </section>
