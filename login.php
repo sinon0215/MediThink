@@ -102,6 +102,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     >
                 </div>
 
+                <!-- 画面右 -->
                 <div class="form-group">
                     <label class="form-input-label" for="password">パスワード</label>
                     <input
