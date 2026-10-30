@@ -10,19 +10,21 @@ shuffle($numbers);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>数字探しゲーム | MediThink</title>
-    <link rel="stylesheet" href="style.css?v=2">
+
+    <!-- CSS読み込み -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/header.css">
 </head>
 
 <body class="game-body">
 
     <!-- ヘッダー -->
-   <?php
+    <?php
         $header_notice = '「1」から順番に数字を探そう';
         include 'header.php';
     ?>
-
-   
 
     <!-- ゲームエリア -->
     <main class="main-container game-main-container">
@@ -45,12 +47,14 @@ shuffle($numbers);
         </div>
 
         <div class="character">
-            <img src="image/zilyou_zaiko.png" alt="キャラクター" class="game-character-image">
+            <img
+                src="image/zilyou_zaiko.png"
+                alt="キャラクター"
+                class="game-character-image"
+            >
         </div>
 
     </div>
-
-    
 
 </body>
 </html>
