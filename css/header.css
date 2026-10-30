@@ -83,6 +83,15 @@
     background-color: #124e68;
 }
 
+.medithink-timer-btn.is-warning {
+    background-color: #b63232;
+}
+
+.medithink-timer-btn:disabled {
+    cursor: default;
+    opacity: 0.8;
+}
+
 .medithink-notice {
     box-sizing: border-box;
     width: 100%;
