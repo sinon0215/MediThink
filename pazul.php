@@ -16,7 +16,8 @@
         <section class="puzzle-board" aria-label="パズル盤">
             <?php for ($row = 0; $row < 3; $row++): ?>
                 <?php for ($column = 0; $column < 4; $column++): ?>
-                    <button class="puzzle-cell puzzle-cell-<?= $row ?>-<?= $column ?>" type="button" aria-label="空のパズルマス">
+                    <?php $cell = $row * 4 + $column; ?>
+                    <button class="puzzle-cell puzzle-cell-<?= $row ?>-<?= $column ?>" type="button" aria-label="空のパズルマス" data-cell="<?= $cell ?>">
                         <span class="puzzle-tab" aria-hidden="true"></span>
                     </button>
                 <?php endfor; ?>
@@ -61,6 +62,7 @@
         const cells = document.querySelectorAll('.puzzle-cell');
         const help = document.querySelector('.puzzle-help');
         let selectedPiece = null;
+        let placedCount = 0;
 
         pieces.forEach((piece) => {
             piece.addEventListener('click', () => {
@@ -84,6 +86,13 @@
                     return;
                 }
 
+                if (selectedPiece.dataset.piece !== cell.dataset.cell) {
+                    help.textContent = 'そのピースの置き場所が違います。別のマスを選んでください。';
+                    cell.classList.add('is-wrong');
+                    window.setTimeout(() => cell.classList.remove('is-wrong'), 350);
+                    return;
+                }
+
                 const placedPiece = selectedPiece.querySelector('img').cloneNode(true);
                 placedPiece.classList.add('placed-piece');
                 cell.appendChild(placedPiece);
@@ -92,6 +101,14 @@
                 selectedPiece.disabled = true;
                 selectedPiece.classList.remove('is-selected');
                 selectedPiece = null;
+                placedCount += 1;
+
+                if (placedCount === cells.length) {
+                    document.body.classList.add('puzzle-cleared');
+                    help.textContent = 'クリア！すべてのピースを正しく並べました。';
+                    return;
+                }
+
                 help.textContent = 'ピースを選んで、盤面のマスをクリックしてください。';
             });
         });

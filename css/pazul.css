@@ -72,6 +72,17 @@ body {
     cursor: default;
 }
 
+.puzzle-cell.is-wrong {
+    background: #ffe4e4;
+    animation: wrong-place 0.35s ease;
+}
+
+@keyframes wrong-place {
+    50% {
+        transform: translateX(4px);
+    }
+}
+
 .puzzle-tab {
     position: absolute;
     z-index: 1;
@@ -196,6 +207,17 @@ body {
     color: #333;
     font-size: 15px;
     text-align: center;
+}
+
+.puzzle-cleared .puzzle-board {
+    border-color: #2e75b6;
+    box-shadow: 0 0 0 4px rgba(46, 117, 182, 0.25);
+}
+
+.puzzle-cleared .puzzle-help {
+    color: #155d7c;
+    font-size: 20px;
+    font-weight: bold;
 }
 
 .pazul-character {
