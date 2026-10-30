@@ -54,25 +54,7 @@ try {
 </head>
 <body class="home-body">
 
-    <!-- ヘッダーエリア (.header) -->
-    <header class="header">
-        <a href="logout.php" class="logout-btn">ログアウト</a>
-
-        <div class="head_logo" aria-label="MediThink">
-            <div class="logo-pill" aria-hidden="true">
-                <span class="logo-pill-green"></span>
-                <span class="logo-pill-white"></span>
-            </div>
-            <span class="logo-text">MediThink</span>
-        </div>
-
-        <div class="header-right-space"></div>
-    </header>
-
-    <!-- お知らせ領域 (.head_text) -->
-    <section class="head_text">
-        <h2>お知らせ</h2>
-    </section>
+    <?php include 'header_logout.php'; ?>
 
     <!-- メインコンテンツ (.main-container) -->
     <main class="main-container">

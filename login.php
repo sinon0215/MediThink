@@ -76,7 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MediThink | ログイン</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="./css/style.css">
 </head>
 <body class="login-body">
     <main class="login-page">
@@ -125,7 +125,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </p>
                 <?php endif; ?>
 
-                <button class="primary-btn" type="submit">ログイン</button>
+                <!-- <button class="primary-btn btn-outline-primary" type="submit">ログイン</button> -->
+                <button type="submit" class="primary-btn">ログイン</button>
 
                 <nav class="login-links" aria-label="ログイン関連リンク">
                     <a class="link" href="signup.php">新規登録はこちら</a>
