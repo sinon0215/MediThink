@@ -83,6 +83,10 @@
         };
 
         const updateTimer = () => {
+            if (!timerButton) {
+                return;
+            }
+
             timerButton.textContent = `残り時間 ${formatTime(remainingSeconds)}`;
             timerButton.classList.toggle('is-warning', remainingSeconds <= 30);
         };
@@ -99,8 +103,10 @@
             cells.forEach((cell) => {
                 cell.disabled = true;
             });
-            timerButton.textContent = '時間切れ';
-            timerButton.disabled = true;
+            if (timerButton) {
+                timerButton.textContent = '時間切れ';
+                timerButton.disabled = true;
+            }
             help.textContent = '時間切れです。ページを再読み込みしてもう一度挑戦してください。';
         };
 
@@ -167,8 +173,10 @@
                     document.querySelector('.clear-overlay').setAttribute('aria-hidden', 'false');
                     window.clearInterval(timerId);
                     timerId = null;
-                    timerButton.disabled = true;
-                    timerButton.textContent = 'クリア！';
+                    if (timerButton) {
+                        timerButton.disabled = true;
+                        timerButton.textContent = 'クリア！';
+                    }
                     help.textContent = 'クリア！すべてのピースを正しく並べました。';
                     window.setTimeout(() => {
                         window.location.href = 'home.php';
