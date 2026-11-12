@@ -1,5 +1,7 @@
 <?php
 // home.php
+
+//yooooo
 // タイムゾーンを日本時間に明示的に設定
 date_default_timezone_set('Asia/Tokyo');
 
@@ -15,6 +17,7 @@ if (!isset($_SESSION['user_id'])) {
     header('Location: login.php');
     exit;
 }
+
 
 $db_host = 'localhost';
 $db_name = 'medithink_db';
