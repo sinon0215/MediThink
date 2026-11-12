@@ -42,7 +42,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     if (empty($user['secret_question'])) {
                         $error = 'このアカウントには秘密の質問が設定されていません。管理者にお問い合わせください。';
                     } else {
-                        // セッションにメールアドレスとユーザーIDを一時保存し、ステップ2へ
                         $_SESSION['reset_email'] = $email;
                         $_SESSION['reset_user_id'] = $user['id'];
                         $secret_question = $user['secret_question'];
@@ -63,21 +62,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if ($secret_answer === '' || $new_password === '') {
                 $error = '秘密の質問の答えと新しいパスワードを入力してください。';
                 $step = 2;
-                // 再度質問を表示するため取得
                 $stmt = $pdo->prepare("SELECT secret_question FROM users WHERE id = :id");
                 $stmt->execute([':id' => $user_id]);
                 $user = $stmt->fetch(PDO::FETCH_ASSOC);
                 $secret_question = $user['secret_question'] ?? '';
             } else {
-                // データベースから秘密の答えを取得（ハッシュ化している場合は password_verify、プレーンテキストなら直接比較）
-                // ※ ここではプレーンテキストまたはハッシュ対応として、安全に比較します
                 $stmt = $pdo->prepare("SELECT secret_answer FROM users WHERE id = :id");
                 $stmt->execute([':id' => $user_id]);
                 $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-                // 秘密の答えの検証（もしハッシュ化している場合は password_verify を使ってください。今回は一致確認）
                 if ($user && $secret_answer === $user['secret_answer']) {
-                    // パスワードをハッシュ化して更新
                     $new_hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
                     $update_stmt = $pdo->prepare("UPDATE users SET password = :password WHERE id = :id");
                     $update_stmt->execute([
@@ -85,7 +79,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         ':id' => $user_id
                     ]);
 
-                    // セッションをクリアしてログイン画面へ
                     unset($_SESSION['reset_email'], $_SESSION['reset_user_id']);
                     $_SESSION['flash_message'] = 'パスワードを再設定しました。新しいパスワードでログインしてください。';
                     header('Location: login.php');
@@ -113,22 +106,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MediThink | パスワード再設定</title>
     <link rel="stylesheet" href="./css/style.css">
-    
-
-    <link rel="stylesheet" href="./style.css">
 </head>
 <body class="login-body">
     <main class="login-page">
-        <!-- 左側：ブランド・タイトルエリア -->
-            <section class="info flex-fill" aria-label="MediThink パスワード再設定画面">
-                <div class="logo" aria-label="MediThink">
-                    <img src="./image/logo.png" height="350px">
+        <!-- 左側：ブランド・タイトルエリア（ログイン画面と完全に統一） -->
         <section class="info flex-fill" aria-label="MediThink パスワード再設定画面">            
             <div class="logo" aria-label="MediThink">
-                <div class="logo-pill" aria-hidden="true">
-                    <span class="logo-pill-green"></span>
-                    <span class="logo-pill-white"></span>
-                </div>
+                <img src="./image/logo.png" height="350px">
             </div>
             <h1 class="title-label">パスワード再設定画面</h1>
         </section>
@@ -214,7 +198,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </main>
 
     <script>
-        // パスワード表示切り替え（要素が存在する場合のみ実行）
         const showPassword = document.getElementById('show-password');
         const passwordInput = document.getElementById('password');
 

@@ -5,14 +5,14 @@ if (!is_dir($save_path)) {
 }
 session_save_path($save_path);
 
-// ★ セッションがまだ始まっていない場合のみスタートする
+// セッションがまだ始まっていない場合のみスタートする
 if (session_status() !== PHP_SESSION_ACTIVE) {
     session_start();
 }
 $email = '';
 $error = '';
 
-if ($_SERVER['REQUEST_METHOD'] !== 'active') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = trim($_POST['email'] ?? '');
     $password = $_POST['password'] ?? '';
 
@@ -32,9 +32,6 @@ if ($_SERVER['REQUEST_METHOD'] !== 'active') {
             $stmt->execute([':email' => $email]);
             $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-            
-
-            
             // ユーザーが存在し、パスワードがハッシュ値と一致するか検証する
             if ($user && password_verify($password, $user['password'])) {
                 $_SESSION['user_id'] = $user['id'];
@@ -42,7 +39,6 @@ if ($_SERVER['REQUEST_METHOD'] !== 'active') {
 
                 // 初回ログインか確認
                 if ($user['is_first_login'] == 1) {
-
                     // 初回ログイン済みに更新
                     $stmt = $pdo->prepare(
                         "UPDATE users SET is_first_login = 0 WHERE id = :id"
@@ -52,18 +48,14 @@ if ($_SERVER['REQUEST_METHOD'] !== 'active') {
                     // 設定画面へ移動
                     header('Location: setting_medi.php');
                     exit;
-
                 } else {
                     // 2回目以降はホーム画面へ
                     header('Location: home.php');
                     exit;
                 }
-
             } else {
                 $error = 'メールアドレスまたはパスワードが間違っています。';
             }
-
-
         } catch (PDOException $e) {
             $error = 'データベースエラーが発生しました。';
         }
@@ -126,19 +118,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'active') {
                     </p>
                 <?php endif; ?>
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-                <!-- <button class="primary-btn btn-outline-primary" type="submit">ログイン</button> -->
                 <button type="submit" class="primary-btn">ログイン</button>
-=======
-                <button class="primary-btn" type="submit">
-                    ログイン
-                </button>
->>>>>>> 52c06a1 (ガクトセーブ)
-=======
-                <!-- <button class="primary-btn btn-outline-primary" type="submit">ログイン</button> -->
-                <button type="submit" class="primary-btn">ログイン</button>
->>>>>>> 84749ce (鷲尾おおお)
 
                 <nav class="login-links" aria-label="ログイン関連リンク">
                     <a class="link" href="signup.php">新規登録はこちら</a>
@@ -155,9 +135,11 @@ if ($_SERVER['REQUEST_METHOD'] !== 'active') {
         const showPassword = document.getElementById('show-password');
         const passwordInput = document.getElementById('password');
 
-        showPassword.addEventListener('change', () => {
-            passwordInput.type = showPassword.checked ? 'text' : 'password';
-        });
+        if (showPassword && passwordInput) {
+            showPassword.addEventListener('change', () => {
+                passwordInput.type = showPassword.checked ? 'text' : 'password';
+            });
+        }
     </script>
 </body>
 </html>
