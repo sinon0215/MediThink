@@ -9,7 +9,7 @@ if (isset($_SESSION['user_id'])) {
         $db_host = 'localhost';
         $db_name = 'medithink_db';
         $db_user = 'medithink_admin'; 
-        $db_pass = 'MediThink123!';     
+        $db_pass = 'MediThink123!';
         $pdo_h = new PDO("mysql:host=$db_host;dbname=$db_name;charset=utf8mb4", $db_user, $db_pass);
         $pdo_h->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         
