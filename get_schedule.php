@@ -55,7 +55,7 @@ try {
 
     // ログイン中のユーザーの設定を取得
     $stmt = $pdo->prepare(
-        "SELECT day_of_week, medication_timing
+        "SELECT day_of_week, medication_timing, scheduled_time
          FROM medication_schedules
          WHERE user_id = ?
          ORDER BY day_of_week, medication_timing"
