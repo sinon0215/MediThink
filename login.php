@@ -1,16 +1,21 @@
 <?php
-$save_path = __DIR__ . '/sessions';
-if (!is_dir($save_path)) {
-    mkdir($save_path, 0733, true);
-}
-session_save_path($save_path);
+// $save_path = __DIR__ . '/sessions';
+// if (!is_dir($save_path)) {
+//     mkdir($save_path, 0733, true);
+// }
+// session_save_path($save_path);
 
-// ★ セッションがまだ始まっていない場合のみスタートする
+// セッションがまだ始まっていない場合のみスタートする
 if (session_status() !== PHP_SESSION_ACTIVE) {
     session_start();
 }
 $email = '';
 $error = '';
+
+if(isset($_SESSION['user_id'] )){
+    header('Location: home.php');
+    exit;
+}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = trim($_POST['email'] ?? '');
@@ -32,9 +37,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt->execute([':email' => $email]);
             $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-            
-
-            
             // ユーザーが存在し、パスワードがハッシュ値と一致するか検証する
             if ($user && password_verify($password, $user['password'])) {
                 $_SESSION['user_id'] = $user['id'];
@@ -42,7 +44,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 // 初回ログインか確認
                 if ($user['is_first_login'] == 1) {
-
                     // 初回ログイン済みに更新
                     $stmt = $pdo->prepare(
                         "UPDATE users SET is_first_login = 0 WHERE id = :id"
@@ -52,18 +53,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     // 設定画面へ移動
                     header('Location: setting_medi.php');
                     exit;
-
                 } else {
                     // 2回目以降はホーム画面へ
                     header('Location: home.php');
                     exit;
                 }
-
             } else {
                 $error = 'メールアドレスまたはパスワードが間違っています。';
             }
-
-
         } catch (PDOException $e) {
             $error = 'データベースエラーが発生しました。';
         }
@@ -87,7 +84,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <h1 class="title-label">ログイン画面</h1>
         </section>
 
-       <section class="container flex-fill">
+        <section class="container flex-fill">
+            <div>ログイン中:<?php echo isset($_SESSION['user_id'])?"ログイン中":"ログインしていません" ?></div>
+
             <form class="login-form" action="login.php" method="post">
                 <div class="form-group">
                     <label class="form-input-label" for="email">メールアドレス</label>
@@ -102,6 +101,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     >
                 </div>
 
+                <!-- 画面右 -->
                 <div class="form-group">
                     <label class="form-input-label" for="password">パスワード</label>
                     <input
@@ -125,7 +125,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </p>
                 <?php endif; ?>
 
-                <!-- <button class="primary-btn btn-outline-primary" type="submit">ログイン</button> -->
                 <button type="submit" class="primary-btn">ログイン</button>
 
                 <nav class="login-links" aria-label="ログイン関連リンク">
@@ -143,9 +142,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         const showPassword = document.getElementById('show-password');
         const passwordInput = document.getElementById('password');
 
-        showPassword.addEventListener('change', () => {
-            passwordInput.type = showPassword.checked ? 'text' : 'password';
-        });
+        if (showPassword && passwordInput) {
+            showPassword.addEventListener('change', () => {
+                passwordInput.type = showPassword.checked ? 'text' : 'password';
+            });
+        }
     </script>
 </body>
 </html>

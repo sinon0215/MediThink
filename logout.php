@@ -1,11 +1,11 @@
 <?php
 // logout.php
 
-// セッションの保存先を指定（login.php等と合わせるため）
-$save_path = __DIR__ . '/sessions';
-if (is_dir($save_path)) {
-    session_save_path($save_path);
-}
+// // セッションの保存先を指定（login.php等と合わせるため）
+// $save_path = __DIR__ . '/sessions';
+// if (is_dir($save_path)) {
+//     session_save_path($save_path);
+// }
 
 session_start();
 

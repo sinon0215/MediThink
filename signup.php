@@ -4,17 +4,21 @@ ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
 $email = '';
+$secret_answer = '';
 $error = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = trim($_POST['email'] ?? '');
     $password = $_POST['password'] ?? '';
+    $secret_answer = trim($_POST['secret_answer'] ?? '');
 
     // バリデーション
-    if ($email === '' || $password === '') {
-        $error = 'メールアドレスとパスワードを入力してください。';
+    if ($email === '' || $password === '' || $secret_answer === '') {
+        $error = 'すべての項目を入力してください。';
     } elseif (strlen($password) < 6) {
         $error = 'パスワードは6文字以上で入力してください。';
+    } elseif (strlen($secret_answer) !== 8 || !is_numeric($secret_answer)) {
+        $error = '秘密の質問（生年月日）は半角数字8桁で入力してください（例: 19950401）。';
     } else {
         $host = 'localhost';
         $dbname = 'medithink_db';
@@ -32,15 +36,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if ($checkStmt->fetch()) {
                 $error = 'このメールアドレスはすでに登録されています。';
             } else {
-                // ★パスワードをハッシュ化する
+                // パスワードをハッシュ化する
                 $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-                // データベースに登録
-                $sql = "INSERT INTO users (email, password) VALUES (:email, :password)";
+                // データベースに登録（秘密の質問と答えも一緒に保存）
+                $sql = "INSERT INTO users (email, password, secret_question, secret_answer) VALUES (:email, :password, :secret_question, :secret_answer)";
                 $stmt = $pdo->prepare($sql);
                 $stmt->execute([
                     ':email' => $email,
-                    ':password' => $hashed_password
+                    ':password' => $hashed_password,
+                    ':secret_question' => '生年月日8桁',
+                    ':secret_answer' => $secret_answer
                 ]);
 
                 header('Location: login.php');
@@ -92,6 +98,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         type="password"
                         id="password"
                         name="password"
+                        required
+                    >
+                </div>
+
+                <!-- 秘密の質問（生年月日8桁）の入力欄を追加 -->
+                <div class="form-group">
+                    <label class="form-input-label" for="secret_answer">秘密の質問：生年月日（半角数字8桁）</label>
+                    <input
+                        class="form-input"
+                        type="text"
+                        id="secret_answer"
+                        name="secret_answer"
+                        placeholder="例: 19950401"
+                        maxlength="8"
+                        inputmode="numeric"
+                        pattern="\d{8}"
+                        value="<?= htmlspecialchars($secret_answer, ENT_QUOTES, 'UTF-8') ?>"
                         required
                     >
                 </div>
