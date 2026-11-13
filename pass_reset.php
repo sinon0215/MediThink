@@ -1,9 +1,9 @@
 <?php
-$save_path = __DIR__ . '/sessions';
-if (!is_dir($save_path)) {
-    mkdir($save_path, 0733, true);
-}
-session_save_path($save_path);
+// $save_path = __DIR__ . '/sessions';
+// if (!is_dir($save_path)) {
+//     mkdir($save_path, 0733, true);
+// }
+// session_save_path($save_path);
 
 if (session_status() !== PHP_SESSION_ACTIVE) {
     session_start();

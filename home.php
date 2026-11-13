@@ -3,10 +3,10 @@
 // タイムゾーンを日本時間に明示的に設定
 date_default_timezone_set('Asia/Tokyo');
 
-$save_path = __DIR__ . '/sessions';
-if (is_dir($save_path)) {
-    session_save_path($save_path);
-}
+// $save_path = __DIR__ . '/sessions';
+// if (is_dir($save_path)) {
+//     session_save_path($save_path);
+// }
 if(session_status() !== PHP_SESSION_ACTIVE){
     session_start();
 }

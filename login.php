@@ -1,9 +1,9 @@
 <?php
-$save_path = __DIR__ . '/sessions';
-if (!is_dir($save_path)) {
-    mkdir($save_path, 0733, true);
-}
-session_save_path($save_path);
+// $save_path = __DIR__ . '/sessions';
+// if (!is_dir($save_path)) {
+//     mkdir($save_path, 0733, true);
+// }
+// session_save_path($save_path);
 
 // セッションがまだ始まっていない場合のみスタートする
 if (session_status() !== PHP_SESSION_ACTIVE) {
@@ -11,6 +11,11 @@ if (session_status() !== PHP_SESSION_ACTIVE) {
 }
 $email = '';
 $error = '';
+
+if(isset($_SESSION['user_id'] )){
+    header('Location: home.php');
+    exit;
+}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = trim($_POST['email'] ?? '');
@@ -78,6 +83,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
             <h1 class="title-label">ログイン画面</h1>
         </section>
+
+        <div>ログイン中:<?php echo isset($_SESSION['user_id'])?"ログイン中":"ログインしていません" ?></div>
 
        <section class="container flex-fill">
             <form class="login-form" action="login.php" method="post">
