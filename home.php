@@ -1,47 +1,74 @@
 <?php
 // home.php
+// タイムゾーンを日本時間に明示的に設定
+date_default_timezone_set('Asia/Tokyo');
 
-// セッションの保存先を指定（login.phpやlogout.phpと合わせる）
-$save_path = __DIR__ . '/sessions';
-if (is_dir($save_path)) {
-    session_save_path($save_path);
-}
+// $save_path = __DIR__ . '/sessions';
+// if (is_dir($save_path)) {
+//     session_save_path($save_path);
+// }
 if(session_status() !== PHP_SESSION_ACTIVE){
     session_start();
 }
 
-// ログインしていない場合はログイン画面へリダイレクト
 if (!isset($_SESSION['user_id'])) {
-    error_log("failed to session.");
     header('Location: login.php');
     exit;
 }
 
-// ==========================================
-// データベースから次の薬の時間を取得する処理
-// ==========================================
-$next_time = "未設定"; // デフォルト値
-
 $db_host = 'localhost';
 $db_name = 'medithink_db';
-$db_user = 'medithink_admin'; // 必要に応じて変更してください
-$db_pass = 'MediThink123!';     // 必要に応じてパスワードを設定してください
+$db_user = 'medithink_admin'; 
+$db_pass = 'MediThink123!';     
+
+$next_time = "未設定";
 
 try {
     $pdo = new PDO("mysql:host=$db_host;dbname=$db_name;charset=utf8", $db_user, $db_pass);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    // ログイン中のユーザーIDをもとに users テーブルから morning_time を取得
-    $stmt = $pdo->prepare("SELECT morning_time FROM users WHERE id = ?");
+    $stmt = $pdo->prepare("SELECT morning_time, lunch_time, evening_time, bedtime_time FROM users WHERE id = ?");
     $stmt->execute([$_SESSION['user_id']]);
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if ($user && !empty($user['morning_time'])) {
-        $next_time = date('H:i', strtotime($user['morning_time']));
+    if ($user) {
+        $morning = $user['morning_time'] ?? null;
+        $lunch   = $user['lunch_time'] ?? null;
+        $evening = $user['evening_time'] ?? null;
+        $bedtime = $user['bedtime_time'] ?? null;
+
+        // 日本時間の現在時刻
+        $now = date('H:i:s');
+
+        $slots = [$morning, $lunch, $evening, $bedtime];
+        $next_time_raw = null;
+
+        // 現在時刻より後の時間を探す
+        foreach ($slots as $slot) {
+            if (!empty($slot) && $now <= $slot) {
+                $next_time_raw = $slot;
+                break;
+            }
+        }
+
+        // 今日もう残りの時間がない場合は最初の時間（翌朝など）
+        if (!$next_time_raw) {
+            foreach ($slots as $slot) {
+                if (!empty($slot)) {
+                    $next_time_raw = $slot;
+                    break;
+                }
+            }
+        }
+
+        if ($next_time_raw) {
+            $next_time = date('H:i', strtotime($next_time_raw));
+        } else {
+            $next_time = "未設定";
+        }
     }
 } catch (PDOException $e) {
-    // どのようなエラーが起きているかを画面に詳細表示する
-    $next_time = "DBエラー: " . $e->getMessage();
+    $next_time = "DBエラー";
 }
 ?>
 <!DOCTYPE html>
@@ -50,35 +77,17 @@ try {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MediThink | ホーム</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="./css/style.css">
 </head>
 <body class="home-body">
 
-    <!-- ヘッダーエリア (.header) -->
-    <header class="header">
-        <a href="logout.php" class="logout-btn">ログアウト</a>
-
-        <div class="head_logo" aria-label="MediThink">
-            <div class="logo-pill" aria-hidden="true">
-                <span class="logo-pill-green"></span>
-                <span class="logo-pill-white"></span>
-            </div>
-            <span class="logo-text">MediThink</span>
-        </div>
-
-        <div class="header-right-space"></div>
-    </header>
-
-    <!-- お知らせ領域 (.head_text) -->
-    <section class="head_text">
-        <h2>お知らせ</h2>
-    </section>
+    <?php include 'header_logout.php'; ?>
 
     <!-- メインコンテンツ (.main-container) -->
     <main class="main-container">
         <!-- 左側メインエリア (カレンダー + 時間 + キャラクター) -->
         <div class="main-content-left">
-            <!-- カレンダーエリア (.calender) : 空白の枠 -->
+            <!-- カレンダーエリア (.calender) : 空布の枠 -->
             <div class="calender"></div>
 
             <!-- 時間表示とキャラクターのエリア -->
@@ -93,14 +102,7 @@ try {
                 </div>
 
                 <!-- キャラクターエリア (.character) -->
-                <div class="character" aria-label="キャラクター">
-                    <div class="pill-character">
-                        <div class="pill-head">
-                            <span class="pill-green"></span>
-                            <span class="pill-white"></span>
-                        </div>
-                        <div class="pill-glasses"></div>
-                    </div>
+                    <img src="./image/zilyou_zaiko.png" height="150px">
                 </div>
             </div>
         </div>
