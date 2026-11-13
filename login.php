@@ -84,9 +84,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <h1 class="title-label">ログイン画面</h1>
         </section>
 
-        <div>ログイン中:<?php echo isset($_SESSION['user_id'])?"ログイン中":"ログインしていません" ?></div>
+        <section class="container flex-fill">
+            <div>ログイン中:<?php echo isset($_SESSION['user_id'])?"ログイン中":"ログインしていません" ?></div>
 
-       <section class="container flex-fill">
             <form class="login-form" action="login.php" method="post">
                 <div class="form-group">
                     <label class="form-input-label" for="email">メールアドレス</label>
