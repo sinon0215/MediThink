@@ -18,7 +18,7 @@
             <a href="setting_pass.php" class="large-btn password-btn">パスワード変更</a>
             <div class="setting-btns">
                 <a href="setting_medi.php" class="large-btn">薬服用時間</a>
-                <a href="setting_time.php" class="primary-btn">通知時間</a>
+                <!-- <a href="setting_time.php" class="primary-btn">通知時間</a> -->
             </div>
         </div>
     </main>

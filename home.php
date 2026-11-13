@@ -1,7 +1,5 @@
 <?php
 // home.php
-
-//yooooo
 // タイムゾーンを日本時間に明示的に設定
 date_default_timezone_set('Asia/Tokyo');
 
@@ -17,7 +15,6 @@ if (!isset($_SESSION['user_id'])) {
     header('Location: login.php');
     exit;
 }
-
 
 $db_host = 'localhost';
 $db_name = 'medithink_db';
@@ -105,14 +102,7 @@ try {
                 </div>
 
                 <!-- キャラクターエリア (.character) -->
-                <div class="character" aria-label="キャラクター">
-                    <div class="pill-character">
-                        <div class="pill-head">
-                            <span class="pill-green"></span>
-                            <span class="pill-white"></span>
-                        </div>
-                        <div class="pill-glasses"></div>
-                    </div>
+                    <img src="./image/zilyou_zaiko.png" height="150px">
                 </div>
             </div>
         </div>
