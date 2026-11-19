@@ -1,4 +1,3 @@
-
 <?php
 // ゲームで表示する数字
 $numbers = range(0, 9);
@@ -11,18 +10,24 @@ shuffle($numbers);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>数字探しゲーム | MediThink</title>
-    <link rel="stylesheet" href="style.css?v=2">
+    <link rel="stylesheet" href="css/style.css?v=2">
+    <link rel="stylesheet" href="css/header.css?v=2">
+    <link rel="stylesheet" href="css/game_suuzisagashi.css?v=2">
 </head>
 
 <body class="game-body">
 
     <!-- ヘッダー -->
-   <?php
-        $header_notice = '「1」から順番に数字を探そう';
+    <?php
         include 'header.php';
     ?>
 
-   
+    <!-- お知らせ表示エリア -->
+    <div class="game-notice-area">
+        <div class="game-notice-box" id="game-notice">
+            「1」から順番に数字を探そう
+        </div>
+    </div>
 
     <!-- ゲームエリア -->
     <main class="main-container game-main-container">
@@ -49,8 +54,6 @@ shuffle($numbers);
         </div>
 
     </div>
-
-    
 
 </body>
 </html>

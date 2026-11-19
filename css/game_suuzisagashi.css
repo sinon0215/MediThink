@@ -1,0 +1,203 @@
+/* =========================================
+   数字探しゲーム専用スタイル（css/game_suuzisagashi.css）
+   ========================================= */
+
+/* ゲーム画面全体のレイアウト */
+.game-body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+}
+
+/* お知らせ表示エリア */
+.game-notice-area {
+    width: 100%;
+    max-width: 1180px;
+    margin: 12px auto 0;
+    padding: 0 24px;
+    box-sizing: border-box;
+}
+
+.game-notice-box {
+    background-color: #ffffff;
+    border: 2.5px solid #111111;
+    padding: 12px 24px;
+    text-align: center;
+    font-size: 1.65rem;
+    font-weight: bold;
+    letter-spacing: 0.04em;
+    color: #111111;
+    box-sizing: border-box;
+}
+
+/* メインエリア（中央の白い枠を配置） */
+.game-main-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 12px 24px 210px;
+    box-sizing: border-box;
+}
+
+/* 白い太枠のゲームエリア */
+.game-container {
+    width: 100%;
+    max-width: 1180px;
+    height: 64vh;
+    min-height: 440px;
+    background-color: #ffffff;
+    border: 3px solid #111111;
+    box-sizing: border-box;
+    position: relative;
+
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    padding: 24px 36px;
+}
+
+/* 各数字 */
+.game-number {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #165e7a;
+    font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", sans-serif;
+    font-weight: 500;
+    line-height: 1;
+    cursor: pointer;
+    user-select: none;
+    transition: transform 0.15s ease, color 0.15s ease;
+}
+
+.game-number:hover {
+    transform: scale(1.1);
+    color: #2185ab;
+}
+
+.game-number:active {
+    transform: scale(0.95);
+}
+
+/* 数字ごとのサイズ・配置バリエーション */
+.game-number:nth-child(1)  { font-size: 72px;  align-self: start;  justify-self: start;  margin: 10px 0 0 15px; }
+.game-number:nth-child(2)  { font-size: 135px; align-self: center; justify-self: end;    margin-top: 15px; }
+.game-number:nth-child(3)  { font-size: 56px;  align-self: end;    justify-self: start;  margin-bottom: 10px; }
+.game-number:nth-child(4)  { font-size: 125px; align-self: center; justify-self: center; }
+.game-number:nth-child(5)  { font-size: 78px;  align-self: end;    justify-self: end;    margin-right: 10px; }
+.game-number:nth-child(6)  { font-size: 110px; align-self: center; justify-self: center; margin-left: 20px; }
+.game-number:nth-child(7)  { font-size: 74px;  align-self: center; justify-self: start;  margin-top: 25px; }
+.game-number:nth-child(8)  { font-size: 52px;  align-self: start;  justify-self: center; margin-top: 15px; }
+.game-number:nth-child(9)  { font-size: 76px;  align-self: end;    justify-self: center; }
+.game-number:nth-child(10) { font-size: 92px;  align-self: end;    justify-self: start;  margin-left: 10px; }
+
+.game-number.is-cleared {
+    opacity: 0.2;
+    pointer-events: none;
+}
+
+/* 右下のキャラクター＆吹き出しエリア */
+.character-area {
+    position: fixed;
+    right: 85px;
+    bottom: 65px;
+    display: flex;
+    align-items: center;
+    gap: 26px;
+    z-index: 100;
+}
+
+.character-comment {
+    position: relative;
+    background-color: #ffffff;
+    border: 3px solid #111111;
+    padding: 28px 54px;
+    min-width: 390px;
+    text-align: center;
+    font-size: 2.15rem;
+    font-weight: bold;
+    letter-spacing: 0.04em;
+    color: #111111;
+    box-sizing: border-box;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+    transform: translate(-15px, 12px);
+}
+
+.character-comment::before {
+    content: "";
+    position: absolute;
+    right: -18px;
+    top: 55%;
+    transform: translateY(-50%);
+    border-style: solid;
+    border-width: 10px 0 10px 18px;
+    border-color: transparent transparent transparent #111111;
+}
+
+.character-comment::after {
+    content: "";
+    position: absolute;
+    right: -12px;
+    top: 55%;
+    transform: translateY(-50%);
+    border-style: solid;
+    border-width: 7px 0 7px 14px;
+    border-color: transparent transparent transparent #ffffff;
+}
+
+.character {
+    flex-shrink: 0;
+}
+
+.game-character-image {
+    width: 210px;
+    height: auto;
+    display: block;
+}
+
+/* レスポンシブ調整 */
+@media (max-width: 768px) {
+    .game-notice-area {
+        padding: 0 12px;
+        margin-top: 8px;
+    }
+
+    .game-notice-box {
+        font-size: 1.25rem;
+        padding: 10px 14px;
+    }
+
+    .game-main-container {
+        padding: 12px 16px 165px;
+    }
+
+    .game-container {
+        height: 55vh;
+        min-height: 340px;
+        padding: 12px;
+    }
+
+    .game-number:nth-child(odd)  { font-size: 48px; }
+    .game-number:nth-child(even) { font-size: 76px; }
+
+    .character-area {
+        right: 24px;
+        bottom: 30px;
+        gap: 14px;
+    }
+
+    .character-comment {
+        padding: 18px 26px;
+        min-width: 230px;
+        font-size: 1.45rem;
+        transform: translate(-8px, 8px);
+    }
+
+    .game-character-image {
+        width: 135px;
+    }
+}
