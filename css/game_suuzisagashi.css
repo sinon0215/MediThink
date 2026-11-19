@@ -15,31 +15,32 @@
 /* お知らせ表示エリア */
 .game-notice-area {
     width: 100%;
-    max-width: 1180px;
+    max-width: none;
     margin: 12px auto 0;
-    padding: 0 24px;
+    padding: 0 16px;
     box-sizing: border-box;
 }
 
 .game-notice-box {
     background-color: #ffffff;
-    border: 2.5px solid #111111;
+    border: 2.5px solid #222222;
+    border-radius: 10px;
     padding: 12px 24px;
     text-align: center;
     font-size: 1.65rem;
     font-weight: bold;
     letter-spacing: 0.04em;
-    color: #111111;
+    color: #222222;
     box-sizing: border-box;
 }
 
-/* メインエリア（中央の白い枠を配置） */
+/* メインエリア */
 .game-main-container {
     flex: 1;
     display: flex;
     justify-content: center;
-    align-items: center;
-    padding: 12px 24px 210px;
+    align-items: center;   /* flex-end じゃなくて center に戻す */
+    padding: 0 24px 200px; /* 上の余白を0にしておく */
     box-sizing: border-box;
 }
 
@@ -47,12 +48,14 @@
 .game-container {
     width: 100%;
     max-width: 1180px;
-    height: 64vh;
-    min-height: 440px;
+    height: 76vh;         /* 70vh -> 76vh にさらにアップ */
+    min-height: 500px;
     background-color: #ffffff;
-    border: 3px solid #111111;
+    border: 3px solid #222222;
+    border-radius: 12px;
     box-sizing: border-box;
     position: relative;
+    top: -10vh;           /* 増やした分だけ上に引き上げて下辺をキープ */
 
     display: grid;
     grid-template-columns: repeat(5, 1fr);
@@ -84,82 +87,103 @@
 }
 
 /* 数字ごとのサイズ・配置バリエーション */
-.game-number:nth-child(1)  { font-size: 72px;  align-self: start;  justify-self: start;  margin: 10px 0 0 15px; }
-.game-number:nth-child(2)  { font-size: 135px; align-self: center; justify-self: end;    margin-top: 15px; }
-.game-number:nth-child(3)  { font-size: 56px;  align-self: end;    justify-self: start;  margin-bottom: 10px; }
-.game-number:nth-child(4)  { font-size: 125px; align-self: center; justify-self: center; }
-.game-number:nth-child(5)  { font-size: 78px;  align-self: end;    justify-self: end;    margin-right: 10px; }
-.game-number:nth-child(6)  { font-size: 110px; align-self: center; justify-self: center; margin-left: 20px; }
-.game-number:nth-child(7)  { font-size: 74px;  align-self: center; justify-self: start;  margin-top: 25px; }
-.game-number:nth-child(8)  { font-size: 52px;  align-self: start;  justify-self: center; margin-top: 15px; }
-.game-number:nth-child(9)  { font-size: 76px;  align-self: end;    justify-self: center; }
-.game-number:nth-child(10) { font-size: 92px;  align-self: end;    justify-self: start;  margin-left: 10px; }
-
+.game-number:nth-child(1)  { font-size: 92px;  align-self: start;  justify-self: start;  margin: 10px 0 0 15px; }
+.game-number:nth-child(2)  { font-size: 168px; align-self: center; justify-self: end;    margin-top: 15px; }
+.game-number:nth-child(3)  { font-size: 72px;  align-self: end;    justify-self: start;  margin-bottom: 10px; }
+.game-number:nth-child(4)  { font-size: 156px; align-self: center; justify-self: center; }
+.game-number:nth-child(5)  { font-size: 98px;  align-self: end;    justify-self: end;    margin-right: 10px; }
+.game-number:nth-child(6)  { font-size: 138px; align-self: center; justify-self: center; margin-left: 20px; }
+.game-number:nth-child(7)  { font-size: 94px;  align-self: center; justify-self: start;  margin-top: 25px; }
+.game-number:nth-child(8)  { font-size: 68px;  align-self: start;  justify-self: center; margin-top: 15px; }
+.game-number:nth-child(9)  { font-size: 96px;  align-self: end;    justify-self: center; }
+.game-number:nth-child(10) { font-size: 116px; align-self: end;    justify-self: start;  margin-left: 10px; }
 .game-number.is-cleared {
     opacity: 0.2;
     pointer-events: none;
 }
 
+/* お手つき時に赤くして少し横に動かす演出 */
+.game-body .game-number.is-wrong {
+    color: #e3342f;
+    transform: translateX(-6px);
+}
+
 /* 右下のキャラクター＆吹き出しエリア */
-.character-area {
+.game-body .character-area {
     position: fixed;
-    right: 85px;
-    bottom: 65px;
+    right: 65px;
+    bottom: 24px;
     display: flex;
     align-items: center;
-    gap: 26px;
+    justify-content: flex-end;
+    gap: 24px;
+    min-height: 0;
+    margin-top: 0;
     z-index: 100;
 }
 
-.character-comment {
+/* 白い角丸吹き出し */
+.game-body .character-comment {
     position: relative;
+    width: auto;
+    min-width: 340px;
+    min-height: 0;
+    padding: 24px 44px;
     background-color: #ffffff;
-    border: 3px solid #111111;
-    padding: 28px 54px;
-    min-width: 390px;
+    border: 3px solid #222222;
+    border-radius: 14px;
     text-align: center;
-    font-size: 2.15rem;
+    font-size: 2rem;
     font-weight: bold;
     letter-spacing: 0.04em;
-    color: #111111;
+    color: #222222;
     box-sizing: border-box;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
-    transform: translate(-15px, 12px);
+    transform: translate(-18px, 6px);
 }
 
-.character-comment::before {
+/* 右向きの三角（外枠） */
+.game-body .character-comment::before {
     content: "";
     position: absolute;
-    right: -18px;
-    top: 55%;
+    right: -19px;
+    top: 56%;
     transform: translateY(-50%);
     border-style: solid;
-    border-width: 10px 0 10px 18px;
-    border-color: transparent transparent transparent #111111;
+    border-width: 12px 0 12px 19px;
+    border-color: transparent transparent transparent #222222;
 }
 
-.character-comment::after {
+/* 右向きの三角（内側・白） */
+.game-body .character-comment::after {
     content: "";
     position: absolute;
-    right: -12px;
-    top: 55%;
+    right: -14px;
+    top: 56%;
     transform: translateY(-50%);
+    width: 0;
+    height: 0;
     border-style: solid;
-    border-width: 7px 0 7px 14px;
+    border-width: 9px 0 9px 15px;
     border-color: transparent transparent transparent #ffffff;
+    background-color: transparent;
+    border-top-color: transparent;
+    border-right-color: transparent;
 }
 
-.character {
+/* キャラクター画像 */
+.game-body .character {
+    width: auto;
+    height: auto;
     flex-shrink: 0;
 }
 
 .game-character-image {
-    width: 210px;
+    width: 190px;
     height: auto;
     display: block;
 }
 
-/* レスポンシブ調整 */
+/* スマートフォン・タブレット対応 */
 @media (max-width: 768px) {
     .game-notice-area {
         padding: 0 12px;
@@ -172,7 +196,7 @@
     }
 
     .game-main-container {
-        padding: 12px 16px 165px;
+        padding: 12px 16px 160px;
     }
 
     .game-container {
@@ -184,20 +208,21 @@
     .game-number:nth-child(odd)  { font-size: 48px; }
     .game-number:nth-child(even) { font-size: 76px; }
 
-    .character-area {
-        right: 24px;
-        bottom: 30px;
+    .game-body .character-area {
+        right: 16px;
+        bottom: 16px;
         gap: 14px;
     }
 
-    .character-comment {
-        padding: 18px 26px;
-        min-width: 230px;
-        font-size: 1.45rem;
-        transform: translate(-8px, 8px);
+    .game-body .character-comment {
+        min-width: 210px;
+        padding: 14px 22px;
+        font-size: 1.35rem;
+        border-radius: 12px;
+        transform: translate(-8px, 4px);
     }
 
     .game-character-image {
-        width: 135px;
+        width: 125px;
     }
 }
