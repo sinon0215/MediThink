@@ -1,5 +1,4 @@
 <?php
-$header_notice = $header_notice ?? 'お知らせ';
 
 // ユーザーの通知時間をデータベースから安全に取得する処理
 $notification_times = ['morning' => '', 'lunch' => '', 'evening' => '', 'bedtime' => ''];
@@ -40,7 +39,6 @@ if (isset($_SESSION['user_id'])) {
         </div>
         <a class="medithink-logout-btn" href="home.php">ホームに戻る</a>
     </div>
-    <p class="medithink-notice"><?= htmlspecialchars($header_notice, ENT_QUOTES, 'UTF-8') ?></p>
 </header>
 
 <script>

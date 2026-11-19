@@ -1,7 +1,3 @@
-<?php
-$header_notice = $header_notice ?? 'お知らせ';
-?>
-
 <link rel="stylesheet" href="header.css">
 
 <header class="medithink-header">
@@ -12,7 +8,6 @@ $header_notice = $header_notice ?? 'お知らせ';
         
         <a class="medithink-logout-btn" id="header-button" href="logout.php">戻る</a>
     </div>
-    <p class="medithink-notice"><?= htmlspecialchars($header_notice, ENT_QUOTES, 'UTF-8') ?></p>
 </header>
 
 <script>
