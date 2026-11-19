@@ -451,6 +451,7 @@ body.home-body {
     /* ========================================================= */
    /* 数字探しゲーム画面用スタイル (.game-body) */
    /* ========================================================= */ 
+/*
 body.game-body {
     position: relative;
     width: 100%;
@@ -460,7 +461,6 @@ body.game-body {
     flex-direction: column;
     overflow: hidden;
  
-    /* 背景画像 */
     background-color: #ffffff;
     background-image: url("image/background-image.png");
     background-size: cover;
@@ -468,7 +468,6 @@ body.game-body {
     background-repeat: no-repeat;
 }
  
-/* ヘッダー */
 .game-body .header {
     position: relative;
     display: flex;
@@ -529,7 +528,6 @@ body.game-body {
     cursor: pointer;
 }
  
-/* お題 */
 .game-body .head_text {
     width: 100%;
     max-width: none;
@@ -547,7 +545,6 @@ body.game-body {
     letter-spacing: 1px;
 }
  
-/* ゲーム全体 */
 .game-body .game-main-container {
     display: flex;
     flex: 1;
@@ -584,7 +581,6 @@ body.game-body {
     user-select: none;
 }
  
-/* キャラクターと吹き出し */
 .game-body .character-area {
     display: flex;
     align-items: flex-end;
@@ -682,9 +678,9 @@ body.game-body {
         width: 175px;
         font-size: 12px;
     }
-}
 .game-character-image {
     width: 150px;
     height: auto;
     display: block;
+}
 }
