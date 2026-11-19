@@ -3,11 +3,7 @@
 // タイムゾーンを日本時間に明示的に設定
 date_default_timezone_set('Asia/Tokyo');
 
-// $save_path = __DIR__ . '/sessions';
-// if (is_dir($save_path)) {
-//     session_save_path($save_path);
-// }
-if(session_status() !== PHP_SESSION_ACTIVE){
+if (session_status() !== PHP_SESSION_ACTIVE) {
     session_start();
 }
 
@@ -18,56 +14,43 @@ if (!isset($_SESSION['user_id'])) {
 
 $db_host = 'localhost';
 $db_name = 'medithink_db';
-$db_user = 'medithink_admin'; 
-$db_pass = 'MediThink123!';     
+$db_user = 'medithink_admin';
+$db_pass = 'MediThink123!';
 
-$next_time = "未設定";
+$next_time = "今日飲む薬はありません";
 
 try {
-    $pdo = new PDO("mysql:host=$db_host;dbname=$db_name;charset=utf8", $db_user, $db_pass);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $pdo = new PDO(
+        "mysql:host=$db_host;dbname=$db_name;charset=utf8mb4",
+        $db_user,
+        $db_pass,
+        [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
+    );
 
-    $stmt = $pdo->prepare("SELECT morning_time, lunch_time, evening_time, bedtime_time FROM users WHERE id = ?");
-    $stmt->execute([$_SESSION['user_id']]);
-    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+    $user_id = $_SESSION['user_id'];
+    $today_dow = (int)date('w'); // 0:日, 1:月, 2:火, 3:水, 4:木, 5:金, 6:土
+    $now = date('H:i:s');
 
-    if ($user) {
-        $morning = $user['morning_time'] ?? null;
-        $lunch   = $user['lunch_time'] ?? null;
-        $evening = $user['evening_time'] ?? null;
-        $bedtime = $user['bedtime_time'] ?? null;
+    // 今日の曜日のうち、現在時刻以降の最も近い予定を取得
+    $stmt = $pdo->prepare(
+        "SELECT scheduled_time
+         FROM medication_schedules
+         WHERE user_id = ?
+           AND day_of_week = ?
+           AND scheduled_time >= ?
+         ORDER BY scheduled_time ASC
+         LIMIT 1"
+    );
+    $stmt->execute([$user_id, $today_dow, $now]);
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        // 日本時間の現在時刻
-        $now = date('H:i:s');
-
-        $slots = [$morning, $lunch, $evening, $bedtime];
-        $next_time_raw = null;
-
-        // 現在時刻より後の時間を探す
-        foreach ($slots as $slot) {
-            if (!empty($slot) && $now <= $slot) {
-                $next_time_raw = $slot;
-                break;
-            }
-        }
-
-        // 今日もう残りの時間がない場合は最初の時間（翌朝など）
-        if (!$next_time_raw) {
-            foreach ($slots as $slot) {
-                if (!empty($slot)) {
-                    $next_time_raw = $slot;
-                    break;
-                }
-            }
-        }
-
-        if ($next_time_raw) {
-            $next_time = date('H:i', strtotime($next_time_raw));
-        } else {
-            $next_time = "未設定";
-        }
+    if ($row && !empty($row['scheduled_time'])) {
+        $next_time = date('H:i', strtotime($row['scheduled_time']));
+    } else {
+        $next_time = "今日飲む薬はありません";
     }
 } catch (PDOException $e) {
+    error_log($e->getMessage());
     $next_time = "DBエラー";
 }
 ?>
@@ -97,11 +80,14 @@ try {
                     <span class="medi-time-label">次の薬の時間は</span>
                     <div class="medi-time-display">
                         <span class="time-digits"><?= htmlspecialchars($next_time, ENT_QUOTES, 'UTF-8') ?></span>
-                        <span class="medi-time-suffix">です</span>
+                        <?php if ($next_time !== "今日飲む薬はありません" && $next_time !== "DBエラー"): ?>
+                            <span class="medi-time-suffix">です</span>
+                        <?php endif; ?>
                     </div>
                 </div>
 
                 <!-- キャラクターエリア (.character) -->
+                <div class="character">
                     <img src="./image/zilyou_zaiko.png" height="150px">
                 </div>
             </div>

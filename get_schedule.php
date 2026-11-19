@@ -2,11 +2,6 @@
 <?php
 // get_schedule.php
 
-// セッション設定
-$save_path = __DIR__ . '/sessions';
-if (is_dir($save_path)) {
-    session_save_path($save_path);
-}
 
 if (session_status() !== PHP_SESSION_ACTIVE) {
     session_start();
