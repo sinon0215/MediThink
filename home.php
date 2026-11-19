@@ -109,7 +109,7 @@ try {
 
         <!-- 右側メニューボタン群 (.menu-btn) -->
         <nav class="menu-btn" aria-label="メインメニュー">
-            <a href="game.php" class="medium-btn">ゲームスタート</a>
+            <a href="game_select.php" class="medium-btn">ゲームスタート</a>
             <a href="settings.php" class="medium-btn">設定</a>
             <a href="ranking.php" class="medium-btn">ランキング</a>
             <button type="button" class="medium-btn">もう薬飲んだ</button>
