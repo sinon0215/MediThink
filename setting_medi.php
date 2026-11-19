@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="./css/setting_medi.css">
 </head>
 <body class="">
-     <?php include 'header_home.php'; ?>
+     <?php include 'header.php'; ?>
     <div class="container">
        
 

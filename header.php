@@ -1,11 +1,10 @@
-<link rel="stylesheet" href="header.css">
+<link rel="stylesheet" href="./css/header.css">
 
 <header class="medithink-header">
     <div class="medithink-logo-area">
         <div class="medithink-logo">
             <img src="image/small_logo.png"  alt="ロゴ">
         </div>
-        
         <a class="medithink-logout-btn" id="header-button" href="logout.php">戻る</a>
     </div>
 </header>
