@@ -12,7 +12,7 @@
     <main class="records-container">
 
         <h1>ゲーム履歴</h1>
-        <p class="description">これまでのゲームの記録を確認できます。</p>
+        <!-- <p class="description">これまでのゲームの記録を確認できます。</p> -->
 
         <!-- ゲーム切り替え -->
         <div class="game-tabs">

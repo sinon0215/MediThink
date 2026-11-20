@@ -154,6 +154,30 @@ shuffle($numbers);
                 gameContainer.appendChild(btn);
             }
 
+            // ゲーム記録をデータベースに保存
+            async function saveGameRecord(clearSec) {
+                try {
+                    const response = await fetch('save_game_record.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            game_name: 'suuzisagashi',
+                            score: Number(clearSec)
+                        })
+                    });
+
+                    const result = await response.json();
+
+                    if (!result.success) {
+                        console.error('スコア保存失敗:', result.message);
+                    }
+
+                } catch (error) {
+                    console.error('スコア保存エラー:', error);
+                }
+            }
             numberElements.forEach((el) => {
                 el.addEventListener('click', () => {
                     if (isFinished) return;
@@ -184,6 +208,7 @@ shuffle($numbers);
                                 commentBox.textContent = `${clearSec}秒で完走です！とても良い結果です。`;
                             }
                             showResultButton(clearSec);
+                            saveGameRecord(clearSec);
                         } else {
                             const nextNum = getCurrentTarget();
                             if (commentBox) {
