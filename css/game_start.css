@@ -197,20 +197,32 @@ body {
 
 
 /* キャラクターの吹き出し */
-
 .character-comment {
-    max-width: 230px;
+    max-width: 300px;
+    width: 90%;
 
-    padding: 14px 12px;
-
-    border: 2px solid #111111;
+    border: 2px solid #000000;
     background-color: #ffffff;
 
     font-size: 16px;
     font-weight: bold;
     text-align: center;
+    border-radius: 8px;
+    padding: 16px 20px;
+
 }
 
+.character-comment::after {
+    content: '';
+    position: absolute;
+
+    right: 30px;
+    bottom: -20px;
+
+    border-width: 20px 10px 0;
+    border-style: solid;
+    border-color: #000000 transparent transparent;
+}
 
 /* キャラクター */
 
@@ -221,15 +233,38 @@ body {
     object-fit: contain;
 }
 
+/* ボタン */
+.medium-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-/* ==========================
-   横並びレイアウト
-========================== */
-
-.flex-fill {
+    width: 1500px;
+    max-width: 90%;
+    height: 110px;
     min-width: 0;
+
+    padding: 10px;
+
+    background-color: #2e75b6;
+    color: #ffffff;
+    border: none;
+    border-radius: 10px;
+    font-size: 22px;
+    font-weight: bold;
+    text-decoration: none;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.2s, transform 0.1s;
 }
 
+.medium-btn:hover {
+    background-color: #245d92;
+}
+
+.medium-btn:active {
+    transform: translateY(2px);
+}
 
 /* ==========================
    スマートフォン対応

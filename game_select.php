@@ -77,7 +77,7 @@ try {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MediThink | ゲーム選択</title>
-    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/game_start.css">
 </head>
 <body class="home-body">
 
@@ -95,11 +95,11 @@ try {
         <div class="bottom-time-character-row">
             <!-- コメント欄 -->
             <div class="character-comment">
-                <span class="character-comment">ゲームを選択してください</span>
+                <span>ゲームを選択してください</span>
             </div>
 
             <!-- キャラクターエリア (.character) -->
-                <img src="./image/zilyou_zaiko.png" height="150px">
+                <img src="./image/zilyou_zaiko.png" height=200px>
             </div>
         </div>
 
