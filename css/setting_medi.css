@@ -9,7 +9,10 @@ body {
     padding: 0;
     width: 100%;
     min-height: 100vh;
-    background-color: white;
+    background-image: url(./../image/background-image.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
 }
 
 /* 画面全体 */
@@ -18,7 +21,6 @@ body {
     min-height: 80vh;
     margin: 0;
     padding: 3px;
-    background-color: white;
     border: none;
     box-sizing: border-box;
 }

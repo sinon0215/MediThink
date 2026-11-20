@@ -8,6 +8,10 @@
 body {
     font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
     color: #333333;
+    background-image: url(./../image/background-image.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
 }
 
 .home-btn {
@@ -416,7 +420,7 @@ body.home-body {
     align-items: center;
     justify-content: center;
 
-    width: 100%;
+    width: 3000px;
     max-width: 100%;
     min-width: 0;
     box-sizing: border-box;
