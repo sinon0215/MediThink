@@ -98,8 +98,8 @@ try {
         <!-- 右側メニューボタン群 (.menu-btn) -->
         <nav class="menu-btn" aria-label="メインメニュー">
 
-            <a href="pazul.php" class="medium-btn">パズル</a>
-            <a href="game_suuzisagashi.php" class="medium-btn">数字探し</a>
+            <button class="medium-btn">パズル</button>
+            <button class="medium-btn">数字探し</button>
 
         <!-- キャラクターとコメント -->
         <div class="bottom-time-character-row">
