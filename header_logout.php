@@ -38,7 +38,10 @@ if (isset($_SESSION['user_id'])) {
         <div class="medithink-logo">
             <img src="image/small_logo.png"  alt="ロゴ">
         </div>
-        <a class="medithink-logout-btn" href="logout.php">ログアウト</a>
+        <a class="medithink-logout-btn" href="logout.php"
+        onclick="return confirm('本当にログアウトしますか？');">
+            ログアウト
+        </a>
     </div>
     <!-- <p class="medithink-notice"><?= htmlspecialchars($header_notice, ENT_QUOTES, 'UTF-8') ?></p> -->
 </header>
