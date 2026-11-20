@@ -12,9 +12,20 @@ shuffle($numbers);
     <link rel="stylesheet" href="css/style.css?v=2">
     <link rel="stylesheet" href="css/header.css?v=2">
     <link rel="stylesheet" href="css/game_suuzisagashi.css?v=2">
+
+    <!-- グレーにするためのコードです -->
+    <link rel="stylesheet" href="css/gure-ninaru.css">
 </head>
 
 <body class="game-body">
+
+    <!-- グレーにするためのコードです -->
+    <div class="gray-bg" id="gray-bg"></div>
+    <div class="gray-box" id="gray-box">
+        <h2>遊び方</h2>
+        <p>1から9までの数字を順番に押そう！</p>
+        <button type="button" class="gray-close-btn" id="gray-close-btn">戻る</button>
+    </div>
 
     <!-- ヘッダー -->
     <?php
@@ -61,6 +72,18 @@ shuffle($numbers);
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            // グレーにするためのコードです
+            const grayBg = document.getElementById('gray-bg');
+            const grayBox = document.getElementById('gray-box');
+            const grayCloseBtn = document.getElementById('gray-close-btn');
+
+            if (grayCloseBtn) {
+                grayCloseBtn.addEventListener('click', () => {
+                    if (grayBg) grayBg.style.display = 'none';
+                    if (grayBox) grayBox.style.display = 'none';
+                });
+            }
+
             const numberElements = document.querySelectorAll('.game-number');
             const gameContainer = document.getElementById('game-container');
             const noticeBox = document.getElementById('game-notice');
