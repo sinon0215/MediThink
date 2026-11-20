@@ -62,6 +62,7 @@ shuffle($numbers);
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const numberElements = document.querySelectorAll('.game-number');
+            const gameContainer = document.getElementById('game-container');
             const noticeBox = document.getElementById('game-notice');
             const timerBox = document.getElementById('game-timer');
             const commentBox = document.getElementById('character-comment');
@@ -119,6 +120,17 @@ shuffle($numbers);
                 noticeBox.textContent = `「${getCurrentTarget()}」を探そう！`;
             }
 
+            function showResultButton(clearSec) {
+                if (!gameContainer) return;
+                if (gameContainer.querySelector('.game-result-link-btn')) return;
+
+                const btn = document.createElement('a');
+                btn.href = `game_result.php?time=${encodeURIComponent(clearSec)}`;
+                btn.className = 'game-result-link-btn';
+                btn.textContent = '結果画面に移動';
+                gameContainer.appendChild(btn);
+            }
+
             numberElements.forEach((el) => {
                 el.addEventListener('click', () => {
                     if (isFinished) return;
@@ -148,6 +160,7 @@ shuffle($numbers);
                             if (commentBox) {
                                 commentBox.textContent = `${clearSec}秒で完走です！とても良い結果です。`;
                             }
+                            showResultButton(clearSec);
                         } else {
                             const nextNum = getCurrentTarget();
                             if (commentBox) {

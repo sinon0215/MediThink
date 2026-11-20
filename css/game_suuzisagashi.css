@@ -85,6 +85,38 @@
     padding: 20px 28px;
 }
 
+/* クリア後：枠の真ん中に「結果画面に移動」ボタンを表示 */
+.game-result-link-btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 50;
+
+    display: inline-block;
+    background-color: #2171b5;
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 1.6rem;
+    font-weight: bold;
+    letter-spacing: 0.04em;
+    padding: 20px 44px;
+    border: 3px solid #222222;
+    border-radius: 12px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+.game-result-link-btn:hover {
+    transform: translate(-50%, -50%) scale(1.05);
+    opacity: 0.92;
+}
+
+.game-result-link-btn:active {
+    transform: translate(-50%, -50%) scale(0.96);
+}
+
 /* 各数字 */
 .game-number {
     display: flex;
@@ -232,6 +264,11 @@
         height: 55vh;
         min-height: 340px;
         padding: 12px;
+    }
+
+    .game-result-link-btn {
+        font-size: 1.2rem;
+        padding: 14px 28px;
     }
 
     .game-number:nth-child(odd)  { font-size: 48px; }

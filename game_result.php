@@ -1,3 +1,18 @@
+<?php
+// URLパラメータからクリアタイムとお手つき回数を取得
+$timeRaw = isset($_GET['time']) ? (float)$_GET['time'] : 0.0;
+$missRaw = isset($_GET['miss']) ? (int)$_GET['miss'] : 0;
+
+$clearTime = max(0.0, $timeRaw);
+$missCount = max(0, $missRaw);
+
+// スコア計算：基準1000点 - (秒数 × 25) - (お手つき回数 × 80)、最低100点
+$rawScore = 1000 - ($clearTime * 25) - ($missCount * 80);
+$score = max(100, (int)round($rawScore));
+
+// 結果表示テキスト
+$resultLabel = ($missCount === 0) ? 'クリア！（お手つきなし）' : 'クリア！';
+?>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -16,9 +31,19 @@
     <main class="result-main">
         <div class="result-banner">ゲーム結果</div>
 
-        <div class="result-status-box">結果</div>
+        <div class="result-status-box">
+            <?= htmlspecialchars($resultLabel, ENT_QUOTES, 'UTF-8') ?>
+        </div>
 
-        <div class="result-score-box">スコア</div>
+        <div class="result-score-box">
+            <div>
+                <div>スコア：<?= htmlspecialchars((string)$score, ENT_QUOTES, 'UTF-8') ?>点</div>
+                <div style="font-size: 1.05rem; margin-top: 10px; font-weight: normal;">
+                    クリアタイム：<?= htmlspecialchars(number_format($clearTime, 1), ENT_QUOTES, 'UTF-8') ?>秒 ／
+                    お手つき：<?= htmlspecialchars((string)$missCount, ENT_QUOTES, 'UTF-8') ?>回
+                </div>
+            </div>
+        </div>
 
         <a href="game_select.php" class="result-back-btn">選択画面に戻る</a>
     </main>
