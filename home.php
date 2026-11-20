@@ -71,7 +71,66 @@ try {
         <!-- 左側メインエリア (カレンダー + 時間 + キャラクター) -->
         <div class="main-content-left">
             <!-- カレンダーエリア (.calender) : 空布の枠 -->
-            <div class="calender"></div>
+            
+        <div class="calender">
+            <table class="home-calendar">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>月</th>
+                        <th>火</th>
+                        <th>水</th>
+                        <th>木</th>
+                        <th>金</th>
+                        <th>土</th>
+                        <th>日</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>朝</th>
+                        <td data-day="1" data-timing="morning"></td>
+                        <td data-day="2" data-timing="morning"></td>
+                        <td data-day="3" data-timing="morning"></td>
+                        <td data-day="4" data-timing="morning"></td>
+                        <td data-day="5" data-timing="morning"></td>
+                        <td data-day="6" data-timing="morning"></td>
+                        <td data-day="0" data-timing="morning"></td>
+                    </tr>
+                    <tr>
+                        <th>昼</th>
+                        <td data-day="1" data-timing="noon"></td>
+                        <td data-day="2" data-timing="noon"></td>
+                        <td data-day="3" data-timing="noon"></td>
+                        <td data-day="4" data-timing="noon"></td>
+                        <td data-day="5" data-timing="noon"></td>
+                        <td data-day="6" data-timing="noon"></td>
+                        <td data-day="0" data-timing="noon"></td>
+                    </tr>
+                    <tr>
+                        <th>夜</th>
+                        <td data-day="1" data-timing="evening"></td>
+                        <td data-day="2" data-timing="evening"></td>
+                        <td data-day="3" data-timing="evening"></td>
+                        <td data-day="4" data-timing="evening"></td>
+                        <td data-day="5" data-timing="evening"></td>
+                        <td data-day="6" data-timing="evening"></td>
+                        <td data-day="0" data-timing="evening"></td>
+                    </tr>
+                    <tr>
+                        <th>寝る前</th>
+                        <td data-day="1" data-timing="bedtime"></td>
+                        <td data-day="2" data-timing="bedtime"></td>
+                        <td data-day="3" data-timing="bedtime"></td>
+                        <td data-day="4" data-timing="bedtime"></td>
+                        <td data-day="5" data-timing="bedtime"></td>
+                        <td data-day="6" data-timing="bedtime"></td>
+                        <td data-day="0" data-timing="bedtime"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
 
             <!-- 時間表示とキャラクターのエリア -->
             <div class="bottom-time-character-row">
@@ -101,6 +160,6 @@ try {
             <button type="button" class="medium-btn">もう薬飲んだ</button>
         </nav>
     </main>
-
+<script src="./js/home.js"></script>
 </body>
 </html>
