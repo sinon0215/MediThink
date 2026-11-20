@@ -85,21 +85,11 @@ try {
 
     <!-- メインコンテンツ (.main-container) -->
     <main class="main-container">
-        <!-- 左側メインエリア(ゲーム説明+スタートボタン) -->
-        <div class="main-container flex-fill">
-            <!-- ゲーム説明エリア -->
-            <div class="game-rule-container">
 
-                <button class="small-btn">次へ</button>
-            </div>
-            <button class="medium-btn">スタート</button>
-        </div>
-
-        <!-- 右側メニューボタン群 (.menu-btn) -->
-        <nav class="menu-btn" aria-label="メインメニュー">
-
-            <button class="medium-btn">パズル</button>
-            <button class="medium-btn">数字探し</button>
+            <nav class="menu-btn" aria-label="メインメニュー">
+                <a href="pazul.php" class="medium-btn">パズル</a>
+                <a href="game_suuzisagashi.php" class="medium-btn">数字探し</a>
+            </nav>
 
         <!-- キャラクターとコメント -->
         <div class="bottom-time-character-row">
