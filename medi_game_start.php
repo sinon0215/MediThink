@@ -82,20 +82,18 @@ try {
 </head>
 <body class="home-body">
 
-    <?php include 'header_home.php'; ?>
+    <?php include 'header_nobutton.php'; ?>
 
     <!-- メインコンテンツ (.main-container) -->
     <main class="main-container">
-            <!-- ゲーム説明エリア -->
-            <div class="game-rule-container">
+        <!-- ゲーム説明エリア -->
+        <div class="game-rule-container">
 
-                <button class="small-btn">次へ</button>
-            </div>
-
-            <button class="medium-btn">スタート</button>
+            <button class="small-btn">次へ</button>
         </div>
 
-        </nav>
+        <button class="medium-btn">スタート</button>
+
     </main>
 
 </body>
