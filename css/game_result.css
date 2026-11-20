@@ -1,0 +1,220 @@
+/* =========================================
+   ゲーム結果画面スタイル（css/game_result.css）
+   ========================================= */
+
+.result-body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    background-image: url("../image/background-image.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", sans-serif;
+    color: #222222;
+    box-sizing: border-box;
+    position: relative;
+}
+
+/* メインエリア */
+.result-main {
+    max-width: 1180px;
+    margin: 24px auto 0;
+    padding: 0 24px 180px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+    box-sizing: border-box;
+}
+
+/* 「ゲーム結果」の横長枠 */
+.result-banner {
+    width: 100%;
+    background-color: #ffffff;
+    border: 2.5px solid #222222;
+    border-radius: 10px;
+    padding: 12px 24px;
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    letter-spacing: 0.04em;
+    color: #222222;
+    box-sizing: border-box;
+}
+
+/* 「結果」枠 */
+.result-status-box {
+    min-width: 240px;
+    background-color: #ffffff;
+    border: 2.5px solid #222222;
+    border-radius: 10px;
+    padding: 16px 28px;
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    letter-spacing: 0.04em;
+    color: #222222;
+    box-sizing: border-box;
+}
+
+/* 「スコア」枠 */
+.result-score-box {
+    width: 100%;
+    max-width: 760px;
+    min-height: 210px;
+    background-color: #ffffff;
+    border: 3px solid #222222;
+    border-radius: 12px;
+    padding: 24px 36px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 1.6rem;
+    font-weight: bold;
+    letter-spacing: 0.04em;
+    color: #222222;
+    box-sizing: border-box;
+}
+
+/* 「選択画面に戻る」ボタン */
+.result-back-btn {
+    display: inline-block;
+    margin-top: 6px;
+    background-color: #2171b5;
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.2rem;
+    letter-spacing: 0.04em;
+    padding: 16px 36px;
+    border-radius: 12px;
+    transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+.result-back-btn:hover {
+    transform: scale(1.03);
+    opacity: 0.92;
+}
+
+.result-back-btn:active {
+    transform: scale(0.97);
+}
+
+/* 右下のキャラクター＆吹き出しエリア */
+.result-character-area {
+    position: fixed;
+    right: 65px;
+    bottom: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 24px;
+    min-height: 0;
+    margin-top: 0;
+    z-index: 100;
+}
+
+/* 白い角丸吹き出し */
+.result-comment {
+    position: relative;
+    width: auto;
+    min-width: 340px;
+    min-height: 0;
+    padding: 22px 40px;
+    background-color: #ffffff;
+    border: 3px solid #222222;
+    border-radius: 14px;
+    text-align: center;
+    font-size: 1.75rem;
+    font-weight: bold;
+    letter-spacing: 0.04em;
+    color: #222222;
+    box-sizing: border-box;
+    transform: translate(-18px, 6px);
+}
+
+/* 右向きの三角（外枠） */
+.result-comment::before {
+    content: "";
+    position: absolute;
+    right: -19px;
+    top: 56%;
+    transform: translateY(-50%);
+    border-style: solid;
+    border-width: 12px 0 12px 19px;
+    border-color: transparent transparent transparent #222222;
+}
+
+/* 右向きの三角（内側・白） */
+.result-comment::after {
+    content: "";
+    position: absolute;
+    right: -14px;
+    top: 56%;
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 9px 0 9px 15px;
+    border-color: transparent transparent transparent #ffffff;
+    background-color: transparent;
+}
+
+/* キャラクター画像 */
+.result-character {
+    width: auto;
+    height: auto;
+    flex-shrink: 0;
+}
+
+.result-character-image {
+    width: 190px;
+    height: auto;
+    display: block;
+}
+
+/* スマートフォン・タブレット対応 */
+@media (max-width: 768px) {
+    .result-main {
+        padding: 0 16px 150px;
+        gap: 14px;
+    }
+
+    .result-banner {
+        font-size: 1.25rem;
+        padding: 10px 14px;
+    }
+
+    .result-status-box {
+        min-width: 180px;
+        font-size: 1.25rem;
+        padding: 12px 20px;
+    }
+
+    .result-score-box {
+        min-height: 160px;
+        padding: 16px;
+        font-size: 1.3rem;
+    }
+
+    .result-character-area {
+        position: static;
+        justify-content: flex-end;
+        padding: 0 16px 20px;
+        gap: 14px;
+    }
+
+    .result-comment {
+        min-width: 210px;
+        padding: 14px 22px;
+        font-size: 1.3rem;
+        border-radius: 12px;
+        transform: translate(-8px, 4px);
+    }
+
+    .result-character-image {
+        width: 125px;
+    }
+}

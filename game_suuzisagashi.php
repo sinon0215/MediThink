@@ -21,6 +21,11 @@ shuffle($numbers);
         include 'header.php';
     ?>
 
+    <!-- 右上タイマー（ヘッダーはいじらず上に重ねる） -->
+    <div class="game-top-timer" id="game-timer">
+        タイム：0.0秒
+    </div>
+
     <!-- お知らせ表示エリア -->
     <div class="game-notice-area">
         <div class="game-notice-box" id="game-notice">
@@ -45,7 +50,7 @@ shuffle($numbers);
     <div class="character-area">
 
         <div class="character-comment" id="character-comment">
-            数字探してちょ
+            数字を探してね
         </div>
 
         <div class="character">
@@ -58,12 +63,52 @@ shuffle($numbers);
         document.addEventListener('DOMContentLoaded', () => {
             const numberElements = document.querySelectorAll('.game-number');
             const noticeBox = document.getElementById('game-notice');
+            const timerBox = document.getElementById('game-timer');
             const commentBox = document.getElementById('character-comment');
 
             // 1 から 9 まで順番に探す設定
             const targetOrder = [1, 2, 3, 4, 5, 6, 7, 8, 9];
             let currentIndex = 0;
             let isFinished = false;
+
+            // タイマー管理（最初は未スタート）
+            let startTime = null;
+            let timerInterval = null;
+            let isTimerStarted = false;
+
+            function formatTime(ms) {
+                return (ms / 1000).toFixed(1);
+            }
+
+            function startTimer() {
+                if (isTimerStarted) return;
+                isTimerStarted = true;
+                startTime = performance.now();
+
+                timerInterval = setInterval(() => {
+                    if (isFinished) return;
+                    const elapsed = performance.now() - startTime;
+                    if (timerBox) {
+                        timerBox.textContent = `タイム：${formatTime(elapsed)}秒`;
+                    }
+                }, 100);
+            }
+
+            function stopTimer() {
+                if (timerInterval) {
+                    clearInterval(timerInterval);
+                    timerInterval = null;
+                }
+                if (!isTimerStarted || startTime === null) {
+                    return '0.0';
+                }
+                const finalElapsed = performance.now() - startTime;
+                const finalSec = formatTime(finalElapsed);
+                if (timerBox) {
+                    timerBox.textContent = `タイム：${finalSec}秒`;
+                }
+                return finalSec;
+            }
 
             function getCurrentTarget() {
                 return targetOrder[currentIndex];
@@ -83,6 +128,11 @@ shuffle($numbers);
                     const expectedNum = getCurrentTarget();
 
                     if (clickedNum === expectedNum) {
+                        // 「1」を押したタイミングでタイマー開始
+                        if (expectedNum === 1) {
+                            startTimer();
+                        }
+
                         // 正解
                         el.classList.add('is-cleared');
                         currentIndex++;
@@ -90,16 +140,18 @@ shuffle($numbers);
                         if (currentIndex >= targetOrder.length) {
                             // 全クリア
                             isFinished = true;
+                            const clearSec = stopTimer();
+
                             if (noticeBox) {
-                                noticeBox.textContent = 'クリアおめでとう！';
+                                noticeBox.textContent = `ゲームクリアおめでとうございます！（記録：${clearSec}秒）`;
                             }
                             if (commentBox) {
-                                commentBox.textContent = 'すごいやん！完走〜！';
+                                commentBox.textContent = `${clearSec}秒で完走です！とても良い結果です。`;
                             }
                         } else {
                             const nextNum = getCurrentTarget();
                             if (commentBox) {
-                                commentBox.textContent = `ナイス！次は「${nextNum}」やで`;
+                                commentBox.textContent = `いいですね！次は「${nextNum}」です。`;
                             }
                             updateNotice();
                         }
@@ -111,7 +163,7 @@ shuffle($numbers);
                         }, 350);
 
                         if (commentBox) {
-                            commentBox.textContent = `ちがうで〜！「${expectedNum}」を探してちょ`;
+                            commentBox.textContent = `失礼ですが、次の数字は「${expectedNum}」です。`;
                         }
                     }
                 });
