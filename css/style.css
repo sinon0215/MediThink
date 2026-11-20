@@ -493,6 +493,27 @@ body.home-body {
     font-weight: bold;
 }
 
+
+/* 日付の行 */
+.home-calendar .date-row th {
+    background-color: #d5edf7; 
+    height: 40px;
+    font-size: 18px;
+    padding: 5px;
+}
+
+/* 今日の曜日 */
+.home-calendar .today-column {
+    background-color: #fff3c4;
+}
+
+/* 今日の曜日の日付部分 */
+.home-calendar .date-row .today-column {
+    background-color: #ffe6a3;
+    font-weight: bold;
+}
+
+
 .medicine-icon {
     width: 50px;
     height: 50px;
@@ -500,6 +521,7 @@ body.home-body {
     display: block;
     margin: 0 auto;
 }
+
 
 
     /* ========================================================= */
