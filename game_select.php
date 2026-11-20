@@ -76,7 +76,7 @@ try {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MediThink | ゲームスタート</title>
+    <title>MediThink | ゲーム選択</title>
     <link rel="stylesheet" href="./css/style.css">
 </head>
 <body class="home-body">
@@ -85,38 +85,34 @@ try {
 
     <!-- メインコンテンツ (.main-container) -->
     <main class="main-container">
-        <!-- 左側メインエリア (カレンダー + 時間 + キャラクター) -->
-        <div class="main-content-left">
-            <!-- カレンダーエリア (.calender) : 空布の枠 -->
-            <div class="calender"></div>
+        <!-- 左側メインエリア(ゲーム説明+スタートボタン) -->
+        <div class="main-container flex-fill">
+            <!-- ゲーム説明エリア -->
+            <div class="game-rule-container">
+
+                <button class="small-btn">次へ</button>
+            </div>
+            <button class="medium-btn">スタート</button>
         </div>
 
         <!-- 右側メニューボタン群 (.menu-btn) -->
         <nav class="menu-btn" aria-label="メインメニュー">
 
-        <!-- 時間表示とキャラクターのエリア -->
-            <div class="bottom-time-character-row">
-                <!-- 次の薬の時間 (.medi-time-box) -->
-                <div class="medi-time-box">
-                    <!-- <span class="medi-time-label">次の薬の時間は</span>
-                    <div class="medi-time-display">
-                        <span class="time-digits"><?= htmlspecialchars($next_time, ENT_QUOTES, 'UTF-8') ?></span>
-                        <span class="medi-time-suffix">です</span>
-                    </div> -->
-                    <div>
-                        <span>ゲームを選択してください</span>
-                    </div>
-                </div>
+            <a href="pazul.php" class="medium-btn">パズル</a>
+            <a href="game_suuzisagashi.php" class="medium-btn">数字探し</a>
 
-                <!-- キャラクターエリア (.character) -->
-                    <img src="./image/zilyou_zaiko.png" height="150px">
-                </div>
+        <!-- キャラクターとコメント -->
+        <div class="bottom-time-character-row">
+            <!-- コメント欄 -->
+            <div class="character-comment">
+                <span class="character-comment">ゲームを選択してください</span>
             </div>
 
-            <!-- <a href="game.php" class="medium-btn">ゲームスタート</a>
-            <a href="settings.php" class="medium-btn">設定</a>
-            <a href="ranking.php" class="medium-btn">ランキング</a>
-            <button type="button" class="medium-btn">もう薬飲んだ</button> -->
+            <!-- キャラクターエリア (.character) -->
+                <img src="./image/zilyou_zaiko.png" height="150px">
+            </div>
+        </div>
+
         </nav>
     </main>
 
