@@ -42,7 +42,7 @@ if (isset($_SESSION['user_id'])) {
     </div>
     <!-- <p class="medithink-notice"><?= htmlspecialchars($header_notice, ENT_QUOTES, 'UTF-8') ?></p> -->
 </header>
-
+<?php include_once __DIR__ . '/medication_header_notice.php'; ?>
 <script>
 window.medTimesData = {
     morning: "<?= htmlspecialchars($notification_times['morning'] ?? '', ENT_QUOTES, 'UTF-8') ?>",

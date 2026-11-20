@@ -35,11 +35,12 @@ if (isset($_SESSION['user_id'])) {
 <header class="medithink-header">
     <div class="medithink-logo-area">
         <div class="medithink-logo">
-            <img src="image/small_logo.png"  alt="ロゴ">
+            <img src="image/small_logo.png" alt="ロゴ">
         </div>
         <a class="medithink-logout-btn" href="home.php">ホームに戻る</a>
     </div>
 </header>
+<?php include_once __DIR__ . '/medication_header_notice.php'; ?>
 
 <script>
 window.medTimesData = {

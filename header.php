@@ -8,7 +8,7 @@
         <a class="medithink-logout-btn" id="header-button" href="logout.php">戻る</a>
     </div>
 </header>
-
+<?php include_once __DIR__ . '/medication_header_notice.php'; ?>
 <script>
 
     const Path = location.pathname;
