@@ -158,7 +158,7 @@ try {
             <a href="game_select.php" class="medium-btn">ゲームスタート</a>
             <a href="settings.php" class="medium-btn">設定</a>
             <a href="ranking.php" class="medium-btn">ランキング</a>
-            <button type="button" class="medium-btn">もう薬飲んだ</button>
+            <a href="medi_game_start.php" class="medium-btn">もう薬飲んだ</a>
         </nav>
     </main>
 <script src="./js/home.js"></script>
