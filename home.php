@@ -157,7 +157,7 @@ try {
         <nav class="menu-btn" aria-label="メインメニュー">
             <a href="game_select.php" class="medium-btn">ゲームスタート</a>
             <a href="settings.php" class="medium-btn">設定</a>
-            <a href="ranking.php" class="medium-btn">ランキング</a>
+            <a href="records.php" class="medium-btn">ゲーム記録</a>
             <a href="medi_game_start.php" class="medium-btn">もう薬飲んだ</a>
         </nav>
     </main>

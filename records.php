@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="./css/records.css">
 </head>
 <body>
-
+    <?php include 'header_home.php'; ?>
     <main class="records-container">
 
         <h1>ゲーム履歴</h1>
