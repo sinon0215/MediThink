@@ -92,7 +92,7 @@ try {
             <button class="small-btn">次へ</button>
         </div>
 
-        <button class="medium-btn">スタート</button>
+        <a href="game_suuzisagashi.php" class=""medium-btn"">スタート</button>
 
     </main>
 

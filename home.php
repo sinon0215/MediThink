@@ -18,6 +18,7 @@ $db_user = 'medithink_admin';
 $db_pass = 'MediThink123!';
 
 $next_time = "今日飲む薬はありません";
+$has_today_medication = false;
 
 try {
     $pdo = new PDO(
@@ -30,6 +31,17 @@ try {
     $user_id = $_SESSION['user_id'];
     $today_dow = (int)date('w'); // 0:日, 1:月, 2:火, 3:水, 4:木, 5:金, 6:土
     $now = date('H:i:s');
+
+    // 今日の曜日に飲む薬の予定があるか確認
+    $stmtCount = $pdo->prepare(
+        "SELECT COUNT(*)
+         FROM medication_schedules
+         WHERE user_id = ?
+           AND day_of_week = ?
+           AND scheduled_time IS NOT NULL"
+    );
+    $stmtCount->execute([$user_id, $today_dow]);
+    $has_today_medication = ((int)$stmtCount->fetchColumn() > 0);
 
     // 今日の曜日のうち、現在時刻以降の最も近い予定を取得
     $stmt = $pdo->prepare(
@@ -52,6 +64,7 @@ try {
 } catch (PDOException $e) {
     error_log($e->getMessage());
     $next_time = "DBエラー";
+    $has_today_medication = false;
 }
 ?>
 <!DOCTYPE html>
@@ -157,10 +170,44 @@ try {
         <nav class="menu-btn" aria-label="メインメニュー">
             <a href="game_select.php" class="medium-btn">ゲームスタート</a>
             <a href="settings.php" class="medium-btn">設定</a>
-            <a href="records.php" class="medium-btn">ゲーム記録</a>
-            <a href="medi_game_start.php" class="medium-btn">もう薬飲んだ</a>
+            <a href="records.php" class="medium-btn">ランキング</a>
+            <a href="medi_game_start.php" id="already-taken-btn" class="medium-btn">もう薬飲んだ</a>
+            <p id="no-medi-message" style="display: none; color: #d93829; font-weight: bold; margin-top: 8px;">
+                今日飲む薬はないよ
+            </p>
         </nav>
     </main>
 <script src="./js/home.js"></script>
+<script>
+(() => {
+    const btn = document.getElementById('already-taken-btn');
+    const msg = document.getElementById('no-medi-message');
+    const hasTodayMedication = <?= json_encode($has_today_medication, JSON_UNESCAPED_UNICODE) ?>;
+
+    if (!btn) return;
+
+    btn.addEventListener('click', (e) => {
+        e.preventDefault();
+
+        if (!hasTodayMedication) {
+            if (msg) {
+                msg.textContent = '今日飲む薬はないよ';
+                msg.style.display = 'block';
+            }
+            return;
+        }
+
+        if (msg) {
+            msg.style.display = 'none';
+        }
+
+        sessionStorage.setItem('medi_record_mode', '1');
+        if (!sessionStorage.getItem('medi_notice_return_url')) {
+            sessionStorage.setItem('medi_notice_return_url', window.location.href || 'home.php');
+        }
+        window.location.href = btn.href || 'medi_game_start.php';
+    });
+})();
+</script>
 </body>
 </html>

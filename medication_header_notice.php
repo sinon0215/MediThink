@@ -88,11 +88,11 @@ if ($notice_user_id) {
     const noticeEl = document.getElementById('medi-header-notice');
     const textEl = document.getElementById('medi-header-notice-text');
 
-    // 班員制作中の画面に合わせて変更（説明画面など）
-    const GAME_TARGET_URL = 'game_intro.php';
+    const GAME_TARGET_URL = 'medi_game_start.php';
 
     const STORAGE_TRIGGERED_KEY = 'medi_notice_triggered_key';
     const STORAGE_RETURN_URL = 'medi_notice_return_url';
+    const STORAGE_RECORD_MODE = 'medi_record_mode';
 
     if (!noticeEl || !textEl || !Array.isArray(schedules) || schedules.length === 0) {
         return;
@@ -119,15 +119,15 @@ if ($notice_user_id) {
         isTransitioning = true;
 
         sessionStorage.setItem(STORAGE_TRIGGERED_KEY, triggerKey);
+        sessionStorage.setItem(STORAGE_RECORD_MODE, '1');
 
         if (!sessionStorage.getItem(STORAGE_RETURN_URL)) {
             sessionStorage.setItem(STORAGE_RETURN_URL, window.location.href || 'home.php');
         }
 
-        // 3秒間バナーを表示してから遷移
         setTimeout(() => {
             window.location.href = GAME_TARGET_URL;
-        }, 3000);
+        }, 5000);
     }
 
     function checkNotice() {

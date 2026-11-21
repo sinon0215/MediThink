@@ -45,7 +45,7 @@ $resultLabel = ($missCount === 0) ? 'クリア！（お手つきなし）' : '�
             </div>
         </div>
 
-        <a href="game_select.php" class="result-back-btn">選択画面に戻る</a>
+        <a href="game_select.php" id="result-action-btn" class="result-back-btn">選択画面に戻る</a>
     </main>
 
     <!-- 右下の吹き出し＆キャラクター -->
@@ -55,6 +55,36 @@ $resultLabel = ($missCount === 0) ? 'クリア！（お手つきなし）' : '�
             <img src="image/zilyou_zaiko.png" alt="キャラクター" class="result-character-image">
         </div>
     </div>
+
+    <script>
+    (() => {
+        const STORAGE_RECORD_MODE = 'medi_record_mode';
+        const STORAGE_RETURN_URL = 'medi_notice_return_url';
+
+        const actionBtn = document.getElementById('result-action-btn');
+        if (!actionBtn) return;
+
+        const isRecordMode = sessionStorage.getItem(STORAGE_RECORD_MODE) === '1';
+
+        if (isRecordMode) {
+            // 服薬記録モードのときだけ「薬を飲みました！」に変更し、リンク先を home.php にする
+            actionBtn.textContent = '薬を飲みました！';
+            actionBtn.href = 'home.php';
+
+            actionBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+
+                // TODO: DB保存処理が決まったらここに追加
+
+                sessionStorage.removeItem(STORAGE_RECORD_MODE);
+                const returnUrl = sessionStorage.getItem(STORAGE_RETURN_URL) || 'home.php';
+                sessionStorage.removeItem(STORAGE_RETURN_URL);
+
+                window.location.href = returnUrl;
+            });
+        }
+    })();
+    </script>
 
 </body>
 </html>
