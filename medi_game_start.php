@@ -86,13 +86,7 @@ try {
 
     <!-- メインコンテンツ (.main-container) -->
     <main class="main-container">
-        <!-- ゲーム説明エリア -->
-        <div class="game-rule-container">
-
-            <button class="small-btn">次へ</button>
-        </div>
-
-        <a href="game_suuzisagashi.php" class=""medium-btn"">スタート</button>
+        <a href="game_suuzisagashi.php" class="medium-btn">スタート</a>
 
     </main>
 
