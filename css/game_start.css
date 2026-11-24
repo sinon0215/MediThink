@@ -198,6 +198,8 @@ body {
 
 /* キャラクターの吹き出し */
 .character-comment {
+    position: relative;
+
     max-width: 300px;
     width: 90%;
 
@@ -207,19 +209,20 @@ body {
     font-size: 16px;
     font-weight: bold;
     text-align: center;
-    border-radius: 8px;
-    padding: 16px 20px;
-
+    border-radius: 20px;
+    padding: 25px 20px;
 }
 
+/* 吹き出しの三角形（内側の白色） */
 .character-comment::after {
-    montent: '';
+    content: '';
     position: absolute;
 
-    right: 30px;
-    bottom: -20px;
+    left: 50%;
+    bottom: -18px;
+    transform: translateX(-50%);
 
-    border-width: 20px 10px 0;
+    border-width: 18px 12px 0;
     border-style: solid;
     border-color: #000000 transparent transparent;
 }
