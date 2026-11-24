@@ -84,27 +84,28 @@ try {
     <?php include 'header_home.php'; ?>
 
     <!-- メインコンテンツ (.main-container) -->
-    <main class="main-container">
+    <main class="main-container game-select-page">
 
-            <nav class="menu-btn" aria-label="メインメニュー">
-                <a href="pazul.php" class="medium-btn">パズル</a>
-                <a href="game_suuzisagashi.php" class="medium-btn">数字探し</a>
-            </nav>
+    <!-- 左側：ゲームメニュー -->
+    <nav class="menu-btn" aria-label="メインメニュー">
+        <a href="pazul.php" class="medium-btn">パズル</a>
+        <a href="game_suuzisagashi.php" class="medium-btn">数字探し</a>
+    </nav>
 
-        <!-- キャラクターとコメント -->
-        <div class="bottom-time-character-row">
-            <!-- コメント欄 -->
-            <div class="character-comment">
-                <span>ゲームを選択してください</span>
-            </div>
+    <!-- 右側：キャラクターとコメント -->
+    <div class="character-area">
 
-            <!-- キャラクターエリア (.character) -->
-                <img src="./image/zilyou_zaiko.png" height=200px>
-            </div>
+        <!-- コメント欄 -->
+        <div class="character-comment">
+            <span>ゲームを選択してください</span>
         </div>
 
-        </nav>
-    </main>
+        <!-- キャラクター画像 -->
+        <img src="./image/zilyou_zaiko.png" class="character" height="200px">
+
+    </div>
+
+</main>
 
 </body>
 </html>
