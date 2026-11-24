@@ -89,8 +89,10 @@
                     </div>
 
                     <!-- キャラクター -->
-                    <img src="./image/zilyou_zaiko.png" height="150px">
-
+                    <div class="character">
+                        <img src="./image/zilyou_zaiko.png">
+                    </div>
+                    
                 </div>
             </main>
 

@@ -264,6 +264,12 @@ body {
     gap: 35px;
 }
 
+.character img {
+    width: 300px;
+    height: auto;
+    object-fit: contain;
+}
+
 /* 吹き出し */
 .guide-bubble {
     position: relative;
