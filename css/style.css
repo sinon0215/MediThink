@@ -8,6 +8,10 @@
 body {
     font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
     color: #333333;
+    background-image: url(./../image/background-image.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
 }
 
 .home-btn {
@@ -277,27 +281,23 @@ body.home-body {
 .main-container {
     padding: 16px 24px;
     display: flex;
-    gap: 24px;
+    align-items: center;
+    gap: 30px;
     width: 100%;
-    max-width: 1100px;
+    max-width: 1400px;
     margin: 0 auto;
     flex-grow: 1;
+    box-sizing: border-box;
 }
 
 .main-content-left {
-    flex: 2;
+    flex: 7;
+    min-width: 0;
     display: flex;
     flex-direction: column;
     gap: 20px;
 }
 
-.calender {
-    width: 100%;
-    height: 320px;
-    background-color: #ffffff;
-    border: 2px solid #2b547e;
-    border-radius: 8px;
-}
 
 .bottom-time-character-row {
     display: flex;
@@ -307,6 +307,7 @@ body.home-body {
 
 .medi-time-box {
     flex: 1;
+    width: 90%;
     background-color: #ffffff;
     border: 2px solid #333333;
     border-radius: 8px;
@@ -404,24 +405,34 @@ body.home-body {
 }
 
 .menu-btn {
-    flex: 1;
+     flex: 3;
+    min-width: 0;
     display: flex;
     flex-direction: column;
     gap: 20px;
-    justify-content: flex-start;
+    justify-content: center;
+
+     transform: translateY(-65px);
 }
 
 .medium-btn {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 100%;
-    height: 100px;
+
+    width: 3000px;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+
+    height: 110px;
+    padding: 10px;
+
     background-color: #2e75b6;
     color: #ffffff;
     border: none;
     border-radius: 10px;
-    font-size: 20px;
+    font-size: 22px;
     font-weight: bold;
     text-decoration: none;
     cursor: pointer;
@@ -448,10 +459,79 @@ body.home-body {
 
 
 
+/* ホーム画面のカレンダー */
+
+.home-calendar {
+    width: 100%;
+    margin: auto;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+.home-calendar th,
+.home-calendar td {
+    border: 1px solid #009fe8;
+    height: 100px;
+    padding: 15px;
+    font-size: 24px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+/* 曜日 */
+.home-calendar thead th {
+    background-color: #70c2e3;
+    height: 50px;
+}
+
+/* 時間帯 */
+.home-calendar tbody th {
+    background-color: #d5edf7;
+    width: 65px;
+    font-size: 18px;
+}
+
+/* 服薬予定のマス */
+.home-calendar td {
+    font-size: 28px;
+    font-weight: bold;
+}
+
+
+/* 日付の行 */
+.home-calendar .date-row th {
+    background-color: #d5edf7; 
+    height: 40px;
+    font-size: 18px;
+    padding: 5px;
+}
+
+/* 今日の曜日 */
+.home-calendar .today-column {
+    background-color: #fff3c4;
+}
+
+/* 今日の曜日の日付部分 */
+.home-calendar .date-row .today-column {
+    background-color: #ffe6a3;
+    font-weight: bold;
+}
+
+
+.medicine-icon {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto;
+}
+
+
+
     /* ========================================================= */
    /* 数字探しゲーム画面用スタイル (.game-body) */
-   /* ========================================================= */ */
- 
+   /* ========================================================= */ 
+/*
 body.game-body {
     position: relative;
     width: 100%;
@@ -461,7 +541,6 @@ body.game-body {
     flex-direction: column;
     overflow: hidden;
  
-    /* 背景画像 */
     background-color: #ffffff;
     background-image: url("image/background-image.png");
     background-size: cover;
@@ -469,7 +548,6 @@ body.game-body {
     background-repeat: no-repeat;
 }
  
-/* ヘッダー */
 .game-body .header {
     position: relative;
     display: flex;
@@ -530,7 +608,6 @@ body.game-body {
     cursor: pointer;
 }
  
-/* お題 */
 .game-body .head_text {
     width: 100%;
     max-width: none;
@@ -548,7 +625,6 @@ body.game-body {
     letter-spacing: 1px;
 }
  
-/* ゲーム全体 */
 .game-body .game-main-container {
     display: flex;
     flex: 1;
@@ -585,7 +661,6 @@ body.game-body {
     user-select: none;
 }
  
-/* キャラクターと吹き出し */
 .game-body .character-area {
     display: flex;
     align-items: flex-end;
@@ -641,7 +716,7 @@ body.game-body {
     left: 17px;
     width: 46px;
     height: 16px;
-}
+} */
  
 /* スマートフォン対応 */
 @media (max-width: 600px) {
@@ -683,9 +758,9 @@ body.game-body {
         width: 175px;
         font-size: 12px;
     }
-}
 .game-character-image {
     width: 150px;
     height: auto;
     display: block;
+}
 }

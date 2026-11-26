@@ -3,34 +3,28 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MediThink | Firebaseログイン</title>
+  <title>Firebase Auth + PHP (CDN)</title>
   <style>
     body { font-family: sans-serif; text-align: center; padding: 3rem; background: #f9f9f9; }
     .card { background: white; padding: 2rem; border-radius: 8px; max-width: 500px; margin: auto; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
     button { padding: 12px 24px; font-size: 16px; cursor: pointer; border: none; border-radius: 4px; background: #4285f4; color: white; font-weight: bold; }
     button:hover { background: #3367d6; }
-    #status { margin-top: 15px; font-weight: bold; color: #333; }
-    #result { margin-top: 20px; text-align: left; background: #eee; padding: 10px; border-radius: 4px; font-size: 14px; white-space: pre-wrap; word-break: break-all; display: none; }
+    #result { margin-top: 20px; text-align: left; background: #eee; padding: 10px; border-radius: 4px; font-size: 14px; white-space: pre-wrap; word-break: break-all; }
   </style>
 </head>
 <body>
   <div class="card">
-    <h1>MediThink ログイン</h1>
-    <p style="color: #666; margin-bottom: 20px;">Firebase (Google) 認証</p>
-    
+    <h1>Firebase + PHP 認証 (CDN)</h1>
     <button id="login-btn">Googleでログイン</button>
-    <div id="status"></div>
-    <div id="result"></div>
-
-    <div style="margin-top: 25px; border-top: 1px solid #ddd; padding-top: 15px;">
-      <a href="login.php" style="color: #4285f4; text-decoration: none; font-size: 14px;">通常ログイン（メール/パスワード）はこちら</a>
-    </div>
+    <div id="status" style="margin-top: 15px;"></div>
+    <div id="result" style="display: none;"></div>
   </div>
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js";
     import { getAuth, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-auth.js";
 
+    // スクリーンショットから取得した設定値
     const firebaseConfig = {
       apiKey: "AIzaSyBcLXgC9uTzuHslvsSHCU-cIE6hPB8FdUs",
       authDomain: "medthink-521e0.firebaseapp.com",
@@ -53,7 +47,7 @@
       try {
         const result = await signInWithPopup(auth, provider);
         const user = result.user;
-        statusDiv.innerText = `Google認証成功: ${user.displayName}\nサーバーと通信中...`;
+        statusDiv.innerText = `Googleログイン成功: ${user.displayName}`;
 
         const idToken = await user.getIdToken();
 
@@ -66,17 +60,8 @@
         });
 
         const data = await res.json();
-
-        if (res.ok && data.status === 'success') {
-          statusDiv.innerText = "ログイン成功！ホーム画面へ移動します...";
-          
-          // 0.8秒後にホーム画面（home.php）へリダイレクト
-          setTimeout(() => {
-            window.location.href = 'home.php';
-          }, 800);
-        } else {
-          throw new Error(data.message || '認証に失敗しました');
-        }
+        resultDiv.style.display = 'block';
+        resultDiv.innerText = "PHPバックエンドからの応答:\n" + JSON.stringify(data, null, 2);
 
       } catch (error) {
         console.error("エラー:", error);

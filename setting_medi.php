@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="./css/setting_medi.css">
 </head>
 <body class="">
-     <?php include 'header_home.php'; ?>
+     <?php include 'header.php'; ?>
     <div class="container">
        
 
@@ -33,9 +33,9 @@
                         <tbody>
                             <tr>
                                 <th>朝</th>
-                                <td>○</td>
                                 <td></td>
-                                <td>○</td>
+                                <td></td>
+                                <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
@@ -45,9 +45,9 @@
                             <tr>
                                 <th>昼</th>
                                 <td></td>
-                                <td>○</td>
                                 <td></td>
-                                <td class="today">○</td>
+                                <td></td>
+                                <td ></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
@@ -55,10 +55,10 @@
 
                             <tr>
                                 <th>夜</th>
-                                <td>○</td>
                                 <td></td>
-                                <td>○</td>
-                                <td class="today"></td>
+                                <td></td>
+                                <td></td>
+                                <td ></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
@@ -67,9 +67,9 @@
                             <tr>
                                 <th>寝る前</th>
                                 <td></td>
-                                <td>○</td>
                                 <td></td>
-                                <td class="today"></td>
+                                <td></td>
+                                <td ></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
@@ -89,16 +89,10 @@
                     </div>
 
                     <!-- キャラクター -->
-                    <div class="character" aria-label="キャラクター">
-                        <div class="pill-character">
-                            <div class="pill-head">
-                                <span class="pill-green"></span>
-                                <span class="pill-white"></span>
-                            </div>
-                            <div class="pill-glasses"></div>
-                        </div>
+                    <div class="character">
+                        <img src="./image/zilyou_zaiko.png">
                     </div>
-
+                    
                 </div>
             </main>
 
@@ -109,7 +103,7 @@
                     ?
                 </button>
 
-                <button class="setting-btn" type="button">
+                <button id="settingBtn" class="setting-btn" type="button">
                     設定する
                 </button>
 

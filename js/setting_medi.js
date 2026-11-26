@@ -3,31 +3,44 @@ const timeInput = document.getElementById("timeInput");
 const modalTitle = document.getElementById("modalTitle");
 
 const cells = document.querySelectorAll(".calendar tbody td");
+const settingBtn = document.getElementById("settingBtn");
 
+// カレンダーの列順（0:月 〜 6:日）
 const days = ["月曜日", "火曜日", "水曜日", "木曜日",
               "金曜日", "土曜日", "日曜日"];
+const timingLabels = ["朝", "昼", "夜", "寝る前"];
+const timings = ["morning", "noon", "evening", "bedtime"];
 
-const timings = ["朝", "昼", "夜", "寝る前"];
+// 列インデックス（0:月〜6:日） → save_schedule.php の day_of_week（0:日〜6:土）
+const colToDayOfWeek = [1, 2, 3, 4, 5, 6, 0];
+// DBの day_of_week（0:日〜6:土） → カレンダーの列インデックス（0:月〜6:日）
+const dayOfWeekToCol = { 1: 0, 2: 1, 3: 2, 4: 3, 5: 4, 6: 5, 0: 6 };
 
 let selectedCell = null;
+let hasUnsavedChanges = false;
 
 // 時刻入力欄のクリック
-timeInput.addEventListener("click", function() {
-    this.showPicker();
-});
+if (timeInput) {
+    timeInput.addEventListener("click", function() {
+        if (typeof this.showPicker === "function") {
+            this.showPicker();
+        }
+    });
+}
 
 // 各マスをクリックしたとき
 cells.forEach((cell, index) => {
     const row = Math.floor(index / 7);
     const column = index % 7;
 
-    cell.textContent = "";
+    cell.dataset.day = colToDayOfWeek[column];
+    cell.dataset.timing = timings[row];
 
     cell.addEventListener("click", function() {
         selectedCell = this;
 
         modalTitle.textContent =
-            days[column] + "・" + timings[row] + "の時刻設定";
+            days[column] + "・" + timingLabels[row] + "の時刻設定";
 
         timeInput.value = this.dataset.time || "08:00";
 
@@ -35,21 +48,25 @@ cells.forEach((cell, index) => {
     });
 });
 
-// 決定ボタン
+// 決定ボタン（画面だけ変更）
 document.getElementById("saveBtn").addEventListener("click", function() {
     if (selectedCell && timeInput.value) {
         selectedCell.dataset.time = timeInput.value;
         selectedCell.textContent = timeInput.value;
+
+        hasUnsavedChanges = true;
     }
 
     modal.style.display = "none";
 });
 
-// 削除ボタン
+// 削除ボタン（画面だけ変更）
 document.getElementById("deleteBtn").addEventListener("click", function() {
     if (selectedCell) {
         selectedCell.textContent = "";
         delete selectedCell.dataset.time;
+
+        hasUnsavedChanges = true;
     }
 
     modal.style.display = "none";
@@ -66,3 +83,97 @@ modal.addEventListener("click", function(event) {
         modal.style.display = "none";
     }
 });
+
+// 「設定する」ボタン（そのまま save_schedule.php に保存）
+settingBtn.addEventListener("click", async function() {
+    const schedules = [];
+
+    cells.forEach(cell => {
+        if (cell.dataset.time) {
+            schedules.push({
+                day_of_week: Number(cell.dataset.day),
+                medication_timing: cell.dataset.timing,
+                scheduled_time: cell.dataset.time
+            });
+        }
+    });
+
+    settingBtn.disabled = true;
+
+    try {
+        const response = await fetch("save_schedule.php", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                schedules: schedules
+            })
+        });
+
+        const result = await response.json();
+
+        if (response.ok && result.success) {
+            hasUnsavedChanges = false;
+            alert(result.message || "設定を保存しました！");
+        } else {
+            alert(result.message || "保存に失敗しました。");
+        }
+    } catch (error) {
+        console.error(error);
+        alert("通信エラーが発生しました。");
+    } finally {
+        settingBtn.disabled = false;
+    }
+});
+
+// ページを開いたときDBから読み込む
+async function loadSchedules() {
+    try {
+        const response = await fetch("get_schedule.php");
+        const result = await response.json();
+
+        if (response.ok && result.success && Array.isArray(result.schedules)) {
+            result.schedules.forEach(schedule => {
+                const day = Number(schedule.day_of_week);
+                const timing = schedule.medication_timing;
+
+                const timingIndex = timings.indexOf(timing);
+                const column = dayOfWeekToCol[day];
+
+                if (timingIndex === -1 || column === undefined) {
+                    return;
+                }
+
+                const index = timingIndex * 7 + column;
+                const cell = cells[index];
+
+                if (cell && schedule.scheduled_time) {
+                    cell.dataset.time = String(schedule.scheduled_time).substring(0, 5);
+                    cell.textContent = cell.dataset.time;
+                }
+            });
+        }
+    } catch (error) {
+        console.error(error);
+        alert("設定の読み込みに失敗しました。");
+    }
+}
+
+loadSchedules();
+
+// ホームに戻るときの未保存確認
+const logoutBtn = document.querySelector(".medithink-logout-btn");
+if (logoutBtn) {
+    logoutBtn.addEventListener("click", function(event) {
+        if (hasUnsavedChanges) {
+            const answer = confirm(
+                "変更した内容が保存されていません。\nホームに戻ってもよろしいですか？"
+            );
+
+            if (!answer) {
+                event.preventDefault();
+            }
+        }
+    });
+}

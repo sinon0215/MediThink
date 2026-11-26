@@ -1,0 +1,44 @@
+/* 「gray-bg」ってクラスをつけたら画面全体がグレーになる部品 */
+.gray-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+
+/* 画面の一番前に出す白い箱（説明とかを入れる用） */
+.gray-box {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+
+  width: 80%;
+  max-width: 500px;
+  padding: 24px;
+  background: #fff;
+  border: 2px solid #333;
+  border-radius: 16px;
+  text-align: center;
+}
+
+/* ★追加：戻るボタン */
+.gray-close-btn {
+  margin-top: 20px;
+  padding: 10px 24px;
+  font-size: 16px;
+  font-weight: bold;
+  background: #333;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.gray-close-btn:hover {
+  background: #555;
+}

@@ -1,5 +1,5 @@
 <?php
-$header_notice = $header_notice ?? 'お知らせ';
+// $header_notice = $header_notice ?? 'お知らせ';
 
 // ユーザーの通知時間をデータベースから安全に取得する処理
 $notification_times = ['morning' => '', 'lunch' => '', 'evening' => '', 'bedtime' => ''];
@@ -38,11 +38,14 @@ if (isset($_SESSION['user_id'])) {
         <div class="medithink-logo">
             <img src="image/small_logo.png"  alt="ロゴ">
         </div>
-        <a class="medithink-logout-btn" href="logout.php">ログアウト</a>
+        <a class="medithink-logout-btn" href="logout.php"
+        onclick="return confirm('本当にログアウトしますか？');">
+            ログアウト
+        </a>
     </div>
-    <p class="medithink-notice"><?= htmlspecialchars($header_notice, ENT_QUOTES, 'UTF-8') ?></p>
+    <!-- <p class="medithink-notice"><?= htmlspecialchars($header_notice, ENT_QUOTES, 'UTF-8') ?></p> -->
 </header>
-
+<?php include_once __DIR__ . '/medication_header_notice.php'; ?>
 <script>
 window.medTimesData = {
     morning: "<?= htmlspecialchars($notification_times['morning'] ?? '', ENT_QUOTES, 'UTF-8') ?>",

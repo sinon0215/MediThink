@@ -12,7 +12,14 @@
     include 'header_home.php';
     ?>
 
+    <div class="puzzle-notice-area">
+        <div class="puzzle-help" aria-live="polite">ピースを選んで、盤面のマスをクリックしてください。</div>
+    </div>
+
     <main class="pazul-main">
+        <div class="puzzle-timer" id="puzzle-timer" data-duration="180" role="timer" aria-label="残り時間" aria-live="off">
+            残り時間 03:00
+        </div>
         <div class="puzzle-stage">
             <section class="puzzle-board" aria-label="パズル盤">
                 <?php for ($row = 0; $row < 3; $row++): ?>
@@ -60,7 +67,6 @@
                 <img src="image/zilyou_zaiko.png" alt="服薬手帳を持つキャラクター">
             </div>
         </div>
-        <p class="puzzle-help" aria-live="polite">ピースを選んで、盤面のマスをクリックしてください。</p>
     </main>
     <div class="clear-overlay" role="status" aria-live="assertive" aria-hidden="true">
         <div class="clear-message">クリア！</div>
@@ -72,7 +78,9 @@
         const timerButton = document.getElementById('puzzle-timer');
         let selectedPiece = null;
         let placedCount = 0;
+        let missCount = 0;
         let timerId = null;
+        const startTime = performance.now();
         let remainingSeconds = Number(timerButton?.dataset.duration || 180);
         let timerStarted = false;
 
@@ -105,7 +113,6 @@
             });
             if (timerButton) {
                 timerButton.textContent = '時間切れ';
-                timerButton.disabled = true;
             }
             help.textContent = '時間切れです。ページを再読み込みしてもう一度挑戦してください。';
         };
@@ -152,6 +159,7 @@
                 }
 
                 if (selectedPiece.dataset.piece !== cell.dataset.cell) {
+                    missCount += 1;
                     help.textContent = 'そのピースの置き場所が違います。別のマスを選んでください。';
                     cell.classList.add('is-wrong');
                     window.setTimeout(() => cell.classList.remove('is-wrong'), 350);
@@ -174,12 +182,12 @@
                     window.clearInterval(timerId);
                     timerId = null;
                     if (timerButton) {
-                        timerButton.disabled = true;
                         timerButton.textContent = 'クリア！';
                     }
                     help.textContent = 'クリア！すべてのピースを正しく並べました。';
+                    const clearTime = ((performance.now() - startTime) / 1000).toFixed(1);
                     window.setTimeout(() => {
-                        window.location.href = 'home.php';
+                        window.location.href = `game_result.php?time=${encodeURIComponent(clearTime)}&miss=${missCount}`;
                     }, 1000);
                     return;
                 }

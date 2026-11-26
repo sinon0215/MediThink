@@ -1,13 +1,6 @@
 
 <?php
 // save_schedule.php
-
-// セッション設定
-$save_path = __DIR__ . '/sessions';
-if (is_dir($save_path)) {
-    session_save_path($save_path);
-}
-
 if (session_status() !== PHP_SESSION_ACTIVE) {
     session_start();
 }
@@ -67,7 +60,8 @@ foreach ($data['schedules'] as $schedule) {
 
     if (
         !isset($schedule['day_of_week']) ||
-        !isset($schedule['medication_timing'])
+        !isset($schedule['medication_timing'])||
+        !isset($schedule['scheduled_time'])
     ) {
         http_response_code(400);
         echo json_encode([
@@ -79,12 +73,15 @@ foreach ($data['schedules'] as $schedule) {
 
     $day = $schedule['day_of_week'];
     $timing = $schedule['medication_timing'];
-
+    $time = $schedule['scheduled_time'];
+    
     if (
-        !is_int($day) ||
-        $day < 0 ||
-        $day > 6 ||
-        !in_array($timing, $allowed_timings, true)
+    !is_int($day) ||
+    $day < 0 ||
+    $day > 6 ||
+    !in_array($timing, $allowed_timings, true) ||
+    !is_string($time) ||
+    !preg_match('/^([01][0-9]|2[0-3]):[0-5][0-9]$/', $time)
     ) {
         http_response_code(400);
         echo json_encode([
@@ -109,7 +106,8 @@ foreach ($data['schedules'] as $schedule) {
     $seen[$key] = true;
     $valid_schedules[] = [
         'day' => $day,
-        'timing' => $timing
+        'timing' => $timing,
+        'time' => $time
     ];
 }
 
@@ -139,16 +137,17 @@ try {
 
     // 新しい設定を登録
     $insert = $pdo->prepare(
-        "INSERT INTO medication_schedules
-        (user_id, day_of_week, medication_timing)
-        VALUES (?, ?, ?)"
+    "INSERT INTO medication_schedules
+    (user_id, day_of_week, medication_timing, scheduled_time)
+    VALUES (?, ?, ?, ?)"
     );
 
     foreach ($valid_schedules as $schedule) {
         $insert->execute([
             $user_id,
             $schedule['day'],
-            $schedule['timing']
+            $schedule['timing'],
+            $schedule['time']
         ]);
     }
 
