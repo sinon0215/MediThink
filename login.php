@@ -85,7 +85,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </section>
 
         <section class="container flex-fill">
-
             <form class="login-form" action="login.php" method="post">
                 <div class="form-group">
                     <label class="form-input-label" for="email">メールアドレス</label>

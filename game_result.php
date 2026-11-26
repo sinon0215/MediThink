@@ -16,14 +16,21 @@ $missRaw = isset($_GET['miss']) ? (int)$_GET['miss'] : 0;
 
 $clearTime = max(0.0, $timeRaw);
 $missCount = max(0, $missRaw);
+$isPazulResult = isset($_GET['game']) && $_GET['game'] === 'pazul';
 
-// 基準タイム（7.0秒以内ならタイム減点なし）
-$targetTime = 7.0;
-$overTime = max(0.0, $clearTime - $targetTime);
+if ($isPazulResult) {
+    $timeScore = (int)round(700 * max(0.0, 1.0 - min($clearTime, 180.0) / 180.0));
+    $accuracyScore = max(0, 300 - ($missCount * 30));
+    $score = min(1000, $timeScore + $accuracyScore);
+} else {
+    // 基準タイム（7.0秒以内ならタイム減点なし）
+    $targetTime = 7.0;
+    $overTime = max(0.0, $clearTime - $targetTime);
 
-// スコア計算：1000点 - (超過秒数 × 25) - (お手つき回数 × 80)、最低100点
-$rawScore = 1000 - ($overTime * 25) - ($missCount * 80);
-$score = max(100, (int)round($rawScore));
+    // スコア計算：1000点 - (超過秒数 × 25) - (お手つき回数 × 80)、最低100点
+    $rawScore = 1000 - ($overTime * 25) - ($missCount * 80);
+    $score = max(100, (int)round($rawScore));
+}
 
 // 結果表示テキスト
 $resultLabel = ($missCount === 0) ? 'クリア！（お手つきなし）' : 'クリア！';
@@ -33,7 +40,7 @@ $db_host = 'localhost';
 $db_name = 'medithink_db';
 $db_user = 'medithink_admin';
 $db_pass = 'MediThink123!';
-$game_name = 'suuzisagashi'; // ランキング画面側と合わせる場合は必要なら変更してください
+$game_name = $isPazulResult ? 'pazul' : 'suuzisagashi';
 
 $recordToken = md5(
     $_SESSION['user_id'] . '|' .
@@ -149,8 +156,16 @@ if (!in_array($recordToken, $_SESSION['saved_game_tokens'], true)) {
         <div class="result-score-box">
             <div>
                 <div>スコア：<?= htmlspecialchars((string)$score, ENT_QUOTES, 'UTF-8') ?>点</div>
+                <?php if ($isPazulResult): ?>
+                    <div style="font-size: 1.05rem; margin-top: 6px; font-weight: normal;">
+                        時間点：<?= htmlspecialchars((string)$timeScore, ENT_QUOTES, 'UTF-8') ?>/700点 ／
+                        正確さ：<?= htmlspecialchars((string)$accuracyScore, ENT_QUOTES, 'UTF-8') ?>/300点
+                    </div>
+                <?php endif; ?>
                 <div style="font-size: 1.05rem; margin-top: 10px; font-weight: normal;">
-                    クリアタイム：<?= htmlspecialchars(number_format($clearTime, 1), ENT_QUOTES, 'UTF-8') ?>秒 ／
+                    プレイ時間：<?= htmlspecialchars(number_format($clearTime, 1), ENT_QUOTES, 'UTF-8') ?>秒
+                </div>
+                <div style="font-size: 1.05rem; margin-top: 6px; font-weight: normal;">
                     お手つき：<?= htmlspecialchars((string)$missCount, ENT_QUOTES, 'UTF-8') ?>回
                 </div>
             </div>
