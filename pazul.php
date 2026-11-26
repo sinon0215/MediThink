@@ -190,7 +190,7 @@
                     help.textContent = 'クリア！すべてのピースを正しく並べました。';
                     const clearTime = ((performance.now() - startTime) / 1000).toFixed(1);
                     window.setTimeout(() => {
-                        window.location.href = `game_result.php?time=${encodeURIComponent(clearTime)}&miss=${missCount}`;
+                        window.location.href = `game_result.php?time=${encodeURIComponent(clearTime)}&miss=${missCount}&game=pazul`;
                     }, 1000);
                     return;
                 }
