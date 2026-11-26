@@ -55,7 +55,10 @@
                     'piece-11.png',
                     'piece-12.png',
                 ];
-                foreach ($piece_images as $piece => $piece_image):
+                $piece_order = range(0, count($piece_images) - 1);
+                shuffle($piece_order);
+                foreach ($piece_order as $piece):
+                    $piece_image = $piece_images[$piece];
                 ?>
                     <button class="piece" type="button" aria-label="パズルピース<?= $piece + 1 ?>" data-piece="<?= $piece ?>">
                         <img src="image/<?= htmlspecialchars($piece_image, ENT_QUOTES, 'UTF-8') ?>" alt="">
