@@ -31,7 +31,7 @@ $game_name = $data['game_name'] ?? '';
 $score = $data['score'] ?? null;
 
 // ゲーム名確認
-$allowed_games = ['suuzisagashi', 'pazul'];
+$allowed_games = ['suuzisagashi'];
 
 if (!in_array($game_name, $allowed_games, true)) {
     echo json_encode([

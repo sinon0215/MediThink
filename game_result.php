@@ -19,8 +19,13 @@ $missCount = max(0, $missRaw);
 $isPazulResult = isset($_GET['game']) && $_GET['game'] === 'pazul';
 
 if ($isPazulResult) {
-    $timeScore = (int)round(700 * max(0.0, 1.0 - min($clearTime, 180.0) / 180.0));
-    $accuracyScore = max(0, 300 - ($missCount * 30));
+    $fullTimeScoreSeconds = 120.0;
+    $timeLimitSeconds = 180.0;
+    $timeScore = (int)round(
+        700 * max(0.0, 1.0 - max(0.0, $clearTime - $fullTimeScoreSeconds) / ($timeLimitSeconds - $fullTimeScoreSeconds))
+    );
+    $freeMisses = 2;
+    $accuracyScore = max(0, 300 - (max(0, $missCount - $freeMisses) * 30));
     $score = min(1000, $timeScore + $accuracyScore);
 } else {
     // 基準タイム（7.0秒以内ならタイム減点なし）
@@ -40,7 +45,7 @@ $db_host = 'localhost';
 $db_name = 'medithink_db';
 $db_user = 'medithink_admin';
 $db_pass = 'MediThink123!';
-$game_name = $isPazulResult ? 'pazul' : 'suuzisagashi';
+$game_name = 'suuzisagashi';
 
 $recordToken = md5(
     $_SESSION['user_id'] . '|' .
@@ -55,7 +60,7 @@ if (!isset($_SESSION['saved_game_tokens']) || !is_array($_SESSION['saved_game_to
     $_SESSION['saved_game_tokens'] = [];
 }
 
-if (!in_array($recordToken, $_SESSION['saved_game_tokens'], true)) {
+if (!$isPazulResult && !in_array($recordToken, $_SESSION['saved_game_tokens'], true)) {
     try {
         $pdo = new PDO(
             "mysql:host=$db_host;dbname=$db_name;charset=utf8mb4",
