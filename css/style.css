@@ -470,7 +470,7 @@ body.home-body {
 
 .home-calendar th,
 .home-calendar td {
-    border: 1px solid #009fe8;
+    border: 2px solid #009fe8;
     height: 100px;
     padding: 15px;
     font-size: 24px;
@@ -495,6 +495,12 @@ body.home-body {
 .home-calendar td {
     font-size: 28px;
     font-weight: bold;
+    background-color: #ffffff;
+}
+
+/* 今日の曜日の服薬予定マス */
+.home-calendar td.today-column {
+    background-color: #fff3c4;
 }
 
 
