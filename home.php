@@ -186,7 +186,7 @@ try {
             <a href="settings.php" class="medium-btn">設定</a>
             <a href="records.php" class="medium-btn">ゲーム記録</a>
             <a href="medi_game_start.php" id="already-taken-btn" class="medium-btn">もう薬飲んだ</a>
-            <p id="no-medi-message" style="display: none; color: #d93829; font-weight: bold; margin-top: 8px;">
+            <p id="no-medi-message" class="no-medi-message">
                 今日飲む薬はないよ
             </p>
         </nav>
