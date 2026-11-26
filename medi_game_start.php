@@ -82,7 +82,7 @@ try {
 </head>
 <body class="home-body">
 
-    <?php include 'header_home.php'; ?>
+    <?php include 'header_nobutton.php'; ?>
 
     <!-- メインコンテンツ (.main-container) -->
     <main class="main-container">
