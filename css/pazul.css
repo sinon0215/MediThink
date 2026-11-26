@@ -37,9 +37,9 @@ body {
 }
 
 .pazul-main {
-    width: min(1080px, calc(100% - 32px));
+    width: min(1280px, calc(100% - 32px));
     margin: 24px auto 32px;
-    padding: 20px;
+    padding: 28px;
     border: 1px solid rgba(17, 17, 17, 0.18);
     border-radius: 18px;
     background: rgba(255, 255, 255, 0.78);
@@ -48,25 +48,25 @@ body {
 
 .puzzle-stage {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) 190px;
+    grid-template-columns: minmax(0, 1fr) 260px;
     align-items: center;
-    gap: 24px;
+    gap: 32px;
 }
 
 .puzzle-reference {
     width: 100%;
     margin: 0;
-    padding: 10px;
-    border: 1px solid #b5c3cc;
-    border-radius: 12px;
+    padding: 14px;
+    border: 2px solid #b5c3cc;
+    border-radius: 14px;
     background: #fff;
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
 }
 
 .puzzle-reference figcaption {
-    margin-bottom: 8px;
+    margin-bottom: 12px;
     color: #155d7c;
-    font-size: 15px;
+    font-size: 18px;
     font-weight: bold;
     text-align: center;
 }
@@ -82,7 +82,7 @@ body {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: repeat(3, 1fr);
-    width: min(720px, 100%);
+    width: min(760px, 100%);
     aspect-ratio: 1;
     margin: 0 auto;
     border: 3px solid #26344d;
@@ -204,9 +204,9 @@ body {
     flex: 1;
     justify-content: flex-start;
     align-items: center;
-    gap: 8px;
-    min-height: 98px;
-    padding: 12px 14px;
+    gap: 12px;
+    min-height: 116px;
+    padding: 16px 18px;
     border: 1px solid #b5c3cc;
     border-radius: 12px;
     background: #fff;
@@ -215,9 +215,9 @@ body {
 
 .piece {
     position: relative;
-    flex: 0 0 52px;
-    width: 52px;
-    height: 70px;
+    flex: 0 0 62px;
+    width: 62px;
+    height: 84px;
     border: 0;
     background: transparent;
     cursor: pointer;
@@ -324,18 +324,12 @@ body {
     }
 
     .puzzle-stage {
-        grid-template-columns: 1fr;
+        grid-template-columns: minmax(0, 1fr) minmax(80px, 32%);
         gap: 12px;
     }
 
     .puzzle-reference {
-        width: min(180px, 100%);
-        justify-self: center;
-        grid-row: 1;
-    }
-
-    .puzzle-board {
-        grid-row: 2;
+        width: 100%;
     }
 
     .pazul-bottom {
