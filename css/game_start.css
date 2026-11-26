@@ -200,13 +200,13 @@ body {
 .character-comment {
     position: relative;
 
-    max-width: 300px;
+    max-width: 600px;
     width: 90%;
 
     border: 2px solid #000000;
     background-color: #ffffff;
 
-    font-size: 16px;
+    font-size: 30px;
     font-weight: bold;
     text-align: center;
     border-radius: 20px;
@@ -261,7 +261,12 @@ body {
     transition: background-color 0.2s, transform 0.1s;
 }
 
-
+.home-body .main-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+}
 
 /* 左右分割 */
 .game-select-page {
@@ -277,8 +282,8 @@ body {
 /* 左側：ゲームメニュー */
 .menu-btn {
     flex: 1;
-    min-width: 0;
-    max-width: 1000px;
+    min-width: 500;
+    max-width: 800px;
 
     display: flex;
     flex-direction: column;
@@ -288,7 +293,7 @@ body {
 
 /* 右側：キャラクターエリア */
 .character-area {
-    width: 400px;
+    width: 500px;
     flex-shrink: 0;
 
     display: flex;

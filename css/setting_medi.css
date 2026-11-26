@@ -220,6 +220,7 @@ body {
     cursor: pointer;
     font-size: 14px;
     font-weight: bold;
+    background-color: #ffffff;
 }
 
 /* 時刻入力欄全体をクリックしやすくする */

@@ -76,18 +76,17 @@ try {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MediThink | ゲーム選択</title>
+    <title>MediThink | ゲームスタート</title>
     <link rel="stylesheet" href="./css/style.css">
     <link rel="stylesheet" href="./css/game_start.css">
 </head>
 <body class="home-body">
 
-    <?php include 'header_nobutton.php'; ?>
+    <?php include 'header_home.php'; ?>
 
     <!-- メインコンテンツ (.main-container) -->
     <main class="main-container">
-        <a href="game_suuzisagashi.php" class="medium-btn">スタート</a>
-
+        <a href="game_suuzisagashi.php" class="medium-btn start-button">スタート</a>
     </main>
 
 </body>

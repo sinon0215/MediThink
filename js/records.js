@@ -1,27 +1,40 @@
-
-// ゲームごとの仮スコア（直近10回分）
-const gameScores = {
-    suuzisagashi: [40, 55, 48, 65, 72, 60, 80, 75, 90, 100],
-    pazul: [30, 45, 50, 42, 60, 70, 65, 80, 85, 95]
-};
+// DBから渡された記録データ（直近10件の推移 + 累計の最高スコア・プレイ回数）
+const recordsData = window.RECORDS_DATA || {};
 
 // 現在のグラフ
 let scoreChart = null;
 
 // グラフを表示する関数
 function showGraph(gameName) {
+    const gameRecord = recordsData[gameName] || {
+        scores: [],
+        bestScore: null,
+        lastScore: null,
+        playCount: 0
+    };
 
-    const scores = gameScores[gameName];
+    const scores = Array.isArray(gameRecord.scores) ? gameRecord.scores : [];
 
-    // スコア情報を計算
-    const bestScore = Math.max(...scores);
-    const lastScore = scores[scores.length - 1];
-    const playCount = scores.length;
+    // 最高スコア・前回のスコア・プレイ回数（10件制限前の累計も含む）
+    const bestScore = gameRecord.bestScore !== null && gameRecord.bestScore !== undefined
+        ? gameRecord.bestScore
+        : (scores.length > 0 ? Math.max(...scores) : null);
+
+    const lastScore = gameRecord.lastScore !== null && gameRecord.lastScore !== undefined
+        ? gameRecord.lastScore
+        : (scores.length > 0 ? scores[scores.length - 1] : null);
+
+    const playCount = gameRecord.playCount !== null && gameRecord.playCount !== undefined
+        ? gameRecord.playCount
+        : scores.length;
 
     // 画面に表示
-    document.getElementById("bestScore").textContent = bestScore + " 点";
-    document.getElementById("lastScore").textContent = lastScore + " 点";
-    document.getElementById("playCount").textContent = playCount + " 回";
+    document.getElementById("bestScore").textContent =
+        bestScore !== null ? bestScore + " 点" : "-- 点";
+    document.getElementById("lastScore").textContent =
+        lastScore !== null ? lastScore + " 点" : "-- 点";
+    document.getElementById("playCount").textContent =
+        playCount + " 回";
 
     // グラフのタイトル
     const gameTitle = gameName === "suuzisagashi"
