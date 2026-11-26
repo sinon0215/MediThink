@@ -1,4 +1,15 @@
 <?php
+date_default_timezone_set('Asia/Tokyo');
+
+if (session_status() !== PHP_SESSION_ACTIVE) {
+    session_start();
+}
+
+if (!isset($_SESSION['user_id'])) {
+    header('Location: login.php');
+    exit;
+}
+
 // URLパラメータからクリアタイムとお手つき回数を取得
 $timeRaw = isset($_GET['time']) ? (float)$_GET['time'] : 0.0;
 $missRaw = isset($_GET['miss']) ? (int)$_GET['miss'] : 0;
@@ -12,6 +23,102 @@ $score = max(100, (int)round($rawScore));
 
 // 結果表示テキスト
 $resultLabel = ($missCount === 0) ? 'クリア！（お手つきなし）' : 'クリア！';
+
+// DB保存（game_records へ履歴保存・直近10件維持 + game_stats へ累計回数・最高スコア反映）
+$db_host = 'localhost';
+$db_name = 'medithink_db';
+$db_user = 'medithink_admin';
+$db_pass = 'MediThink123!';
+$game_name = 'suuzisagashi'; // ランキング画面側と合わせる場合は必要なら変更してください
+
+$recordToken = md5(
+    $_SESSION['user_id'] . '|' .
+    $game_name . '|' .
+    $score . '|' .
+    $clearTime . '|' .
+    $missCount . '|' .
+    ($_SERVER['REQUEST_URI'] ?? '')
+);
+
+if (!isset($_SESSION['saved_game_tokens']) || !is_array($_SESSION['saved_game_tokens'])) {
+    $_SESSION['saved_game_tokens'] = [];
+}
+
+if (!in_array($recordToken, $_SESSION['saved_game_tokens'], true)) {
+    try {
+        $pdo = new PDO(
+            "mysql:host=$db_host;dbname=$db_name;charset=utf8mb4",
+            $db_user,
+            $db_pass,
+            [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
+        );
+
+        $userId = (int)$_SESSION['user_id'];
+
+        $pdo->beginTransaction();
+
+        // 1. 今回のスコア履歴を保存
+        $stmt = $pdo->prepare(
+            "INSERT INTO game_records (user_id, game_name, score)
+             VALUES (:user_id, :game_name, :score)"
+        );
+        $stmt->execute([
+            ':user_id'   => $userId,
+            ':game_name' => $game_name,
+            ':score'     => $score,
+        ]);
+
+        // 2. 該当ユーザー・ゲームの履歴を直近10件までに絞る
+        $stmtOld = $pdo->prepare(
+            "SELECT game_record_id
+             FROM game_records
+             WHERE user_id = :user_id
+               AND game_name = :game_name
+             ORDER BY game_record_id DESC
+             LIMIT 1000 OFFSET 10"
+        );
+        $stmtOld->execute([
+            ':user_id'   => $userId,
+            ':game_name' => $game_name,
+        ]);
+        $oldIds = $stmtOld->fetchAll(PDO::FETCH_COLUMN);
+
+        if (!empty($oldIds)) {
+            $placeholders = implode(',', array_fill(0, count($oldIds), '?'));
+            $stmtDelete = $pdo->prepare(
+                "DELETE FROM game_records WHERE game_record_id IN ($placeholders)"
+            );
+            $stmtDelete->execute($oldIds);
+        }
+
+        // 3. 累計プレイ回数と最高スコアを game_stats に反映（自己ベストを超えた場合のみ更新）
+        $stmtStats = $pdo->prepare(
+            "INSERT INTO game_stats (user_id, game_name, best_score, play_count)
+             VALUES (:user_id, :game_name, :score_insert, 1)
+             ON DUPLICATE KEY UPDATE
+                 best_score = CASE
+                     WHEN best_score >= :score_update THEN best_score
+                     ELSE :score_update_fallback
+                 END,
+                 play_count = play_count + 1"
+        );
+        $stmtStats->execute([
+            ':user_id'               => $userId,
+            ':game_name'             => $game_name,
+            ':score_insert'          => $score,
+            ':score_update'          => $score,
+            ':score_update_fallback' => $score,
+        ]);
+
+        $pdo->commit();
+        $_SESSION['saved_game_tokens'][] = $recordToken;
+    } catch (PDOException $e) {
+        if (isset($pdo) && $pdo->inTransaction()) {
+            $pdo->rollBack();
+        }
+        error_log('game_result DB save error: ' . $e->getMessage());
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -44,47 +151,54 @@ $resultLabel = ($missCount === 0) ? 'クリア！（お手つきなし）' : '�
                 </div>
             </div>
         </div>
+<a href="game_select.php" id="result-action-btn" class="result-back-btn">選択画面に戻る</a>
+        </main>
 
-        <a href="game_select.php" id="result-action-btn" class="result-back-btn">選択画面に戻る</a>
-    </main>
-
-    <!-- 右下の吹き出し＆キャラクター -->
-    <div class="result-character-area">
-        <div class="result-comment">お疲れ様でした。</div>
-        <div class="result-character">
-            <img src="image/zilyou_zaiko.png" alt="キャラクター" class="result-character-image">
+        <!-- 右下の吹き出し＆キャラクター -->
+        <div class="result-character-area">
+            <div class="result-comment">お疲れ様でした。</div>
+            <div class="result-character">
+                <img src="image/zilyou_zaiko.png" alt="キャラクター" class="result-character-image">
+            </div>
         </div>
-    </div>
 
-    <script>
-    (() => {
-        const STORAGE_RECORD_MODE = 'medi_record_mode';
-        const STORAGE_RETURN_URL = 'medi_notice_return_url';
+        <script>
+        (() => {
+            const STORAGE_RECORD_MODE = 'medi_record_mode';
+            const STORAGE_RETURN_URL = 'medi_notice_return_url';
 
-        const actionBtn = document.getElementById('result-action-btn');
-        if (!actionBtn) return;
+            const actionBtn = document.getElementById('result-action-btn');
+            if (!actionBtn) return;
 
-        const isRecordMode = sessionStorage.getItem(STORAGE_RECORD_MODE) === '1';
+            const isRecordMode = sessionStorage.getItem(STORAGE_RECORD_MODE) === '1';
 
-        if (isRecordMode) {
-            // 服薬記録モードのときだけ「薬を飲みました！」に変更し、リンク先を home.php にする
-            actionBtn.textContent = '薬を飲みました！';
-            actionBtn.href = 'home.php';
+            if (isRecordMode) {
+                // 服薬記録モードのときだけ「薬を飲みました！」に変更し、リンク先を home.php にする
+                actionBtn.textContent = '薬を飲みました！';
+                actionBtn.href = 'home.php';
 
-            actionBtn.addEventListener('click', (e) => {
-                e.preventDefault();
+                actionBtn.addEventListener('click', async (e) => {
+                    e.preventDefault();
 
-                // TODO: DB保存処理が決まったらここに追加
+                    sessionStorage.removeItem(STORAGE_RECORD_MODE);
+                    const returnUrl = sessionStorage.getItem(STORAGE_RETURN_URL) || 'home.php';
+                    sessionStorage.removeItem(STORAGE_RETURN_URL);
 
-                sessionStorage.removeItem(STORAGE_RECORD_MODE);
-                const returnUrl = sessionStorage.getItem(STORAGE_RETURN_URL) || 'home.php';
-                sessionStorage.removeItem(STORAGE_RETURN_URL);
+                    try {
+                        await fetch('mark_medication_taken.php', {
+                            method: 'POST',
+                            credentials: 'same-origin',
+                        });
+                    } catch (err) {
+                        console.error('Failed to mark medication taken:', err);
+                    }
 
-                window.location.href = returnUrl;
-            });
-        }
-    })();
-    </script>
+                    window.location.href = returnUrl;
+                });
+            }
+        })();
+        </script>
 
-</body>
-</html>
+    </body>
+    </html>
+  
