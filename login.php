@@ -44,12 +44,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 // 初回ログインか確認
                 if ($user['is_first_login'] == 1) {
-                    // 初回ログイン済みに更新
-                    $stmt = $pdo->prepare(
-                        "UPDATE users SET is_first_login = 0 WHERE id = :id"
-                    );
-                    $stmt->execute([':id' => $user['id']]);
+                    // 初回ログインか確認
+                if ((int)$user['is_first_login'] === 1) {
 
+                    // 設定画面へ移動
+                    header('Location: setting_medi.php');
+                    exit;
+
+                } else {
+
+                    // 2回目以降はホーム画面へ
+                    header('Location: home.php');
+                    exit;
+                }
                     // 設定画面へ移動
                     header('Location: setting_medi.php');
                     exit;

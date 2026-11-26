@@ -86,6 +86,12 @@ modal.addEventListener("click", function(event) {
 
 // 「設定する」ボタン（そのまま save_schedule.php に保存）
 settingBtn.addEventListener("click", async function() {
+
+    // 設定内容の確認
+    if (!confirm("この内容で設定しますか？")) {
+        return;
+    }
+
     const schedules = [];
 
     cells.forEach(cell => {
@@ -112,10 +118,16 @@ settingBtn.addEventListener("click", async function() {
         });
 
         const result = await response.json();
+        console.log("保存結果:", result);
 
         if (response.ok && result.success) {
             hasUnsavedChanges = false;
-            alert(result.message || "設定を保存しました！");
+
+            if (result.is_first_login) {
+                window.location.href = "home.php";
+                return;
+            }
+
         } else {
             alert(result.message || "保存に失敗しました。");
         }
