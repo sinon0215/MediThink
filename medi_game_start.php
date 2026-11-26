@@ -87,7 +87,6 @@ try {
     <!-- メインコンテンツ (.main-container) -->
     <main class="main-container">
         <a href="game_suuzisagashi.php" class="medium-btn">スタート</a>
-
     </main>
 
 </body>
