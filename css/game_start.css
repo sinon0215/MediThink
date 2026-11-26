@@ -261,7 +261,12 @@ body {
     transition: background-color 0.2s, transform 0.1s;
 }
 
-
+.home-body .main-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+}
 
 /* 左右分割 */
 .game-select-page {
