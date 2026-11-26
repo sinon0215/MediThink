@@ -17,8 +17,12 @@ $missRaw = isset($_GET['miss']) ? (int)$_GET['miss'] : 0;
 $clearTime = max(0.0, $timeRaw);
 $missCount = max(0, $missRaw);
 
-// スコア計算：基準1000点 - (秒数 × 25) - (お手つき回数 × 80)、最低100点
-$rawScore = 1000 - ($clearTime * 25) - ($missCount * 80);
+// 基準タイム（7.0秒以内ならタイム減点なし）
+$targetTime = 7.0;
+$overTime = max(0.0, $clearTime - $targetTime);
+
+// スコア計算：1000点 - (超過秒数 × 25) - (お手つき回数 × 80)、最低100点
+$rawScore = 1000 - ($overTime * 25) - ($missCount * 80);
 $score = max(100, (int)round($rawScore));
 
 // 結果表示テキスト
@@ -201,4 +205,3 @@ if (!in_array($recordToken, $_SESSION['saved_game_tokens'], true)) {
 
     </body>
     </html>
-  

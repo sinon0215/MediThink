@@ -93,6 +93,7 @@ shuffle($numbers);
             // 1 から 9 まで順番に探す設定
             const targetOrder = [1, 2, 3, 4, 5, 6, 7, 8, 9];
             let currentIndex = 0;
+            let missCount = 0; // お手つき回数
             let isFinished = false;
 
             // タイマー管理（最初は未スタート）
@@ -143,19 +144,19 @@ shuffle($numbers);
                 noticeBox.textContent = `「${getCurrentTarget()}」を探そう！`;
             }
 
-            function showResultButton(clearSec) {
+            function showResultButton(clearSec, misses) {
                 if (!gameContainer) return;
                 if (gameContainer.querySelector('.game-result-link-btn')) return;
 
                 const btn = document.createElement('a');
-                btn.href = `game_result.php?time=${encodeURIComponent(clearSec)}`;
+                btn.href = `game_result.php?time=${encodeURIComponent(clearSec)}&miss=${encodeURIComponent(misses)}`;
                 btn.className = 'game-result-link-btn';
                 btn.textContent = '結果画面に移動';
                 gameContainer.appendChild(btn);
             }
 
             // ゲーム記録をデータベースに保存
-            async function saveGameRecord(clearSec) {
+            async function saveGameRecord(clearSec, misses) {
                 try {
                     const response = await fetch('save_game_record.php', {
                         method: 'POST',
@@ -164,7 +165,8 @@ shuffle($numbers);
                         },
                         body: JSON.stringify({
                             game_name: 'suuzisagashi',
-                            score: Number(clearSec)
+                            score: Number(clearSec),
+                            miss_count: misses
                         })
                     });
 
@@ -178,6 +180,7 @@ shuffle($numbers);
                     console.error('スコア保存エラー:', error);
                 }
             }
+
             numberElements.forEach((el) => {
                 el.addEventListener('click', () => {
                     if (isFinished) return;
@@ -202,13 +205,13 @@ shuffle($numbers);
                             const clearSec = stopTimer();
 
                             if (noticeBox) {
-                                noticeBox.textContent = `ゲームクリアおめでとうございます！（記録：${clearSec}秒）`;
+                                noticeBox.textContent = `ゲームクリアおめでとうございます！（記録：${clearSec}秒 / お手つき：${missCount}回）`;
                             }
                             if (commentBox) {
-                                commentBox.textContent = `${clearSec}秒で完走です！とても良い結果です。`;
+                                commentBox.textContent = `${clearSec}秒で完走です！お手つきは${missCount}回でした。`;
                             }
-                            showResultButton(clearSec);
-                            saveGameRecord(clearSec);
+                            showResultButton(clearSec, missCount);
+                            saveGameRecord(clearSec, missCount);
                         } else {
                             const nextNum = getCurrentTarget();
                             if (commentBox) {
@@ -218,6 +221,7 @@ shuffle($numbers);
                         }
                     } else {
                         // お手つき（違う数字を押したとき）
+                        missCount++;
                         el.classList.add('is-wrong');
                         setTimeout(() => {
                             el.classList.remove('is-wrong');
