@@ -110,7 +110,7 @@ try {
                 </thead>
                 <tbody>
                     <tr>
-                        <th>朝</th>
+                        <th class="medication-timing">朝</th>
                         <td data-day="1" data-timing="morning"></td>
                         <td data-day="2" data-timing="morning"></td>
                         <td data-day="3" data-timing="morning"></td>
@@ -120,7 +120,7 @@ try {
                         <td data-day="0" data-timing="morning"></td>
                     </tr>
                     <tr>
-                        <th>昼</th>
+                        <th class="medication-timing">昼</th>
                         <td data-day="1" data-timing="noon"></td>
                         <td data-day="2" data-timing="noon"></td>
                         <td data-day="3" data-timing="noon"></td>
@@ -130,7 +130,7 @@ try {
                         <td data-day="0" data-timing="noon"></td>
                     </tr>
                     <tr>
-                        <th>夜</th>
+                        <th class="medication-timing">夜</th>
                         <td data-day="1" data-timing="evening"></td>
                         <td data-day="2" data-timing="evening"></td>
                         <td data-day="3" data-timing="evening"></td>
@@ -140,7 +140,7 @@ try {
                         <td data-day="0" data-timing="evening"></td>
                     </tr>
                     <tr>
-                        <th>寝る前</th>
+                        <th class="medication-timing">寝る前</th>
                         <td data-day="1" data-timing="bedtime"></td>
                         <td data-day="2" data-timing="bedtime"></td>
                         <td data-day="3" data-timing="bedtime"></td>
