@@ -162,6 +162,18 @@
     transform: translateX(-6px);
 }
 
+.game-body .gray-box h2 {
+    font-size: clamp(2.2rem, 4.8vw, 2.8rem);
+}
+
+.game-body .gray-box p {
+    font-size: clamp(1.8rem, 4.2vw, 2.2rem);
+}
+
+.game-body .gray-close-btn {
+    font-size: clamp(1.4rem, 3.2vw, 1.7rem);
+}
+
 /* 右下のキャラクター＆吹き出しエリア */
 .game-body .character-area {
     position: fixed;

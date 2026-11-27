@@ -11,7 +11,7 @@ shuffle($numbers);
     <title>数字探しゲーム | MediThink</title>
     <link rel="stylesheet" href="css/style.css?v=2">
     <link rel="stylesheet" href="css/header.css?v=2">
-    <link rel="stylesheet" href="css/game_suuzisagashi.css?v=2">
+    <link rel="stylesheet" href="css/game_suuzisagashi.css?v=3">
 
     <!-- グレーにするためのコードです -->
     <link rel="stylesheet" href="css/gure-ninaru.css">
@@ -24,7 +24,7 @@ shuffle($numbers);
     <div class="gray-box" id="gray-box">
         <h2>遊び方</h2>
         <p>1から9までの数字を順番に押そう！</p>
-        <button type="button" class="gray-close-btn" id="gray-close-btn">戻る</button>
+        <button type="button" class="gray-close-btn" id="gray-close-btn">ゲームを開始</button>
     </div>
 
     <!-- ヘッダー -->
