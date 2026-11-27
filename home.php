@@ -29,51 +29,46 @@ try {
         [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
     );
 
-    $user_id = $_SESSION['user_id'];
+    $user_id = (int)$_SESSION['user_id'];
     $today_dow = (int)date('w'); // 0:日, 1:月, 2:火, 3:水, 4:木, 5:金, 6:土
     $now = date('H:i:s');
     $today_str = date('Y-m-d');
 
-    $already_taken_today = (
-        isset($_SESSION['taken_medication_date']) &&
-        $_SESSION['taken_medication_date'] === $today_str
+    // 今日・現在時刻以降の予定のうち、まだ今日記録されていないものを1件取得
+    $stmt = $pdo->prepare(
+        "SELECT medication_timing, scheduled_time
+         FROM medication_schedules
+         WHERE user_id = ?
+           AND day_of_week = ?
+           AND scheduled_time IS NOT NULL
+           AND scheduled_time <> ''
+           AND scheduled_time >= ?
+           AND medication_timing NOT IN (
+               SELECT medication_timing
+               FROM medication_logs
+               WHERE user_id = ? AND taken_date = ?
+           )
+         ORDER BY scheduled_time ASC
+         LIMIT 1"
     );
+    $stmt->execute([$user_id, $today_dow, $now, $user_id, $today_str]);
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if ($already_taken_today) {
+    if ($row && !empty($row['scheduled_time'])) {
+        $has_today_medication = true;
+        $next_time = date('H:i', strtotime($row['scheduled_time']));
+        $_SESSION['target_medication_timing'] = $row['medication_timing'];
+    } else {
         $has_today_medication = false;
         $next_time = "今日飲む薬はありません";
-    } else {
-        // 今日の曜日のうち、現在時刻以降に飲む予定があるか確認
-        $stmtCount = $pdo->prepare(
-            "SELECT COUNT(*)
-             FROM medication_schedules
-             WHERE user_id = ?
-               AND day_of_week = ?
-               AND scheduled_time IS NOT NULL
-               AND scheduled_time <> ''
-               AND scheduled_time >= ?"
-        );
-        $stmtCount->execute([$user_id, $today_dow, $now]);
-        $has_today_medication = ((int)$stmtCount->fetchColumn() > 0);
+        unset($_SESSION['target_medication_timing']);
 
-        // 今日の曜日のうち、現在時刻以降の最も近い予定を取得
-        $stmt = $pdo->prepare(
-            "SELECT scheduled_time
-             FROM medication_schedules
-             WHERE user_id = ?
-               AND day_of_week = ?
-               AND scheduled_time >= ?
-             ORDER BY scheduled_time ASC
-             LIMIT 1"
+        // 今日すでに1回でも記録があるか確認（メッセージ切り替え用）
+        $stmtLog = $pdo->prepare(
+            "SELECT COUNT(*) FROM medication_logs WHERE user_id = ? AND taken_date = ?"
         );
-        $stmt->execute([$user_id, $today_dow, $now]);
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        if ($row && !empty($row['scheduled_time'])) {
-            $next_time = date('H:i', strtotime($row['scheduled_time']));
-        } else {
-            $next_time = "今日飲む薬はありません";
-        }
+        $stmtLog->execute([$user_id, $today_str]);
+        $already_taken_today = ((int)$stmtLog->fetchColumn() > 0);
     }
 } catch (PDOException $e) {
     error_log($e->getMessage());
@@ -98,7 +93,7 @@ try {
         <!-- 左側メインエリア (カレンダー + 時間 + キャラクター) -->
         <div class="main-content-left">
             <!-- カレンダーエリア (.calender) : 空布の枠 -->
-            
+
         <div class="calender">
             <table class="home-calendar">
                 <thead>
@@ -186,16 +181,12 @@ try {
             <a href="settings.php" class="medium-btn">設定</a>
             <a href="records.php" class="medium-btn">ゲーム記録</a>
             <a href="home_medi_start.php" id="already-taken-btn" class="medium-btn">もう薬飲んだ</a>
-            <p id="no-medi-message" class="no-medi-message">
-                今日飲む薬はないよ
-            </p>
         </nav>
     </main>
 <script src="./js/home.js"></script>
 <script>
 (() => {
     const btn = document.getElementById('already-taken-btn');
-    const msg = document.getElementById('no-medi-message');
     const hasTodayMedication = <?= json_encode((bool)$has_today_medication, JSON_UNESCAPED_UNICODE) ?>;
     const alreadyTakenToday = <?= json_encode((bool)$already_taken_today, JSON_UNESCAPED_UNICODE) ?>;
 
@@ -210,17 +201,12 @@ try {
 
         if (!hasTodayMedication) {
             sessionStorage.removeItem('medi_record_mode');
-            if (msg) {
-                msg.textContent = alreadyTakenToday
+            alert(
+                alreadyTakenToday
                     ? '今日はもう服薬記録済みだよ'
-                    : '今日飲む薬はないよ';
-                msg.style.display = 'block';
-            }
+                    : '今日飲む薬はないよ'
+            );
             return;
-        }
-
-        if (msg) {
-            msg.style.display = 'none';
         }
 
         sessionStorage.setItem('medi_record_mode', '1');
