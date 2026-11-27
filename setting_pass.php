@@ -80,6 +80,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     >
                 </div>
 
+                <label class="checkbox-row">
+                    <input class="checkbox-input" type="checkbox" id="show-password">
+                    <span class="checkbox-label">パスワードを表示する</span>
+                </label>
+
                 <div class="form-group">
                     <label class="form-input-label" for="password_confirm">確認用パスワード</label>
                     <input
@@ -93,7 +98,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
 
                 <label class="checkbox-row">
-                    <input class="checkbox-input" type="checkbox" id="show-password">
+                    <input class="checkbox-input" type="checkbox" id="show-password-confirm">
                     <span class="checkbox-label">パスワードを表示する</span>
                 </label>
 
@@ -112,13 +117,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <script>
         const showPassword = document.getElementById('show-password');
         const passwordInput = document.getElementById('password');
-        const passwordConfirmInput = document.getElementById('password_confirm');
-
-        if (showPassword && passwordInput && passwordConfirmInput) {
+        if (showPassword && passwordInput) {
             showPassword.addEventListener('change', () => {
-                const type = showPassword.checked ? 'text' : 'password';
-                passwordInput.type = type;
-                passwordConfirmInput.type = type;
+                passwordInput.type = showPassword.checked ? 'text' : 'password';
+            });
+        }
+
+        const showPasswordConfirm = document.getElementById('show-password-confirm');
+        const passwordConfirmInput = document.getElementById('password_confirm');
+        if (showPasswordConfirm && passwordConfirmInput) {
+            showPasswordConfirm.addEventListener('change', () => {
+                passwordConfirmInput.type = showPasswordConfirm.checked ? 'text' : 'password';
             });
         }
     </script>
