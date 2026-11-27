@@ -353,3 +353,55 @@ body {
     background-color: rgba(255, 255, 255, 0.6);
     box-sizing: border-box;
 }
+
+/* 時刻選択エリア */
+.time-select {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin: 25px 0;
+}
+
+/* スクロール部分 */
+.time-wheel {
+    width: 100px;
+    height: 132px;
+    overflow-y: auto;
+    scroll-snap-type: y mandatory;
+    scrollbar-width: none;
+    border: 2px solid #222;
+    border-radius: 9px;
+    background-color: #fff;
+}
+
+.time-wheel::-webkit-scrollbar {
+    display: none;
+}
+
+/* 数字1つ分 */
+.wheel-list {
+    padding: 44px 0;
+}
+
+.wheel-item {
+    height: 44px;
+    line-height: 44px;
+    text-align: center;
+    font-size: 30px;
+    color: #999;
+    scroll-snap-align: center;
+}
+
+/* 選択中の数字 */
+.wheel-item.selected {
+    color: #222;
+    font-weight: bold;
+    background-color: #e5f3fa;
+}
+
+/* 時と分の間のコロン */
+.time-colon {
+    font-size: 32px;
+    font-weight: bold;
+}

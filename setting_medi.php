@@ -113,21 +113,33 @@
 
     
     <!-- 時刻設定ポップアップ -->
-    <div id="timeModal" class="modal">
-        <div class="modal-content">
-            <h3 id="modalTitle">時刻設定</h3>
+<div id="timeModal" class="modal">
+    <div class="modal-content">
+        <h3 id="modalTitle">時刻設定</h3>
 
-            <p>服薬する時刻を選択してください。</p>
+        <p>服薬する時刻を選択してください。</p>
 
-            <input type="time" id="timeInput" value="08:00">
+        <div class="time-select">
 
-            <div class="modal-buttons">
-                <button type="button" id="deleteBtn">削除</button>
-                <button type="button" id="cancelBtn">キャンセル</button>
-                <button type="button" id="saveBtn">決定</button>
+            <div class="time-wheel" id="hourWheel">
+                <div class="wheel-list" id="hourList"></div>
             </div>
+
+            <span class="time-colon">：</span>
+
+            <div class="time-wheel" id="minuteWheel">
+                <div class="wheel-list" id="minuteList"></div>
+            </div>
+
+        </div>
+
+        <div class="modal-buttons">
+            <button type="button" id="deleteBtn">削除</button>
+            <button type="button" id="cancelBtn">キャンセル</button>
+            <button type="button" id="saveBtn">決定</button>
         </div>
     </div>
+</div>
 
     
 

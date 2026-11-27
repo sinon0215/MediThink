@@ -1,9 +1,64 @@
 const modal = document.getElementById("timeModal");
-const timeInput = document.getElementById("timeInput");
+const hourWheel = document.getElementById("hourWheel");
+const minuteWheel = document.getElementById("minuteWheel");
+const hourList = document.getElementById("hourList");
+const minuteList = document.getElementById("minuteList");
 const modalTitle = document.getElementById("modalTitle");
 
 const cells = document.querySelectorAll(".calendar tbody td");
 const settingBtn = document.getElementById("settingBtn");
+
+// 時刻選択の数字を作成
+function createWheel(list, max) {
+    for (let i = 0; i <= max; i++) {
+        const item = document.createElement("div");
+
+        item.className = "wheel-item";
+        item.textContent = String(i).padStart(2, "0");
+
+        list.appendChild(item);
+    }
+}
+
+// 時と分の数字を作成
+createWheel(hourList, 23);
+createWheel(minuteList, 59);
+
+// 選択中の時刻を取得
+function getWheelValue(wheel) {
+    const itemHeight = 44;
+    const index = Math.round(wheel.scrollTop / itemHeight);
+
+    return String(index).padStart(2, "0");
+}
+
+// 指定した時刻までスクロール
+function setWheelValue(wheel, value) {
+    const itemHeight = 44;
+
+    wheel.scrollTop = Number(value) * itemHeight;
+}
+
+// スクロール位置に合わせて選択中の数字を変更
+function updateWheelSelection(wheel) {
+    const itemHeight = 44;
+    const index = Math.round(wheel.scrollTop / itemHeight);
+
+    const items = wheel.querySelectorAll(".wheel-item");
+
+    items.forEach((item, i) => {
+        item.classList.toggle("selected", i === index);
+    });
+}
+
+// スクロールしたときに選択状態を更新
+hourWheel.addEventListener("scroll", function() {
+    updateWheelSelection(hourWheel);
+});
+
+minuteWheel.addEventListener("scroll", function() {
+    updateWheelSelection(minuteWheel);
+});
 
 // カレンダーの列順（0:月 〜 6:日）
 const days = ["月曜日", "火曜日", "水曜日", "木曜日",
@@ -19,14 +74,6 @@ const dayOfWeekToCol = { 1: 0, 2: 1, 3: 2, 4: 3, 5: 4, 6: 5, 0: 6 };
 let selectedCell = null;
 let hasUnsavedChanges = false;
 
-// 時刻入力欄のクリック
-if (timeInput) {
-    timeInput.addEventListener("click", function() {
-        if (typeof this.showPicker === "function") {
-            this.showPicker();
-        }
-    });
-}
 
 // 各マスをクリックしたとき
 cells.forEach((cell, index) => {
@@ -42,7 +89,13 @@ cells.forEach((cell, index) => {
         modalTitle.textContent =
             days[column] + "・" + timingLabels[row] + "の時刻設定";
 
-        timeInput.value = this.dataset.time || "08:00";
+        const time = this.dataset.time || "08:00";
+        const [hour, minute] = time.split(":");
+
+        setWheelValue(hourWheel, hour);
+        setWheelValue(minuteWheel, minute);
+        updateWheelSelection(hourWheel);
+        updateWheelSelection(minuteWheel);
 
         modal.style.display = "flex";
     });
@@ -50,9 +103,15 @@ cells.forEach((cell, index) => {
 
 // 決定ボタン（画面だけ変更）
 document.getElementById("saveBtn").addEventListener("click", function() {
-    if (selectedCell && timeInput.value) {
-        selectedCell.dataset.time = timeInput.value;
-        selectedCell.textContent = timeInput.value;
+
+    if (selectedCell) {
+        const hour = getWheelValue(hourWheel);
+        const minute = getWheelValue(minuteWheel);
+
+        const selectedTime = hour + ":" + minute;
+
+        selectedCell.dataset.time = selectedTime;
+        selectedCell.textContent = selectedTime;
 
         hasUnsavedChanges = true;
     }
