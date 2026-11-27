@@ -146,7 +146,7 @@ CREATE TABLE `pazul_game_records` (
   `played_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`game_record_id`),
   KEY `idx_pazul_records_user_game` (`user_id`,`game_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -155,7 +155,7 @@ CREATE TABLE `pazul_game_records` (
 
 LOCK TABLES `pazul_game_records` WRITE;
 /*!40000 ALTER TABLE `pazul_game_records` DISABLE KEYS */;
-INSERT INTO `pazul_game_records` VALUES (1,7,'pazul',820,'2026-11-27 10:15:46');
+INSERT INTO `pazul_game_records` VALUES (1,7,'pazul',820,'2026-11-27 10:15:46'),(2,7,'pazul',910,'2026-11-27 11:15:24');
 /*!40000 ALTER TABLE `pazul_game_records` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -175,7 +175,7 @@ CREATE TABLE `pazul_game_stats` (
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`stat_id`),
   UNIQUE KEY `uq_pazul_stats_user_game` (`user_id`,`game_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -184,7 +184,7 @@ CREATE TABLE `pazul_game_stats` (
 
 LOCK TABLES `pazul_game_stats` WRITE;
 /*!40000 ALTER TABLE `pazul_game_stats` DISABLE KEYS */;
-INSERT INTO `pazul_game_stats` VALUES (1,7,'pazul',820,1,'2026-11-27 10:15:46');
+INSERT INTO `pazul_game_stats` VALUES (1,7,'pazul',910,2,'2026-11-27 11:15:24');
 /*!40000 ALTER TABLE `pazul_game_stats` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -290,4 +290,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-11-27 10:47:33
+-- Dump completed on 2026-11-27 11:29:19
