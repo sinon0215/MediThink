@@ -3,13 +3,20 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // 服薬スケジュールを取得
     fetch("get_schedule.php")
-        .then(response => response.json())
+        .then(response => {
+            console.log("HTTP status:", response.status);
+            return response.json();
+        })
         .then(data => {
+
+            console.log("取得したデータ:", data);
 
             if (!data.success) {
                 console.error("スケジュールを取得できませんでした");
                 return;
             }
+
+            console.log("予定一覧:", data.schedules);
 
             data.schedules.forEach(schedule => {
 
@@ -18,13 +25,23 @@ document.addEventListener("DOMContentLoaded", function() {
                 );
 
                 if (cell) {
-                    const img = document.createElement("img");
 
-                    img.src = "./image/tablet.png";
-                    img.alt = "服薬予定";
-                    img.className = "medicine-icon";
+                    if (schedule.taken) {
+                        // 服薬済みなら「○」を表示
+                        cell.textContent = "○";
+                        cell.classList.add("taken-medication");
 
-                    cell.appendChild(img);
+                    } else {
+                        // 未服薬なら薬アイコンを表示
+                        const img = document.createElement("img");
+
+                        img.src = "./image/tablet.png";
+                        img.alt = "服薬予定";
+                        img.className = "medicine-icon";
+
+                        cell.appendChild(img);
+                    }
+
                 }
 
             });
@@ -57,10 +74,12 @@ document.addEventListener("DOMContentLoaded", function() {
     // 今週の月曜日の日付を取得
     const monday = new Date(today);
     const day = today.getDay();
+
     monday.setDate(today.getDate() - ((day + 6) % 7));
 
     // 月曜日から日曜日の日付を表示
     for (let i = 0; i < 7; i++) {
+
         const date = new Date(monday);
         date.setDate(monday.getDate() + i);
 
@@ -80,12 +99,13 @@ document.addEventListener("DOMContentLoaded", function() {
     const todayColumn = todayDay === 0 ? 6 : todayDay - 1;
 
     calendar.querySelectorAll("tr").forEach(row => {
+
         const cell = row.children[todayColumn + 1];
 
         if (cell) {
             cell.classList.add("today-column");
         }
+
     });
 
 });
-
