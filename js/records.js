@@ -44,8 +44,10 @@ function showGraph(gameName) {
     document.getElementById("graphTitle").textContent =
         gameTitle + "のスコア推移";
 
-    // グラフのデータ
-    const labels = scores.map((_, index) => (index + 1) + "回目");
+    // グラフのデータ（記録が0件のときは「記録なし」を1つ入れて 0 が出るのを防ぐ）
+    const labels = scores.length > 0
+        ? scores.map((_, index) => (index + 1) + "回目")
+        : ["記録なし"];
 
     // 既存のグラフを削除
     if (scoreChart) {
