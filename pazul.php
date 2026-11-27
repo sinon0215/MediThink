@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MediThink | パズル</title>
     <link rel="stylesheet" href="css/pazul.css">
+    <link rel="stylesheet" href="css/gure-ninaru.css">
 </head>
 <body class="pazul-body">
     <?php
@@ -71,19 +72,38 @@
             </div>
         </div>
     </main>
+    <div class="gray-bg" id="puzzle-instructions-bg" aria-hidden="true"></div>
+    <section class="gray-box" id="puzzle-instructions" role="dialog" aria-modal="true" aria-labelledby="puzzle-instructions-title">
+        <h2 id="puzzle-instructions-title">遊び方</h2>
+        <p>下のピースを選び、完成イメージを見ながら正しいマスをクリックしてください。</p>
+        <p>すべてのピースを3分以内に並べるとクリアです。間違えて置いた回数も記録されます。</p>
+        <button type="button" class="gray-close-btn" id="puzzle-start">ゲーム開始</button>
+    </section>
     <div class="clear-overlay" role="status" aria-live="assertive" aria-hidden="true">
         <div class="clear-message">クリア！</div>
     </div>
     <script>
+        const backButton = document.querySelector('.medithink-header .medithink-logout-btn');
+        if (backButton) {
+            backButton.textContent = '戻る';
+            backButton.addEventListener('click', (event) => {
+                event.preventDefault();
+                window.history.back();
+            });
+        }
+
         const pieces = document.querySelectorAll('.piece');
         const cells = document.querySelectorAll('.puzzle-cell');
         const help = document.querySelector('.puzzle-help');
         const timerButton = document.getElementById('puzzle-timer');
+        const instructionsBg = document.getElementById('puzzle-instructions-bg');
+        const instructions = document.getElementById('puzzle-instructions');
+        const startButton = document.getElementById('puzzle-start');
         let selectedPiece = null;
         let placedCount = 0;
         let missCount = 0;
         let timerId = null;
-        const startTime = performance.now();
+        let startTime = null;
         let remainingSeconds = Number(timerButton?.dataset.duration || 180);
         let timerStarted = false;
 
@@ -126,6 +146,7 @@
             }
 
             timerStarted = true;
+            startTime = performance.now();
             updateTimer();
             timerId = window.setInterval(() => {
                 remainingSeconds -= 1;
@@ -137,7 +158,12 @@
         };
 
         updateTimer();
-        startTimer();
+        startButton.addEventListener('click', () => {
+            instructions.setAttribute('aria-hidden', 'true');
+            instructions.style.display = 'none';
+            instructionsBg.style.display = 'none';
+            startTimer();
+        });
 
         pieces.forEach((piece) => {
             piece.addEventListener('click', () => {

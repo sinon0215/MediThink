@@ -40,12 +40,14 @@ if ($isPazulResult) {
 // 結果表示テキスト
 $resultLabel = ($missCount === 0) ? 'クリア！（お手つきなし）' : 'クリア！';
 
-// DB保存（game_records へ履歴保存・直近10件維持 + game_stats へ累計回数・最高スコア反映）
+// DB保存（ゲーム別の履歴を直近10件維持 + 累計回数・最高スコア反映）
 $db_host = 'localhost';
 $db_name = 'medithink_db';
 $db_user = 'medithink_admin';
 $db_pass = 'MediThink123!';
-$game_name = 'suuzisagashi';
+$game_name = $isPazulResult ? 'pazul' : 'suuzisagashi';
+$record_table = $isPazulResult ? 'pazul_game_records' : 'game_records';
+$stats_table = $isPazulResult ? 'pazul_game_stats' : 'game_stats';
 
 $recordToken = md5(
     $_SESSION['user_id'] . '|' .
@@ -60,7 +62,7 @@ if (!isset($_SESSION['saved_game_tokens']) || !is_array($_SESSION['saved_game_to
     $_SESSION['saved_game_tokens'] = [];
 }
 
-if (!$isPazulResult && !in_array($recordToken, $_SESSION['saved_game_tokens'], true)) {
+if (!in_array($recordToken, $_SESSION['saved_game_tokens'], true)) {
     try {
         $pdo = new PDO(
             "mysql:host=$db_host;dbname=$db_name;charset=utf8mb4",
@@ -75,7 +77,7 @@ if (!$isPazulResult && !in_array($recordToken, $_SESSION['saved_game_tokens'], t
 
         // 1. 今回のスコア履歴を保存
         $stmt = $pdo->prepare(
-            "INSERT INTO game_records (user_id, game_name, score)
+            "INSERT INTO $record_table (user_id, game_name, score)
              VALUES (:user_id, :game_name, :score)"
         );
         $stmt->execute([
@@ -87,7 +89,7 @@ if (!$isPazulResult && !in_array($recordToken, $_SESSION['saved_game_tokens'], t
         // 2. 該当ユーザー・ゲームの履歴を直近10件までに絞る
         $stmtOld = $pdo->prepare(
             "SELECT game_record_id
-             FROM game_records
+             FROM $record_table
              WHERE user_id = :user_id
                AND game_name = :game_name
              ORDER BY game_record_id DESC
@@ -102,14 +104,14 @@ if (!$isPazulResult && !in_array($recordToken, $_SESSION['saved_game_tokens'], t
         if (!empty($oldIds)) {
             $placeholders = implode(',', array_fill(0, count($oldIds), '?'));
             $stmtDelete = $pdo->prepare(
-                "DELETE FROM game_records WHERE game_record_id IN ($placeholders)"
+                "DELETE FROM $record_table WHERE game_record_id IN ($placeholders)"
             );
             $stmtDelete->execute($oldIds);
         }
 
         // 3. 累計プレイ回数と最高スコアを game_stats に反映（自己ベストを超えた場合のみ更新）
         $stmtStats = $pdo->prepare(
-            "INSERT INTO game_stats (user_id, game_name, best_score, play_count)
+            "INSERT INTO $stats_table (user_id, game_name, best_score, play_count)
              VALUES (:user_id, :game_name, :score_insert, 1)
              ON DUPLICATE KEY UPDATE
                  best_score = CASE

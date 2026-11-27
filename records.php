@@ -37,26 +37,29 @@ try {
 
     $userId = (int)$_SESSION['user_id'];
 
-    // 直近10件のスコアを取得（新しい順に10件取得してから古い順に並べ替え）
-    $stmtRecent = $pdo->prepare(
-        "SELECT score
-         FROM game_records
-         WHERE user_id = :user_id
-           AND game_name = :game_name
-         ORDER BY game_record_id DESC
-         LIMIT 10"
-    );
-
-    // 累計プレイ回数・最高スコアを取得
-    $stmtStats = $pdo->prepare(
-        "SELECT best_score, play_count
-         FROM game_stats
-         WHERE user_id = :user_id
-           AND game_name = :game_name
-         LIMIT 1"
-    );
-
     foreach ($games as $g) {
+        $recordTable = $g === 'pazul' ? 'pazul_game_records' : 'game_records';
+        $statsTable = $g === 'pazul' ? 'pazul_game_stats' : 'game_stats';
+
+        // 直近10件のスコアを取得（新しい順に10件取得してから古い順に並べ替え）
+        $stmtRecent = $pdo->prepare(
+            "SELECT score
+             FROM $recordTable
+             WHERE user_id = :user_id
+               AND game_name = :game_name
+             ORDER BY game_record_id DESC
+             LIMIT 10"
+        );
+
+        // 累計プレイ回数・最高スコアを取得
+        $stmtStats = $pdo->prepare(
+            "SELECT best_score, play_count
+             FROM $statsTable
+             WHERE user_id = :user_id
+               AND game_name = :game_name
+             LIMIT 1"
+        );
+
         $stmtRecent->execute([
             ':user_id'   => $userId,
             ':game_name' => $g,
