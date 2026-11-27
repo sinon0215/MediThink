@@ -99,10 +99,6 @@
             <!-- 下部ボタン -->
             <footer class="footer">
 
-                <button class="help-btn" type="button">
-                    ?
-                </button>
-
                 <button id="settingBtn" class="setting-btn" type="button">
                     設定する
                 </button>

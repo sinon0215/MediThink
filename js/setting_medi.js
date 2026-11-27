@@ -32,6 +32,41 @@ function getWheelValue(wheel) {
     return String(index).padStart(2, "0");
 }
 
+// 時刻が前後の設定と矛盾していないか確認
+function checkTimeOrder(cell, selectedTime) {
+    const row = Math.floor(Array.from(cells).indexOf(cell) / 7);
+    const column = Array.from(cells).indexOf(cell) % 7;
+
+    const timings = ["morning", "lunch", "evening", "bedtime"];
+
+    const currentTime = selectedTime.split(":").map(Number);
+    const currentMinutes = currentTime[0] * 60 + currentTime[1];
+
+    // 同じ曜日の時刻を確認
+    for (let i = 0; i < timings.length; i++) {
+        if (i === row) continue;
+
+        const targetCell = document.querySelector(
+            `.calendar td[data-day="${colToDayOfWeek[column]}"][data-timing="${timings[i]}"]`
+        );
+
+        if (!targetCell || !targetCell.dataset.time) continue;
+
+        const [hour, minute] = targetCell.dataset.time.split(":").map(Number);
+        const targetMinutes = hour * 60 + minute;
+
+        if (i < row && currentMinutes <= targetMinutes) {
+            return false;
+        }
+
+        if (i > row && currentMinutes >= targetMinutes) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
 // 指定した時刻までスクロール
 function setWheelValue(wheel, value) {
     const itemHeight = 44;
@@ -109,6 +144,12 @@ document.getElementById("saveBtn").addEventListener("click", function() {
         const minute = getWheelValue(minuteWheel);
 
         const selectedTime = hour + ":" + minute;
+
+        // 時刻の順番をチェック
+        if (!checkTimeOrder(selectedCell, selectedTime)) {
+            alert("前の時間より遅く、次の時間より早い時刻を設定してください。");
+            return;
+        }
 
         selectedCell.dataset.time = selectedTime;
         selectedCell.textContent = selectedTime;
