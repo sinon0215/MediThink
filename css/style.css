@@ -481,6 +481,10 @@ body.home-body {
     table-layout: fixed;
 }
 
+.home-calendar th{
+    font-size: 25px;
+}
+
 .home-calendar th,
 .home-calendar td {
     border: 2px solid #009fe8;
@@ -494,19 +498,18 @@ body.home-body {
 /* 曜日 */
 .home-calendar thead th {
     background-color: #70c2e3;
-    height: 50px;
+    height: 30px;
 }
 
 /* 時間帯 */
 .home-calendar tbody th {
     background-color: #d5edf7;
     width: 65px;
-    font-size: 18px;
+    font-size: 30px;
 }
 
 /* 服薬予定のマス */
 .home-calendar td {
-    font-size: 28px;
     font-weight: bold;
     background-color: #ffffff;
 }
@@ -521,7 +524,6 @@ body.home-body {
 .home-calendar .date-row th {
     background-color: #d5edf7; 
     height: 40px;
-    font-size: 18px;
     padding: 5px;
 }
 
