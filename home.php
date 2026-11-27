@@ -175,7 +175,7 @@ try {
 
                 <!-- キャラクターエリア (.character) -->
                 <div class="character">
-                    <img src="./image/zilyou_zaiko.png" height="150px">
+                    <img src="./image/zilyou_zaiko.png">
                 </div>
             </div>
         </div>

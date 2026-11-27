@@ -368,6 +368,12 @@ body.home-body {
     flex-shrink: 0;
 }
 
+.character img{
+    height: 150px;
+    width: auto;
+    margin-left: 50px;
+}
+
 .pill-character {
     position: relative;
     width: 90px;
