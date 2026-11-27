@@ -144,6 +144,12 @@ document.getElementById("saveBtn").addEventListener("click", function() {
         const minute = getWheelValue(minuteWheel);
 
         const selectedTime = hour + ":" + minute;
+        // 00:00は設定できない
+        if (selectedTime === "00:00") {
+            alert("00:00は設定できません。00:01以降を選択してください。");
+            return;
+        }
+
 
         // 時刻の順番をチェック
         if (!checkTimeOrder(selectedCell, selectedTime)) {
