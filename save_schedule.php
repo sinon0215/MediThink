@@ -1,6 +1,7 @@
-
 <?php
 // save_schedule.php
+date_default_timezone_set('Asia/Tokyo');
+
 if (session_status() !== PHP_SESSION_ACTIVE) {
     session_start();
 }
@@ -152,32 +153,12 @@ try {
     }
 
     // 保存確定
-    // 初回ログインか確認
-        $check = $pdo->prepare(
-            "SELECT is_first_login FROM users WHERE id = ?"
-        );
-        $check->execute([$user_id]);
-        $user = $check->fetch(PDO::FETCH_ASSOC);
+    $pdo->commit();
 
-        $is_first_login = (int)$user['is_first_login'] === 1;
-        error_log("初回ログイン判定: user_id=" . $user_id . ", is_first_login=" . $user['is_first_login']);
-        
-        // 初回ログインの場合、フラグを更新
-        if ($is_first_login) {
-            $update = $pdo->prepare(
-                "UPDATE users SET is_first_login = 0 WHERE id = ?"
-            );
-            $update->execute([$user_id]);
-        }
-
-        // 保存確定
-        $pdo->commit();
-
-        echo json_encode([
-            'success' => true,
-            'message' => 'カレンダー設定を保存しました。',
-            'is_first_login' => $is_first_login
-        ]);
+    echo json_encode([
+        'success' => true,
+        'message' => 'カレンダー設定を保存しました。'
+    ]);
 
 } catch (PDOException $e) {
 

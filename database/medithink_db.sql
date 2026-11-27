@@ -31,7 +31,7 @@ CREATE TABLE `game_records` (
   PRIMARY KEY (`game_record_id`),
   KEY `user_id` (`user_id`),
   CONSTRAINT `game_records_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -40,7 +40,7 @@ CREATE TABLE `game_records` (
 
 LOCK TABLES `game_records` WRITE;
 /*!40000 ALTER TABLE `game_records` DISABLE KEYS */;
-INSERT INTO `game_records` VALUES (9,7,'suuzisagashi',810,'2026-11-25 11:18:01'),(10,7,'suuzisagashi',840,'2026-11-25 11:18:11'),(11,7,'suuzisagashi',863,'2026-11-25 11:18:30'),(12,7,'suuzisagashi',865,'2026-11-25 12:22:38'),(13,7,'suuzisagashi',740,'2026-11-25 12:23:02'),(14,7,'suuzisagashi',818,'2026-11-25 12:33:03'),(15,7,'suuzisagashi',810,'2026-11-25 12:35:32'),(16,7,'suuzisagashi',830,'2026-11-25 12:37:22'),(17,7,'suuzisagashi',870,'2026-11-25 12:42:37'),(18,7,'suuzisagashi',740,'2026-11-26 10:32:22');
+INSERT INTO `game_records` VALUES (18,7,'suuzisagashi',740,'2026-11-26 10:32:22'),(19,7,'suuzisagashi',855,'2026-11-26 11:38:28'),(20,7,'suuzisagashi',920,'2026-11-26 11:38:43'),(21,7,'suuzisagashi',1000,'2026-11-26 12:33:31'),(22,7,'suuzisagashi',7,'2026-11-26 12:33:58'),(23,7,'suuzisagashi',1000,'2026-11-26 12:33:59'),(24,7,'suuzisagashi',965,'2026-11-26 12:38:23'),(25,7,'suuzisagashi',920,'2026-11-27 10:01:56'),(26,7,'suuzisagashi',7,'2026-11-27 10:15:10'),(27,7,'suuzisagashi',1000,'2026-11-27 10:15:10');
 /*!40000 ALTER TABLE `game_records` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -60,7 +60,7 @@ CREATE TABLE `game_stats` (
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`stat_id`),
   UNIQUE KEY `uq_user_game` (`user_id`,`game_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -69,8 +69,36 @@ CREATE TABLE `game_stats` (
 
 LOCK TABLES `game_stats` WRITE;
 /*!40000 ALTER TABLE `game_stats` DISABLE KEYS */;
-INSERT INTO `game_stats` VALUES (1,7,'suuzisagashi',870,18,'2026-11-26 10:32:22');
+INSERT INTO `game_stats` VALUES (1,7,'suuzisagashi',1000,25,'2026-11-27 10:15:10');
 /*!40000 ALTER TABLE `game_stats` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `medication_logs`
+--
+
+DROP TABLE IF EXISTS `medication_logs`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `medication_logs` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int unsigned NOT NULL,
+  `taken_date` date NOT NULL,
+  `medication_timing` varchar(20) NOT NULL,
+  `taken_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uniq_user_date_timing` (`user_id`,`taken_date`,`medication_timing`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `medication_logs`
+--
+
+LOCK TABLES `medication_logs` WRITE;
+/*!40000 ALTER TABLE `medication_logs` DISABLE KEYS */;
+INSERT INTO `medication_logs` VALUES (1,7,'2026-11-26','evening','2026-11-26 03:38:23'),(2,7,'2026-11-27','noon','2026-11-27 01:01:57');
+/*!40000 ALTER TABLE `medication_logs` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -90,7 +118,7 @@ CREATE TABLE `medication_schedules` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `uq_user_day_timing` (`user_id`,`day_of_week`,`medication_timing`),
   KEY `idx_user_id` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=351 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=391 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -99,8 +127,65 @@ CREATE TABLE `medication_schedules` (
 
 LOCK TABLES `medication_schedules` WRITE;
 /*!40000 ALTER TABLE `medication_schedules` DISABLE KEYS */;
-INSERT INTO `medication_schedules` VALUES (343,7,1,'morning','08:00:00','2026-11-25 03:42:19'),(344,7,4,'morning','08:00:00','2026-11-25 03:42:19'),(345,7,3,'noon','08:00:00','2026-11-25 03:42:19'),(346,7,5,'noon','14:42:00','2026-11-25 03:42:19'),(347,7,2,'evening','12:00:00','2026-11-25 03:42:19'),(348,7,3,'evening','15:38:00','2026-11-25 03:42:19'),(349,7,4,'evening','16:00:00','2026-11-25 03:42:19'),(350,7,2,'bedtime','14:00:00','2026-11-25 03:42:19');
+INSERT INTO `medication_schedules` VALUES (383,7,1,'morning','08:00:00','2026-11-26 03:33:17'),(384,7,4,'morning','08:00:00','2026-11-26 03:33:17'),(385,7,3,'noon','08:00:00','2026-11-26 03:33:17'),(386,7,5,'noon','14:42:00','2026-11-26 03:33:17'),(387,7,2,'evening','12:00:00','2026-11-26 03:33:17'),(388,7,3,'evening','15:38:00','2026-11-26 03:33:17'),(389,7,4,'evening','21:13:00','2026-11-26 03:33:17'),(390,7,2,'bedtime','14:00:00','2026-11-26 03:33:17');
 /*!40000 ALTER TABLE `medication_schedules` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `pazul_game_records`
+--
+
+DROP TABLE IF EXISTS `pazul_game_records`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `pazul_game_records` (
+  `game_record_id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL,
+  `game_name` varchar(50) NOT NULL DEFAULT 'pazul',
+  `score` int NOT NULL,
+  `played_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`game_record_id`),
+  KEY `idx_pazul_records_user_game` (`user_id`,`game_name`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `pazul_game_records`
+--
+
+LOCK TABLES `pazul_game_records` WRITE;
+/*!40000 ALTER TABLE `pazul_game_records` DISABLE KEYS */;
+INSERT INTO `pazul_game_records` VALUES (1,7,'pazul',820,'2026-11-27 10:15:46'),(2,7,'pazul',910,'2026-11-27 11:15:24');
+/*!40000 ALTER TABLE `pazul_game_records` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `pazul_game_stats`
+--
+
+DROP TABLE IF EXISTS `pazul_game_stats`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `pazul_game_stats` (
+  `stat_id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL,
+  `game_name` varchar(50) NOT NULL DEFAULT 'pazul',
+  `best_score` int NOT NULL DEFAULT '0',
+  `play_count` int NOT NULL DEFAULT '0',
+  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`stat_id`),
+  UNIQUE KEY `uq_pazul_stats_user_game` (`user_id`,`game_name`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `pazul_game_stats`
+--
+
+LOCK TABLES `pazul_game_stats` WRITE;
+/*!40000 ALTER TABLE `pazul_game_stats` DISABLE KEYS */;
+INSERT INTO `pazul_game_stats` VALUES (1,7,'pazul',910,2,'2026-11-27 11:15:24');
+/*!40000 ALTER TABLE `pazul_game_stats` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -183,7 +268,7 @@ CREATE TABLE `users` (
   `is_first_login` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -192,7 +277,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (7,'test@gmail.com','$2y$12$JT9JGGzXuTVGK3hHgv5gmO4J8IZtKug0Gur1A5jgfMbUxP8Um9BGS','2026-10-30 05:28:51','13:45:00','03:23:00','10:15:00','20:08:00','23:25:00','生年月日8桁','20060215',0),(8,'test@example.com','$2y$12$LeecozVwP01KcAGUxZXrn.llxOQXbm8R.lQxfN5aS90OY55/oW86i','2026-11-01 02:06:32','13:35:00',NULL,NULL,NULL,NULL,'生年月日8桁','20060215',0);
+INSERT INTO `users` VALUES (7,'test@gmail.com','$2y$12$JT9JGGzXuTVGK3hHgv5gmO4J8IZtKug0Gur1A5jgfMbUxP8Um9BGS','2026-10-30 05:28:51','13:45:00','03:23:00','10:15:00','20:08:00','23:25:00','生年月日8桁','20060215',0),(8,'test@example.com','$2y$12$LeecozVwP01KcAGUxZXrn.llxOQXbm8R.lQxfN5aS90OY55/oW86i','2026-11-01 02:06:32','13:35:00',NULL,NULL,NULL,NULL,'生年月日8桁','20060215',0),(9,'test12345@gmail.com','$2y$12$7tHX8vwRoOmQeRRQ5Xj9Z.FbryGNMEKkNShAYdwckgqCcaSIFYFOy','2026-11-26 03:40:38',NULL,NULL,NULL,NULL,NULL,'生年月日8桁','11111111',0),(10,'test123451@gmail.com','$2y$12$YBpEPO1kULdm55jJIgH1W.G7wA6FjtGBC/SdfuuCz9mkQIlfmyb6a','2026-11-27 00:41:42',NULL,NULL,NULL,NULL,NULL,'生年月日8桁','20060215',1),(11,'test12@gmail.com','$2y$12$uGs/aP.W0GzYiWilpf5gpeZpdAgoI8ngwQN5.2dN4Fi.lhin3Prr.','2026-11-27 00:42:37',NULL,NULL,NULL,NULL,NULL,'生年月日8桁','20060215',1),(12,'test1@gmail.com','$2y$12$ZNe9J/IggnFmJFEuRaSbeusPfP7pEQonjO4NIo0yOGS90GpO7.2Se','2026-11-27 00:45:29',NULL,NULL,NULL,NULL,NULL,'生年月日8桁','11111111',1),(13,'test111@gmail.com','$2y$12$a12HZ4JD8/w3Y0uZMhaSh.0dxjAngZSTOhApmKtccmfEAYOJoBZ2C','2026-11-27 00:53:58',NULL,NULL,NULL,NULL,NULL,'生年月日8桁','20060215',0);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -205,4 +290,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-11-26 10:45:56
+-- Dump completed on 2026-11-27 11:29:19

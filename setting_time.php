@@ -1,4 +1,5 @@
 <?php
+date_default_timezone_set('Asia/Tokyo');
 
 if (session_status() !== PHP_SESSION_ACTIVE) {
     session_start();
@@ -10,9 +11,10 @@ if (!isset($_SESSION['user_id'])) {
     exit;
 }
 
-$user_id = $_SESSION['user_id'];
+$user_id = (int)$_SESSION['user_id'];
 $success_message = '';
 $error = '';
+$did_reset = false;
 
 $host = 'localhost';
 $dbname = 'medithink_db';
@@ -23,30 +25,46 @@ try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $username, $db_password);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    // POST送信時の処理（時間の保存：セレクトボックスの時と分を結合）
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $morning_time = (!empty($_POST['morning_h']) && !empty($_POST['morning_m'])) ? $_POST['morning_h'] . ':' . $_POST['morning_m'] . ':00' : null;
-        $lunch_time   = (!empty($_POST['lunch_h'])   && !empty($_POST['lunch_m']))   ? $_POST['lunch_h']   . ':' . $_POST['lunch_m']   . ':00' : null;
-        $evening_time = (!empty($_POST['evening_h']) && !empty($_POST['evening_m'])) ? $_POST['evening_h'] . ':' . $_POST['evening_m'] . ':00' : null;
-        $bedtime_time = (!empty($_POST['bedtime_h']) && !empty($_POST['bedtime_m'])) ? $_POST['bedtime_h'] . ':' . $_POST['bedtime_m'] . ':00' : null;
+        $action = $_POST['action'] ?? 'save_time';
 
-        $update_stmt = $pdo->prepare("
-            UPDATE users 
-            SET morning_time = :morning, 
-                lunch_time = :lunch, 
-                evening_time = :evening, 
-                bedtime_time = :bedtime 
-            WHERE id = :id
-        ");
-        $update_stmt->execute([
-            ':morning' => $morning_time,
-            ':lunch'   => $lunch_time,
-            ':evening' => $evening_time,
-            ':bedtime' => $bedtime_time,
-            ':id'      => $user_id
-        ]);
+        if ($action === 'reset_logs') {
+            $today_str = date('Y-m-d');
+            $reset_stmt = $pdo->prepare(
+                "DELETE FROM medication_logs WHERE user_id = :id AND taken_date = :today"
+            );
+            $reset_stmt->execute([
+                ':id'    => $user_id,
+                ':today' => $today_str
+            ]);
+            unset($_SESSION['target_medication_timing']);
+            $did_reset = true;
+            $success_message = '今日の服薬・通知判定をリセットしました！';
+        } else {
+            // 時間の保存（セレクトボックスの時と分を結合）
+            $morning_time = (!empty($_POST['morning_h']) && !empty($_POST['morning_m'])) ? $_POST['morning_h'] . ':' . $_POST['morning_m'] . ':00' : null;
+            $lunch_time   = (!empty($_POST['lunch_h'])   && !empty($_POST['lunch_m']))   ? $_POST['lunch_h']   . ':' . $_POST['lunch_m']   . ':00' : null;
+            $evening_time = (!empty($_POST['evening_h']) && !empty($_POST['evening_m'])) ? $_POST['evening_h'] . ':' . $_POST['evening_m'] . ':00' : null;
+            $bedtime_time = (!empty($_POST['bedtime_h']) && !empty($_POST['bedtime_m'])) ? $_POST['bedtime_h'] . ':' . $_POST['bedtime_m'] . ':00' : null;
 
-        $success_message = '通知時間を更新しました！';
+            $update_stmt = $pdo->prepare("
+                UPDATE users 
+                SET morning_time = :morning, 
+                    lunch_time = :lunch, 
+                    evening_time = :evening, 
+                    bedtime_time = :bedtime 
+                WHERE id = :id
+            ");
+            $update_stmt->execute([
+                ':morning' => $morning_time,
+                ':lunch'   => $lunch_time,
+                ':evening' => $evening_time,
+                ':bedtime' => $bedtime_time,
+                ':id'      => $user_id
+            ]);
+
+            $success_message = '通知時間を更新しました！';
+        }
     }
 
     // 現在の登録時間をデータベースから取得して分解
@@ -134,11 +152,11 @@ try {
     </style>
 </head>
 <body>
-    <!-- 共通ヘッダーの読み込み（正しく `<?php` に修正） -->
+    <!-- 共通ヘッダーの読み込み -->
     <?php 
         if (file_exists('header_home.php')) {
-        include('header_home.php');
-            }
+            include('header_home.php');
+        }
     ?>
 
     <!-- メインコンテンツエリア -->
@@ -242,12 +260,20 @@ try {
                 </div>
 
                 <!-- ボタンエリア -->
-                <div style="display: flex; justify-content: center;">
-                    <button class="primary-btn" type="submit" style="width: 100%; padding: 15px; font-size: 18px; font-weight: bold; border-radius: 8px;">変更を決定する</button>
+                <div style="display: flex; flex-direction: column; gap: 12px;">
+                    <button class="primary-btn" type="submit" name="action" value="save_time" style="width: 100%; padding: 15px; font-size: 18px; font-weight: bold; border-radius: 8px;">変更を決定する</button>
+                    <button class="primary-btn" type="submit" name="action" value="reset_logs" style="width: 100%; padding: 12px; font-size: 16px; font-weight: bold; border-radius: 8px; background-color: #d9534f; border-color: #d9534f;">今日の服薬判定をリセットする（テスト用）</button>
                 </div>
             </form>
 
         </div>
     </main>
+
+    <?php if ($did_reset): ?>
+    <script>
+        sessionStorage.removeItem('medi_notice_triggered_key');
+        sessionStorage.removeItem('medi_record_mode');
+    </script>
+    <?php endif; ?>
 </body>
 </html>

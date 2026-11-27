@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -102,6 +101,9 @@
                 <button id="settingBtn" class="setting-btn" type="button">
                     設定する
                 </button>
+                <button id="resetMedicationBtn" class="setting-btn" type="button" style="background-color: #d9534f; margin-left: 12px;">
+                    服薬判定リセット
+                </button>
 
             </footer>
         
@@ -137,11 +139,32 @@
     </div>
 </div>
 
-    
-
-
-  
     <script src="js/setting_medi.js"></script>
+    <script>
+    (() => {
+        const resetBtn = document.getElementById('resetMedicationBtn');
+        if (!resetBtn) return;
+
+        resetBtn.addEventListener('click', async () => {
+            try {
+                const res = await fetch('reset_medication_logs.php', {
+                    method: 'POST',
+                    credentials: 'same-origin'
+                });
+                const data = await res.json();
+                if (!res.ok || !data.ok) {
+                    alert('リセットに失敗しました。');
+                    return;
+                }
+                sessionStorage.removeItem('medi_notice_triggered_key');
+                sessionStorage.removeItem('medi_record_mode');
+                alert('今日の服薬・通知判定をリセットしました！');
+            } catch (err) {
+                console.error(err);
+                alert('通信エラーが発生しました。');
+            }
+        });
+    })();
+    </script>
 </body>
 </html>
-

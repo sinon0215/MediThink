@@ -1,5 +1,5 @@
 <?php
-// home.php
+// medi_game_start.php
 // タイムゾーンを日本時間に明示的に設定
 date_default_timezone_set('Asia/Tokyo');
 
@@ -7,7 +7,7 @@ date_default_timezone_set('Asia/Tokyo');
 // if (is_dir($save_path)) {
 //     session_save_path($save_path);
 // }
-if(session_status() !== PHP_SESSION_ACTIVE){
+if (session_status() !== PHP_SESSION_ACTIVE) {
     session_start();
 }
 
@@ -18,8 +18,8 @@ if (!isset($_SESSION['user_id'])) {
 
 $db_host = 'localhost';
 $db_name = 'medithink_db';
-$db_user = 'medithink_admin'; 
-$db_pass = 'MediThink123!';     
+$db_user = 'medithink_admin';
+$db_pass = 'MediThink123!';
 
 $next_time = "未設定";
 
@@ -70,6 +70,9 @@ try {
 } catch (PDOException $e) {
     $next_time = "DBエラー";
 }
+
+$games = ['game_suuzisagashi.php', 'pazul.php'];
+$random_game = $games[random_int(0, count($games) - 1)];
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -86,7 +89,7 @@ try {
 
     <!-- メインコンテンツ (.main-container) -->
     <main class="main-container">
-        <a href="game_suuzisagashi.php" class="medium-btn start-button">スタート</a>
+        <a href="<?= htmlspecialchars($random_game, ENT_QUOTES, 'UTF-8') ?>" class="medium-btn start-button">スタート</a>
     </main>
 
 </body>

@@ -8,6 +8,7 @@ if (session_status() !== PHP_SESSION_ACTIVE) {
 
 $notice_user_id = $_SESSION['user_id'] ?? null;
 $notice_today_dow = (int)date('w'); // 0:日, 1:月, 2:火, 3:水, 4:木, 5:金, 6:土
+$notice_today_str = date('Y-m-d');
 $notice_schedules = [];
 
 $notice_timing_labels = [
@@ -36,11 +37,19 @@ if ($notice_user_id) {
              FROM medication_schedules
              WHERE user_id = :user_id
                AND day_of_week = :dow
+               AND medication_timing NOT IN (
+                   SELECT medication_timing
+                   FROM medication_logs
+                   WHERE user_id = :log_user_id
+                     AND taken_date = :taken_date
+               )
              ORDER BY scheduled_time ASC"
         );
         $stmt->execute([
-            ':user_id' => $notice_user_id,
-            ':dow'     => $notice_today_dow
+            ':user_id'     => $notice_user_id,
+            ':dow'         => $notice_today_dow,
+            ':log_user_id' => $notice_user_id,
+            ':taken_date'  => $notice_today_str
         ]);
         $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -135,7 +144,7 @@ if ($notice_user_id) {
         const matched = schedules.find(item => item.time === hhmm);
         if (!matched) return;
 
-        const key = `${dateStr}_${matched.time}`;
+        const key = `${dateStr}_${matched.timing}`;
         if (sessionStorage.getItem(STORAGE_TRIGGERED_KEY) === key) {
             return;
         }
