@@ -514,6 +514,10 @@ body.home-body {
     background-color: #ffffff;
 }
 
+.home-calendar td.taken-medication {
+    font-size: 60px;
+}
+
 /* 今日の曜日の服薬予定マス */
 .home-calendar td.today-column {
     background-color: #fff3c4;
