@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
                     if (schedule.taken) {
                         // 服薬済みなら「○」を表示
-                        cell.textContent = "○";
+                        cell.textContent = "✓";
                         cell.classList.add("taken-medication");
 
                     } else {

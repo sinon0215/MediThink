@@ -515,7 +515,8 @@ body.home-body {
 }
 
 .home-calendar td.taken-medication {
-    font-size: 60px;
+    font-size: 40px;
+    color: #74a8d8;
 }
 
 /* 今日の曜日の服薬予定マス */
